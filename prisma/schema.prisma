@@ -24,22 +24,192 @@ model Admin {
   createdAt  DateTime @default(now())
 }
 
+model City {
+  city_id   Int         @id @default(autoincrement())
+  city_name String
+  state     String
+  created_at DateTime   @default(now())
+  subCities SubCity[]
+
+  @@map("Cities")
+}
+
+model SubCity {
+  sub_city_id Int       @id @default(autoincrement())
+  city_id     Int
+  sub_city_name String
+  created_at  DateTime  @default(now())
+
+  city        City      @relation(fields: [city_id], references: [city_id], onDelete: Cascade, onUpdate: Cascade)
+  addresses   StreetAddress[]
+
+  @@map("Sub_Cities")
+}
+
+model StreetAddress {
+  street_address_id Int       @id @default(autoincrement())
+  sub_city_id       Int
+  street_address    String
+  zip_code          String
+  created_at        DateTime  @default(now())
+
+  subCity           SubCity   @relation(fields: [sub_city_id], references: [sub_city_id], onDelete: Cascade, onUpdate: Cascade)
+  locations         Location[]
+
+  @@map("Street_Addresses")
+}
+
+model Location {
+  location_id        Int       @id @default(autoincrement())
+  lot_id             Int
+  street_address_id  Int
+  latitude           Float
+  longitude          Float
+  created_at         DateTime  @default(now())
+
+  parkingLot         ParkingLot  @relation(fields: [lot_id], references: [lot_id], onDelete: Cascade, onUpdate: Cascade)
+  streetAddress      StreetAddress @relation(fields: [street_address_id], references: [street_address_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Locations")
+}
+
+model ParkingLot {
+  lot_id     Int        @id @default(autoincrement())
+  owner_id   Int
+  lot_name   String
+  capacity   Int
+  created_at DateTime   @default(now())
+
+  owner      Owner      @relation(fields: [owner_id], references: [owner_id], onDelete: Cascade, onUpdate: Cascade)
+  spaces     ParkingSpace[]
+  locations  Location[]
+  prices     Price[]
+  reviews    Review[]
+
+  @@map("Parking_Lots")
+}
+
+model ParkingSpace {
+  space_id     Int       @id @default(autoincrement())
+  lot_id       Int
+  space_number String
+  is_handicap  Boolean
+  status       String
+  created_at   DateTime  @default(now())
+
+  lot          ParkingLot  @relation(fields: [lot_id], references: [lot_id], onDelete: Cascade, onUpdate: Cascade)
+  availability AvailabilityLog[]
+  bookings     Booking[]
+
+  @@map("Parking_Spaces")
+}
+
 model User {
-  id         Int      @id @default(autoincrement()) // user_id
-  firstName  String
-  lastName   String
-  email      String   @unique
+  user_id    Int       @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String    @unique
   password   String
   phone      String
-  createdAt  DateTime @default(now())
+  created_at DateTime  @default(now())
+
+  bookings   Booking[]
+  payments   Payment[]
+  reviews    Review[]
+  notifications Notification[]
+
+  @@map("Users")
 }
 
 model Owner {
-  id         Int      @id @default(autoincrement()) // owner_id
-  firstName  String
-  lastName   String
-  email      String   @unique
+  owner_id   Int       @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String    @unique
   password   String
   phone      String
-  createdAt  DateTime @default(now())
+  created_at DateTime  @default(now())
+
+  parkingLots ParkingLot[]
+  notifications Notification[]
+
+  @@map("Owners")
+}
+
+model AvailabilityLog {
+  log_id    Int       @id @default(autoincrement())
+  space_id  Int
+  status    String
+  timestamp DateTime  @default(now())
+
+  space     ParkingSpace @relation(fields: [space_id], references: [space_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Availability_Logs")
+}
+
+model Booking {
+  booking_id Int       @id @default(autoincrement())
+  user_id    Int
+  space_id   Int
+  start_time DateTime
+  end_time   DateTime
+  status     String
+
+  user       User         @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  space      ParkingSpace @relation(fields: [space_id], references: [space_id], onDelete: Cascade, onUpdate: Cascade)
+  payment    Payment?
+
+  @@map("Bookings")
+}
+
+model Payment {
+  payment_id     Int       @id @default(autoincrement())
+  booking_id     Int       @unique
+  user_id        Int
+  amount         Float
+  payment_method String
+  payment_date   DateTime  @default(now())
+
+  booking        Booking   @relation(fields: [booking_id], references: [booking_id], onDelete: Cascade, onUpdate: Cascade)
+  user           User      @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Payments")
+}
+
+model Price {
+  price_id       Int       @id @default(autoincrement())
+  lot_id         Int
+  price_per_hour Float
+  effective_date DateTime
+
+  lot            ParkingLot @relation(fields: [lot_id], references: [lot_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Prices")
+}
+
+model Review {
+  review_id  Int       @id @default(autoincrement())
+  user_id    Int
+  lot_id     Int
+  rating     Int
+  comment    String
+  review_date DateTime @default(now())
+
+  user       User      @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  lot        ParkingLot @relation(fields: [lot_id], references: [lot_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Reviews")
+}
+
+model Notification {
+  notification_id Int       @id @default(autoincrement())
+  user_id         Int?
+  owner_id        Int?
+  message         String
+  sent_at         DateTime  @default(now())
+
+  user            User?     @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  owner           Owner?    @relation(fields: [owner_id], references: [owner_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Notifications")
 }
