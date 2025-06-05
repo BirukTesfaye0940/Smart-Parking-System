@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "lib/prisma.js", "app/api/auth/[...betterAuth]/route.js"  ],
   "exclude": [
     "node_modules"
   ]
