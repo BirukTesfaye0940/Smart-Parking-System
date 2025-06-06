@@ -1,9 +1,7 @@
-
 import bcrypt from 'bcrypt';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import prisma from "../../../../lib/prisma";
-
+import prisma from '../../../../lib/prisma';
 
 const handler = NextAuth({
   providers: [
@@ -14,39 +12,51 @@ const handler = NextAuth({
         password: {},
         role: {}, // include role field
       },
-     async authorize(credentials) {
-  const { email, password, role } = credentials;
-  console.log('Authorizing user with role:', role, 'and email:', email);
+      async authorize(credentials) {
+        try {
+          const { email, password, role } = credentials || {};
 
-  let user = null;
+          if (!email || !password || !role) {
+            console.log('Missing credentials');
+            return null;
+          }
 
-  if (role === 'admin') {
-    user = await prisma.admin.findUnique({ where: { email } });
-  } else if (role === 'user') {
-    user = await prisma.user.findUnique({ where: { email } });
-  } else if (role === 'owner') {
-    user = await prisma.owner.findUnique({ where: { email } });
-  }
+          let user = null;
 
-  if (!user) {
-    console.log('No user found');
-    return null; // ✅ early return
-  }
+          if (role === 'admin') {
+            user = await prisma.admin.findUnique({ where: { email } });
+          } else if (role === 'user') {
+            user = await prisma.user.findUnique({ where: { email } });
+          } else if (role === 'owner') {
+            user = await prisma.owner.findUnique({ where: { email } });
+          }
 
-  const isValid = await bcrypt.compare(password, user.password);
-  if (!isValid) {
-    console.log('Invalid password');
-    return null; // ✅ another early return
-  }
+          if (!user) {
+            console.log('No user found with email:', email);
+            return null;
+          }
 
-  // ✅ valid credentials
-  return {
-    id: user.id,
-    email: user.email,
-    role,
-  };
-}
+          if (!user.password) {
+            console.log('User has no password set');
+            return null;
+          }
 
+          const isValid = await bcrypt.compare(password, user.password);
+          if (!isValid) {
+            console.log('Invalid password');
+            return null;
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            role,
+          };
+        } catch (err) {
+          console.error('Error during authorize:', err);
+          return null; // never throw from authorize
+        }
+      },
     }),
   ],
   session: {
@@ -55,22 +65,21 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.role = user.role;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.role = token.role
+        session.user.role = token.role;
       }
-      return session
+      return session;
     },
   },
   pages: {
     signIn: '/auth/signin',
   },
   secret: process.env.NEXTAUTH_SECRET,
-})
+});
 
 export { handler as GET, handler as POST };
-
