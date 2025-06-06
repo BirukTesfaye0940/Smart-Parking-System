@@ -49,6 +49,11 @@ export type ParkingLot = $Result.DefaultSelection<Prisma.$ParkingLotPayload>
  */
 export type ParkingSpace = $Result.DefaultSelection<Prisma.$ParkingSpacePayload>
 /**
+ * Model AvailabilityLog
+ * 
+ */
+export type AvailabilityLog = $Result.DefaultSelection<Prisma.$AvailabilityLogPayload>
+/**
  * Model User
  * 
  */
@@ -58,11 +63,6 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Owner = $Result.DefaultSelection<Prisma.$OwnerPayload>
-/**
- * Model AvailabilityLog
- * 
- */
-export type AvailabilityLog = $Result.DefaultSelection<Prisma.$AvailabilityLogPayload>
 /**
  * Model Booking
  * 
@@ -285,6 +285,16 @@ export class PrismaClient<
   get parkingSpace(): Prisma.ParkingSpaceDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.availabilityLog`: Exposes CRUD operations for the **AvailabilityLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AvailabilityLogs
+    * const availabilityLogs = await prisma.availabilityLog.findMany()
+    * ```
+    */
+  get availabilityLog(): Prisma.AvailabilityLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -303,16 +313,6 @@ export class PrismaClient<
     * ```
     */
   get owner(): Prisma.OwnerDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.availabilityLog`: Exposes CRUD operations for the **AvailabilityLog** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AvailabilityLogs
-    * const availabilityLogs = await prisma.availabilityLog.findMany()
-    * ```
-    */
-  get availabilityLog(): Prisma.AvailabilityLogDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.booking`: Exposes CRUD operations for the **Booking** model.
@@ -810,9 +810,9 @@ export namespace Prisma {
     Location: 'Location',
     ParkingLot: 'ParkingLot',
     ParkingSpace: 'ParkingSpace',
+    AvailabilityLog: 'AvailabilityLog',
     User: 'User',
     Owner: 'Owner',
-    AvailabilityLog: 'AvailabilityLog',
     Booking: 'Booking',
     Payment: 'Payment',
     Price: 'Price',
@@ -836,7 +836,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "admin" | "city" | "subCity" | "streetAddress" | "location" | "parkingLot" | "parkingSpace" | "user" | "owner" | "availabilityLog" | "booking" | "payment" | "price" | "review" | "notification"
+      modelProps: "admin" | "city" | "subCity" | "streetAddress" | "location" | "parkingLot" | "parkingSpace" | "availabilityLog" | "user" | "owner" | "booking" | "payment" | "price" | "review" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1358,6 +1358,80 @@ export namespace Prisma {
           }
         }
       }
+      AvailabilityLog: {
+        payload: Prisma.$AvailabilityLogPayload<ExtArgs>
+        fields: Prisma.AvailabilityLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AvailabilityLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AvailabilityLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
+          }
+          findFirst: {
+            args: Prisma.AvailabilityLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AvailabilityLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
+          }
+          findMany: {
+            args: Prisma.AvailabilityLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>[]
+          }
+          create: {
+            args: Prisma.AvailabilityLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
+          }
+          createMany: {
+            args: Prisma.AvailabilityLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AvailabilityLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>[]
+          }
+          delete: {
+            args: Prisma.AvailabilityLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
+          }
+          update: {
+            args: Prisma.AvailabilityLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.AvailabilityLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AvailabilityLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AvailabilityLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.AvailabilityLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
+          }
+          aggregate: {
+            args: Prisma.AvailabilityLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAvailabilityLog>
+          }
+          groupBy: {
+            args: Prisma.AvailabilityLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AvailabilityLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AvailabilityLogCountArgs<ExtArgs>
+            result: $Utils.Optional<AvailabilityLogCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1503,80 +1577,6 @@ export namespace Prisma {
           count: {
             args: Prisma.OwnerCountArgs<ExtArgs>
             result: $Utils.Optional<OwnerCountAggregateOutputType> | number
-          }
-        }
-      }
-      AvailabilityLog: {
-        payload: Prisma.$AvailabilityLogPayload<ExtArgs>
-        fields: Prisma.AvailabilityLogFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.AvailabilityLogFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.AvailabilityLogFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
-          }
-          findFirst: {
-            args: Prisma.AvailabilityLogFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.AvailabilityLogFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
-          }
-          findMany: {
-            args: Prisma.AvailabilityLogFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>[]
-          }
-          create: {
-            args: Prisma.AvailabilityLogCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
-          }
-          createMany: {
-            args: Prisma.AvailabilityLogCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.AvailabilityLogCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>[]
-          }
-          delete: {
-            args: Prisma.AvailabilityLogDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
-          }
-          update: {
-            args: Prisma.AvailabilityLogUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
-          }
-          deleteMany: {
-            args: Prisma.AvailabilityLogDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.AvailabilityLogUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.AvailabilityLogUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>[]
-          }
-          upsert: {
-            args: Prisma.AvailabilityLogUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$AvailabilityLogPayload>
-          }
-          aggregate: {
-            args: Prisma.AvailabilityLogAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateAvailabilityLog>
-          }
-          groupBy: {
-            args: Prisma.AvailabilityLogGroupByArgs<ExtArgs>
-            result: $Utils.Optional<AvailabilityLogGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.AvailabilityLogCountArgs<ExtArgs>
-            result: $Utils.Optional<AvailabilityLogCountAggregateOutputType> | number
           }
         }
       }
@@ -2041,9 +2041,9 @@ export namespace Prisma {
     location?: LocationOmit
     parkingLot?: ParkingLotOmit
     parkingSpace?: ParkingSpaceOmit
+    availabilityLog?: AvailabilityLogOmit
     user?: UserOmit
     owner?: OwnerOmit
-    availabilityLog?: AvailabilityLogOmit
     booking?: BookingOmit
     payment?: PaymentOmit
     price?: PriceOmit
@@ -10327,6 +10327,1089 @@ export namespace Prisma {
 
 
   /**
+   * Model AvailabilityLog
+   */
+
+  export type AggregateAvailabilityLog = {
+    _count: AvailabilityLogCountAggregateOutputType | null
+    _avg: AvailabilityLogAvgAggregateOutputType | null
+    _sum: AvailabilityLogSumAggregateOutputType | null
+    _min: AvailabilityLogMinAggregateOutputType | null
+    _max: AvailabilityLogMaxAggregateOutputType | null
+  }
+
+  export type AvailabilityLogAvgAggregateOutputType = {
+    log_id: number | null
+    space_id: number | null
+  }
+
+  export type AvailabilityLogSumAggregateOutputType = {
+    log_id: number | null
+    space_id: number | null
+  }
+
+  export type AvailabilityLogMinAggregateOutputType = {
+    log_id: number | null
+    space_id: number | null
+    status: string | null
+    timestamp: Date | null
+  }
+
+  export type AvailabilityLogMaxAggregateOutputType = {
+    log_id: number | null
+    space_id: number | null
+    status: string | null
+    timestamp: Date | null
+  }
+
+  export type AvailabilityLogCountAggregateOutputType = {
+    log_id: number
+    space_id: number
+    status: number
+    timestamp: number
+    _all: number
+  }
+
+
+  export type AvailabilityLogAvgAggregateInputType = {
+    log_id?: true
+    space_id?: true
+  }
+
+  export type AvailabilityLogSumAggregateInputType = {
+    log_id?: true
+    space_id?: true
+  }
+
+  export type AvailabilityLogMinAggregateInputType = {
+    log_id?: true
+    space_id?: true
+    status?: true
+    timestamp?: true
+  }
+
+  export type AvailabilityLogMaxAggregateInputType = {
+    log_id?: true
+    space_id?: true
+    status?: true
+    timestamp?: true
+  }
+
+  export type AvailabilityLogCountAggregateInputType = {
+    log_id?: true
+    space_id?: true
+    status?: true
+    timestamp?: true
+    _all?: true
+  }
+
+  export type AvailabilityLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AvailabilityLog to aggregate.
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AvailabilityLogs to fetch.
+     */
+    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AvailabilityLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AvailabilityLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AvailabilityLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AvailabilityLogs
+    **/
+    _count?: true | AvailabilityLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AvailabilityLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AvailabilityLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AvailabilityLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AvailabilityLogMaxAggregateInputType
+  }
+
+  export type GetAvailabilityLogAggregateType<T extends AvailabilityLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateAvailabilityLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAvailabilityLog[P]>
+      : GetScalarType<T[P], AggregateAvailabilityLog[P]>
+  }
+
+
+
+
+  export type AvailabilityLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AvailabilityLogWhereInput
+    orderBy?: AvailabilityLogOrderByWithAggregationInput | AvailabilityLogOrderByWithAggregationInput[]
+    by: AvailabilityLogScalarFieldEnum[] | AvailabilityLogScalarFieldEnum
+    having?: AvailabilityLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AvailabilityLogCountAggregateInputType | true
+    _avg?: AvailabilityLogAvgAggregateInputType
+    _sum?: AvailabilityLogSumAggregateInputType
+    _min?: AvailabilityLogMinAggregateInputType
+    _max?: AvailabilityLogMaxAggregateInputType
+  }
+
+  export type AvailabilityLogGroupByOutputType = {
+    log_id: number
+    space_id: number
+    status: string
+    timestamp: Date
+    _count: AvailabilityLogCountAggregateOutputType | null
+    _avg: AvailabilityLogAvgAggregateOutputType | null
+    _sum: AvailabilityLogSumAggregateOutputType | null
+    _min: AvailabilityLogMinAggregateOutputType | null
+    _max: AvailabilityLogMaxAggregateOutputType | null
+  }
+
+  type GetAvailabilityLogGroupByPayload<T extends AvailabilityLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AvailabilityLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AvailabilityLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AvailabilityLogGroupByOutputType[P]>
+            : GetScalarType<T[P], AvailabilityLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AvailabilityLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    log_id?: boolean
+    space_id?: boolean
+    status?: boolean
+    timestamp?: boolean
+    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["availabilityLog"]>
+
+  export type AvailabilityLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    log_id?: boolean
+    space_id?: boolean
+    status?: boolean
+    timestamp?: boolean
+    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["availabilityLog"]>
+
+  export type AvailabilityLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    log_id?: boolean
+    space_id?: boolean
+    status?: boolean
+    timestamp?: boolean
+    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["availabilityLog"]>
+
+  export type AvailabilityLogSelectScalar = {
+    log_id?: boolean
+    space_id?: boolean
+    status?: boolean
+    timestamp?: boolean
+  }
+
+  export type AvailabilityLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"log_id" | "space_id" | "status" | "timestamp", ExtArgs["result"]["availabilityLog"]>
+  export type AvailabilityLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+  }
+  export type AvailabilityLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+  }
+  export type AvailabilityLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+  }
+
+  export type $AvailabilityLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AvailabilityLog"
+    objects: {
+      space: Prisma.$ParkingSpacePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      log_id: number
+      space_id: number
+      status: string
+      timestamp: Date
+    }, ExtArgs["result"]["availabilityLog"]>
+    composites: {}
+  }
+
+  type AvailabilityLogGetPayload<S extends boolean | null | undefined | AvailabilityLogDefaultArgs> = $Result.GetResult<Prisma.$AvailabilityLogPayload, S>
+
+  type AvailabilityLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AvailabilityLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AvailabilityLogCountAggregateInputType | true
+    }
+
+  export interface AvailabilityLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AvailabilityLog'], meta: { name: 'AvailabilityLog' } }
+    /**
+     * Find zero or one AvailabilityLog that matches the filter.
+     * @param {AvailabilityLogFindUniqueArgs} args - Arguments to find a AvailabilityLog
+     * @example
+     * // Get one AvailabilityLog
+     * const availabilityLog = await prisma.availabilityLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AvailabilityLogFindUniqueArgs>(args: SelectSubset<T, AvailabilityLogFindUniqueArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AvailabilityLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AvailabilityLogFindUniqueOrThrowArgs} args - Arguments to find a AvailabilityLog
+     * @example
+     * // Get one AvailabilityLog
+     * const availabilityLog = await prisma.availabilityLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AvailabilityLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AvailabilityLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AvailabilityLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogFindFirstArgs} args - Arguments to find a AvailabilityLog
+     * @example
+     * // Get one AvailabilityLog
+     * const availabilityLog = await prisma.availabilityLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AvailabilityLogFindFirstArgs>(args?: SelectSubset<T, AvailabilityLogFindFirstArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AvailabilityLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogFindFirstOrThrowArgs} args - Arguments to find a AvailabilityLog
+     * @example
+     * // Get one AvailabilityLog
+     * const availabilityLog = await prisma.availabilityLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AvailabilityLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AvailabilityLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AvailabilityLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AvailabilityLogs
+     * const availabilityLogs = await prisma.availabilityLog.findMany()
+     * 
+     * // Get first 10 AvailabilityLogs
+     * const availabilityLogs = await prisma.availabilityLog.findMany({ take: 10 })
+     * 
+     * // Only select the `log_id`
+     * const availabilityLogWithLog_idOnly = await prisma.availabilityLog.findMany({ select: { log_id: true } })
+     * 
+     */
+    findMany<T extends AvailabilityLogFindManyArgs>(args?: SelectSubset<T, AvailabilityLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AvailabilityLog.
+     * @param {AvailabilityLogCreateArgs} args - Arguments to create a AvailabilityLog.
+     * @example
+     * // Create one AvailabilityLog
+     * const AvailabilityLog = await prisma.availabilityLog.create({
+     *   data: {
+     *     // ... data to create a AvailabilityLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends AvailabilityLogCreateArgs>(args: SelectSubset<T, AvailabilityLogCreateArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AvailabilityLogs.
+     * @param {AvailabilityLogCreateManyArgs} args - Arguments to create many AvailabilityLogs.
+     * @example
+     * // Create many AvailabilityLogs
+     * const availabilityLog = await prisma.availabilityLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AvailabilityLogCreateManyArgs>(args?: SelectSubset<T, AvailabilityLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AvailabilityLogs and returns the data saved in the database.
+     * @param {AvailabilityLogCreateManyAndReturnArgs} args - Arguments to create many AvailabilityLogs.
+     * @example
+     * // Create many AvailabilityLogs
+     * const availabilityLog = await prisma.availabilityLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AvailabilityLogs and only return the `log_id`
+     * const availabilityLogWithLog_idOnly = await prisma.availabilityLog.createManyAndReturn({
+     *   select: { log_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AvailabilityLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AvailabilityLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AvailabilityLog.
+     * @param {AvailabilityLogDeleteArgs} args - Arguments to delete one AvailabilityLog.
+     * @example
+     * // Delete one AvailabilityLog
+     * const AvailabilityLog = await prisma.availabilityLog.delete({
+     *   where: {
+     *     // ... filter to delete one AvailabilityLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AvailabilityLogDeleteArgs>(args: SelectSubset<T, AvailabilityLogDeleteArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AvailabilityLog.
+     * @param {AvailabilityLogUpdateArgs} args - Arguments to update one AvailabilityLog.
+     * @example
+     * // Update one AvailabilityLog
+     * const availabilityLog = await prisma.availabilityLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AvailabilityLogUpdateArgs>(args: SelectSubset<T, AvailabilityLogUpdateArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AvailabilityLogs.
+     * @param {AvailabilityLogDeleteManyArgs} args - Arguments to filter AvailabilityLogs to delete.
+     * @example
+     * // Delete a few AvailabilityLogs
+     * const { count } = await prisma.availabilityLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AvailabilityLogDeleteManyArgs>(args?: SelectSubset<T, AvailabilityLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AvailabilityLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AvailabilityLogs
+     * const availabilityLog = await prisma.availabilityLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AvailabilityLogUpdateManyArgs>(args: SelectSubset<T, AvailabilityLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AvailabilityLogs and returns the data updated in the database.
+     * @param {AvailabilityLogUpdateManyAndReturnArgs} args - Arguments to update many AvailabilityLogs.
+     * @example
+     * // Update many AvailabilityLogs
+     * const availabilityLog = await prisma.availabilityLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AvailabilityLogs and only return the `log_id`
+     * const availabilityLogWithLog_idOnly = await prisma.availabilityLog.updateManyAndReturn({
+     *   select: { log_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AvailabilityLogUpdateManyAndReturnArgs>(args: SelectSubset<T, AvailabilityLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AvailabilityLog.
+     * @param {AvailabilityLogUpsertArgs} args - Arguments to update or create a AvailabilityLog.
+     * @example
+     * // Update or create a AvailabilityLog
+     * const availabilityLog = await prisma.availabilityLog.upsert({
+     *   create: {
+     *     // ... data to create a AvailabilityLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AvailabilityLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AvailabilityLogUpsertArgs>(args: SelectSubset<T, AvailabilityLogUpsertArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AvailabilityLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogCountArgs} args - Arguments to filter AvailabilityLogs to count.
+     * @example
+     * // Count the number of AvailabilityLogs
+     * const count = await prisma.availabilityLog.count({
+     *   where: {
+     *     // ... the filter for the AvailabilityLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends AvailabilityLogCountArgs>(
+      args?: Subset<T, AvailabilityLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AvailabilityLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AvailabilityLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AvailabilityLogAggregateArgs>(args: Subset<T, AvailabilityLogAggregateArgs>): Prisma.PrismaPromise<GetAvailabilityLogAggregateType<T>>
+
+    /**
+     * Group by AvailabilityLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AvailabilityLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AvailabilityLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AvailabilityLogGroupByArgs['orderBy'] }
+        : { orderBy?: AvailabilityLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AvailabilityLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAvailabilityLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AvailabilityLog model
+   */
+  readonly fields: AvailabilityLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AvailabilityLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AvailabilityLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    space<T extends ParkingSpaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ParkingSpaceDefaultArgs<ExtArgs>>): Prisma__ParkingSpaceClient<$Result.GetResult<Prisma.$ParkingSpacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AvailabilityLog model
+   */
+  interface AvailabilityLogFieldRefs {
+    readonly log_id: FieldRef<"AvailabilityLog", 'Int'>
+    readonly space_id: FieldRef<"AvailabilityLog", 'Int'>
+    readonly status: FieldRef<"AvailabilityLog", 'String'>
+    readonly timestamp: FieldRef<"AvailabilityLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AvailabilityLog findUnique
+   */
+  export type AvailabilityLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AvailabilityLog to fetch.
+     */
+    where: AvailabilityLogWhereUniqueInput
+  }
+
+  /**
+   * AvailabilityLog findUniqueOrThrow
+   */
+  export type AvailabilityLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AvailabilityLog to fetch.
+     */
+    where: AvailabilityLogWhereUniqueInput
+  }
+
+  /**
+   * AvailabilityLog findFirst
+   */
+  export type AvailabilityLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AvailabilityLog to fetch.
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AvailabilityLogs to fetch.
+     */
+    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AvailabilityLogs.
+     */
+    cursor?: AvailabilityLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AvailabilityLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AvailabilityLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AvailabilityLogs.
+     */
+    distinct?: AvailabilityLogScalarFieldEnum | AvailabilityLogScalarFieldEnum[]
+  }
+
+  /**
+   * AvailabilityLog findFirstOrThrow
+   */
+  export type AvailabilityLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AvailabilityLog to fetch.
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AvailabilityLogs to fetch.
+     */
+    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AvailabilityLogs.
+     */
+    cursor?: AvailabilityLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AvailabilityLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AvailabilityLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AvailabilityLogs.
+     */
+    distinct?: AvailabilityLogScalarFieldEnum | AvailabilityLogScalarFieldEnum[]
+  }
+
+  /**
+   * AvailabilityLog findMany
+   */
+  export type AvailabilityLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * Filter, which AvailabilityLogs to fetch.
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AvailabilityLogs to fetch.
+     */
+    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AvailabilityLogs.
+     */
+    cursor?: AvailabilityLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AvailabilityLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AvailabilityLogs.
+     */
+    skip?: number
+    distinct?: AvailabilityLogScalarFieldEnum | AvailabilityLogScalarFieldEnum[]
+  }
+
+  /**
+   * AvailabilityLog create
+   */
+  export type AvailabilityLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AvailabilityLog.
+     */
+    data: XOR<AvailabilityLogCreateInput, AvailabilityLogUncheckedCreateInput>
+  }
+
+  /**
+   * AvailabilityLog createMany
+   */
+  export type AvailabilityLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AvailabilityLogs.
+     */
+    data: AvailabilityLogCreateManyInput | AvailabilityLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AvailabilityLog createManyAndReturn
+   */
+  export type AvailabilityLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many AvailabilityLogs.
+     */
+    data: AvailabilityLogCreateManyInput | AvailabilityLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AvailabilityLog update
+   */
+  export type AvailabilityLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AvailabilityLog.
+     */
+    data: XOR<AvailabilityLogUpdateInput, AvailabilityLogUncheckedUpdateInput>
+    /**
+     * Choose, which AvailabilityLog to update.
+     */
+    where: AvailabilityLogWhereUniqueInput
+  }
+
+  /**
+   * AvailabilityLog updateMany
+   */
+  export type AvailabilityLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AvailabilityLogs.
+     */
+    data: XOR<AvailabilityLogUpdateManyMutationInput, AvailabilityLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AvailabilityLogs to update
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * Limit how many AvailabilityLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AvailabilityLog updateManyAndReturn
+   */
+  export type AvailabilityLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * The data used to update AvailabilityLogs.
+     */
+    data: XOR<AvailabilityLogUpdateManyMutationInput, AvailabilityLogUncheckedUpdateManyInput>
+    /**
+     * Filter which AvailabilityLogs to update
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * Limit how many AvailabilityLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AvailabilityLog upsert
+   */
+  export type AvailabilityLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AvailabilityLog to update in case it exists.
+     */
+    where: AvailabilityLogWhereUniqueInput
+    /**
+     * In case the AvailabilityLog found by the `where` argument doesn't exist, create a new AvailabilityLog with this data.
+     */
+    create: XOR<AvailabilityLogCreateInput, AvailabilityLogUncheckedCreateInput>
+    /**
+     * In case the AvailabilityLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AvailabilityLogUpdateInput, AvailabilityLogUncheckedUpdateInput>
+  }
+
+  /**
+   * AvailabilityLog delete
+   */
+  export type AvailabilityLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+    /**
+     * Filter which AvailabilityLog to delete.
+     */
+    where: AvailabilityLogWhereUniqueInput
+  }
+
+  /**
+   * AvailabilityLog deleteMany
+   */
+  export type AvailabilityLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AvailabilityLogs to delete
+     */
+    where?: AvailabilityLogWhereInput
+    /**
+     * Limit how many AvailabilityLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AvailabilityLog without action
+   */
+  export type AvailabilityLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AvailabilityLog
+     */
+    select?: AvailabilityLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AvailabilityLog
+     */
+    omit?: AvailabilityLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AvailabilityLogInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model User
    */
 
@@ -12695,1089 +13778,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: OwnerInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model AvailabilityLog
-   */
-
-  export type AggregateAvailabilityLog = {
-    _count: AvailabilityLogCountAggregateOutputType | null
-    _avg: AvailabilityLogAvgAggregateOutputType | null
-    _sum: AvailabilityLogSumAggregateOutputType | null
-    _min: AvailabilityLogMinAggregateOutputType | null
-    _max: AvailabilityLogMaxAggregateOutputType | null
-  }
-
-  export type AvailabilityLogAvgAggregateOutputType = {
-    log_id: number | null
-    space_id: number | null
-  }
-
-  export type AvailabilityLogSumAggregateOutputType = {
-    log_id: number | null
-    space_id: number | null
-  }
-
-  export type AvailabilityLogMinAggregateOutputType = {
-    log_id: number | null
-    space_id: number | null
-    status: string | null
-    timestamp: Date | null
-  }
-
-  export type AvailabilityLogMaxAggregateOutputType = {
-    log_id: number | null
-    space_id: number | null
-    status: string | null
-    timestamp: Date | null
-  }
-
-  export type AvailabilityLogCountAggregateOutputType = {
-    log_id: number
-    space_id: number
-    status: number
-    timestamp: number
-    _all: number
-  }
-
-
-  export type AvailabilityLogAvgAggregateInputType = {
-    log_id?: true
-    space_id?: true
-  }
-
-  export type AvailabilityLogSumAggregateInputType = {
-    log_id?: true
-    space_id?: true
-  }
-
-  export type AvailabilityLogMinAggregateInputType = {
-    log_id?: true
-    space_id?: true
-    status?: true
-    timestamp?: true
-  }
-
-  export type AvailabilityLogMaxAggregateInputType = {
-    log_id?: true
-    space_id?: true
-    status?: true
-    timestamp?: true
-  }
-
-  export type AvailabilityLogCountAggregateInputType = {
-    log_id?: true
-    space_id?: true
-    status?: true
-    timestamp?: true
-    _all?: true
-  }
-
-  export type AvailabilityLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AvailabilityLog to aggregate.
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AvailabilityLogs to fetch.
-     */
-    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: AvailabilityLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AvailabilityLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AvailabilityLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned AvailabilityLogs
-    **/
-    _count?: true | AvailabilityLogCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: AvailabilityLogAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: AvailabilityLogSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: AvailabilityLogMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: AvailabilityLogMaxAggregateInputType
-  }
-
-  export type GetAvailabilityLogAggregateType<T extends AvailabilityLogAggregateArgs> = {
-        [P in keyof T & keyof AggregateAvailabilityLog]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateAvailabilityLog[P]>
-      : GetScalarType<T[P], AggregateAvailabilityLog[P]>
-  }
-
-
-
-
-  export type AvailabilityLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AvailabilityLogWhereInput
-    orderBy?: AvailabilityLogOrderByWithAggregationInput | AvailabilityLogOrderByWithAggregationInput[]
-    by: AvailabilityLogScalarFieldEnum[] | AvailabilityLogScalarFieldEnum
-    having?: AvailabilityLogScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: AvailabilityLogCountAggregateInputType | true
-    _avg?: AvailabilityLogAvgAggregateInputType
-    _sum?: AvailabilityLogSumAggregateInputType
-    _min?: AvailabilityLogMinAggregateInputType
-    _max?: AvailabilityLogMaxAggregateInputType
-  }
-
-  export type AvailabilityLogGroupByOutputType = {
-    log_id: number
-    space_id: number
-    status: string
-    timestamp: Date
-    _count: AvailabilityLogCountAggregateOutputType | null
-    _avg: AvailabilityLogAvgAggregateOutputType | null
-    _sum: AvailabilityLogSumAggregateOutputType | null
-    _min: AvailabilityLogMinAggregateOutputType | null
-    _max: AvailabilityLogMaxAggregateOutputType | null
-  }
-
-  type GetAvailabilityLogGroupByPayload<T extends AvailabilityLogGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<AvailabilityLogGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AvailabilityLogGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AvailabilityLogGroupByOutputType[P]>
-            : GetScalarType<T[P], AvailabilityLogGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type AvailabilityLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    log_id?: boolean
-    space_id?: boolean
-    status?: boolean
-    timestamp?: boolean
-    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["availabilityLog"]>
-
-  export type AvailabilityLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    log_id?: boolean
-    space_id?: boolean
-    status?: boolean
-    timestamp?: boolean
-    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["availabilityLog"]>
-
-  export type AvailabilityLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    log_id?: boolean
-    space_id?: boolean
-    status?: boolean
-    timestamp?: boolean
-    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["availabilityLog"]>
-
-  export type AvailabilityLogSelectScalar = {
-    log_id?: boolean
-    space_id?: boolean
-    status?: boolean
-    timestamp?: boolean
-  }
-
-  export type AvailabilityLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"log_id" | "space_id" | "status" | "timestamp", ExtArgs["result"]["availabilityLog"]>
-  export type AvailabilityLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
-  }
-  export type AvailabilityLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
-  }
-  export type AvailabilityLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
-  }
-
-  export type $AvailabilityLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AvailabilityLog"
-    objects: {
-      space: Prisma.$ParkingSpacePayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      log_id: number
-      space_id: number
-      status: string
-      timestamp: Date
-    }, ExtArgs["result"]["availabilityLog"]>
-    composites: {}
-  }
-
-  type AvailabilityLogGetPayload<S extends boolean | null | undefined | AvailabilityLogDefaultArgs> = $Result.GetResult<Prisma.$AvailabilityLogPayload, S>
-
-  type AvailabilityLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AvailabilityLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: AvailabilityLogCountAggregateInputType | true
-    }
-
-  export interface AvailabilityLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AvailabilityLog'], meta: { name: 'AvailabilityLog' } }
-    /**
-     * Find zero or one AvailabilityLog that matches the filter.
-     * @param {AvailabilityLogFindUniqueArgs} args - Arguments to find a AvailabilityLog
-     * @example
-     * // Get one AvailabilityLog
-     * const availabilityLog = await prisma.availabilityLog.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends AvailabilityLogFindUniqueArgs>(args: SelectSubset<T, AvailabilityLogFindUniqueArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one AvailabilityLog that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {AvailabilityLogFindUniqueOrThrowArgs} args - Arguments to find a AvailabilityLog
-     * @example
-     * // Get one AvailabilityLog
-     * const availabilityLog = await prisma.availabilityLog.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends AvailabilityLogFindUniqueOrThrowArgs>(args: SelectSubset<T, AvailabilityLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AvailabilityLog that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogFindFirstArgs} args - Arguments to find a AvailabilityLog
-     * @example
-     * // Get one AvailabilityLog
-     * const availabilityLog = await prisma.availabilityLog.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends AvailabilityLogFindFirstArgs>(args?: SelectSubset<T, AvailabilityLogFindFirstArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first AvailabilityLog that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogFindFirstOrThrowArgs} args - Arguments to find a AvailabilityLog
-     * @example
-     * // Get one AvailabilityLog
-     * const availabilityLog = await prisma.availabilityLog.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends AvailabilityLogFindFirstOrThrowArgs>(args?: SelectSubset<T, AvailabilityLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more AvailabilityLogs that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all AvailabilityLogs
-     * const availabilityLogs = await prisma.availabilityLog.findMany()
-     * 
-     * // Get first 10 AvailabilityLogs
-     * const availabilityLogs = await prisma.availabilityLog.findMany({ take: 10 })
-     * 
-     * // Only select the `log_id`
-     * const availabilityLogWithLog_idOnly = await prisma.availabilityLog.findMany({ select: { log_id: true } })
-     * 
-     */
-    findMany<T extends AvailabilityLogFindManyArgs>(args?: SelectSubset<T, AvailabilityLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a AvailabilityLog.
-     * @param {AvailabilityLogCreateArgs} args - Arguments to create a AvailabilityLog.
-     * @example
-     * // Create one AvailabilityLog
-     * const AvailabilityLog = await prisma.availabilityLog.create({
-     *   data: {
-     *     // ... data to create a AvailabilityLog
-     *   }
-     * })
-     * 
-     */
-    create<T extends AvailabilityLogCreateArgs>(args: SelectSubset<T, AvailabilityLogCreateArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many AvailabilityLogs.
-     * @param {AvailabilityLogCreateManyArgs} args - Arguments to create many AvailabilityLogs.
-     * @example
-     * // Create many AvailabilityLogs
-     * const availabilityLog = await prisma.availabilityLog.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends AvailabilityLogCreateManyArgs>(args?: SelectSubset<T, AvailabilityLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many AvailabilityLogs and returns the data saved in the database.
-     * @param {AvailabilityLogCreateManyAndReturnArgs} args - Arguments to create many AvailabilityLogs.
-     * @example
-     * // Create many AvailabilityLogs
-     * const availabilityLog = await prisma.availabilityLog.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many AvailabilityLogs and only return the `log_id`
-     * const availabilityLogWithLog_idOnly = await prisma.availabilityLog.createManyAndReturn({
-     *   select: { log_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends AvailabilityLogCreateManyAndReturnArgs>(args?: SelectSubset<T, AvailabilityLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a AvailabilityLog.
-     * @param {AvailabilityLogDeleteArgs} args - Arguments to delete one AvailabilityLog.
-     * @example
-     * // Delete one AvailabilityLog
-     * const AvailabilityLog = await prisma.availabilityLog.delete({
-     *   where: {
-     *     // ... filter to delete one AvailabilityLog
-     *   }
-     * })
-     * 
-     */
-    delete<T extends AvailabilityLogDeleteArgs>(args: SelectSubset<T, AvailabilityLogDeleteArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one AvailabilityLog.
-     * @param {AvailabilityLogUpdateArgs} args - Arguments to update one AvailabilityLog.
-     * @example
-     * // Update one AvailabilityLog
-     * const availabilityLog = await prisma.availabilityLog.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends AvailabilityLogUpdateArgs>(args: SelectSubset<T, AvailabilityLogUpdateArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more AvailabilityLogs.
-     * @param {AvailabilityLogDeleteManyArgs} args - Arguments to filter AvailabilityLogs to delete.
-     * @example
-     * // Delete a few AvailabilityLogs
-     * const { count } = await prisma.availabilityLog.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends AvailabilityLogDeleteManyArgs>(args?: SelectSubset<T, AvailabilityLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AvailabilityLogs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many AvailabilityLogs
-     * const availabilityLog = await prisma.availabilityLog.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends AvailabilityLogUpdateManyArgs>(args: SelectSubset<T, AvailabilityLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more AvailabilityLogs and returns the data updated in the database.
-     * @param {AvailabilityLogUpdateManyAndReturnArgs} args - Arguments to update many AvailabilityLogs.
-     * @example
-     * // Update many AvailabilityLogs
-     * const availabilityLog = await prisma.availabilityLog.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more AvailabilityLogs and only return the `log_id`
-     * const availabilityLogWithLog_idOnly = await prisma.availabilityLog.updateManyAndReturn({
-     *   select: { log_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends AvailabilityLogUpdateManyAndReturnArgs>(args: SelectSubset<T, AvailabilityLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one AvailabilityLog.
-     * @param {AvailabilityLogUpsertArgs} args - Arguments to update or create a AvailabilityLog.
-     * @example
-     * // Update or create a AvailabilityLog
-     * const availabilityLog = await prisma.availabilityLog.upsert({
-     *   create: {
-     *     // ... data to create a AvailabilityLog
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the AvailabilityLog we want to update
-     *   }
-     * })
-     */
-    upsert<T extends AvailabilityLogUpsertArgs>(args: SelectSubset<T, AvailabilityLogUpsertArgs<ExtArgs>>): Prisma__AvailabilityLogClient<$Result.GetResult<Prisma.$AvailabilityLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of AvailabilityLogs.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogCountArgs} args - Arguments to filter AvailabilityLogs to count.
-     * @example
-     * // Count the number of AvailabilityLogs
-     * const count = await prisma.availabilityLog.count({
-     *   where: {
-     *     // ... the filter for the AvailabilityLogs we want to count
-     *   }
-     * })
-    **/
-    count<T extends AvailabilityLogCountArgs>(
-      args?: Subset<T, AvailabilityLogCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], AvailabilityLogCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a AvailabilityLog.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends AvailabilityLogAggregateArgs>(args: Subset<T, AvailabilityLogAggregateArgs>): Prisma.PrismaPromise<GetAvailabilityLogAggregateType<T>>
-
-    /**
-     * Group by AvailabilityLog.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {AvailabilityLogGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends AvailabilityLogGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: AvailabilityLogGroupByArgs['orderBy'] }
-        : { orderBy?: AvailabilityLogGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, AvailabilityLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAvailabilityLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AvailabilityLog model
-   */
-  readonly fields: AvailabilityLogFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for AvailabilityLog.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__AvailabilityLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    space<T extends ParkingSpaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ParkingSpaceDefaultArgs<ExtArgs>>): Prisma__ParkingSpaceClient<$Result.GetResult<Prisma.$ParkingSpacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the AvailabilityLog model
-   */
-  interface AvailabilityLogFieldRefs {
-    readonly log_id: FieldRef<"AvailabilityLog", 'Int'>
-    readonly space_id: FieldRef<"AvailabilityLog", 'Int'>
-    readonly status: FieldRef<"AvailabilityLog", 'String'>
-    readonly timestamp: FieldRef<"AvailabilityLog", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * AvailabilityLog findUnique
-   */
-  export type AvailabilityLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AvailabilityLog to fetch.
-     */
-    where: AvailabilityLogWhereUniqueInput
-  }
-
-  /**
-   * AvailabilityLog findUniqueOrThrow
-   */
-  export type AvailabilityLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AvailabilityLog to fetch.
-     */
-    where: AvailabilityLogWhereUniqueInput
-  }
-
-  /**
-   * AvailabilityLog findFirst
-   */
-  export type AvailabilityLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AvailabilityLog to fetch.
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AvailabilityLogs to fetch.
-     */
-    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AvailabilityLogs.
-     */
-    cursor?: AvailabilityLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AvailabilityLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AvailabilityLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AvailabilityLogs.
-     */
-    distinct?: AvailabilityLogScalarFieldEnum | AvailabilityLogScalarFieldEnum[]
-  }
-
-  /**
-   * AvailabilityLog findFirstOrThrow
-   */
-  export type AvailabilityLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AvailabilityLog to fetch.
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AvailabilityLogs to fetch.
-     */
-    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for AvailabilityLogs.
-     */
-    cursor?: AvailabilityLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AvailabilityLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AvailabilityLogs.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of AvailabilityLogs.
-     */
-    distinct?: AvailabilityLogScalarFieldEnum | AvailabilityLogScalarFieldEnum[]
-  }
-
-  /**
-   * AvailabilityLog findMany
-   */
-  export type AvailabilityLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * Filter, which AvailabilityLogs to fetch.
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of AvailabilityLogs to fetch.
-     */
-    orderBy?: AvailabilityLogOrderByWithRelationInput | AvailabilityLogOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing AvailabilityLogs.
-     */
-    cursor?: AvailabilityLogWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` AvailabilityLogs from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` AvailabilityLogs.
-     */
-    skip?: number
-    distinct?: AvailabilityLogScalarFieldEnum | AvailabilityLogScalarFieldEnum[]
-  }
-
-  /**
-   * AvailabilityLog create
-   */
-  export type AvailabilityLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * The data needed to create a AvailabilityLog.
-     */
-    data: XOR<AvailabilityLogCreateInput, AvailabilityLogUncheckedCreateInput>
-  }
-
-  /**
-   * AvailabilityLog createMany
-   */
-  export type AvailabilityLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many AvailabilityLogs.
-     */
-    data: AvailabilityLogCreateManyInput | AvailabilityLogCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * AvailabilityLog createManyAndReturn
-   */
-  export type AvailabilityLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * The data used to create many AvailabilityLogs.
-     */
-    data: AvailabilityLogCreateManyInput | AvailabilityLogCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AvailabilityLog update
-   */
-  export type AvailabilityLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * The data needed to update a AvailabilityLog.
-     */
-    data: XOR<AvailabilityLogUpdateInput, AvailabilityLogUncheckedUpdateInput>
-    /**
-     * Choose, which AvailabilityLog to update.
-     */
-    where: AvailabilityLogWhereUniqueInput
-  }
-
-  /**
-   * AvailabilityLog updateMany
-   */
-  export type AvailabilityLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update AvailabilityLogs.
-     */
-    data: XOR<AvailabilityLogUpdateManyMutationInput, AvailabilityLogUncheckedUpdateManyInput>
-    /**
-     * Filter which AvailabilityLogs to update
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * Limit how many AvailabilityLogs to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * AvailabilityLog updateManyAndReturn
-   */
-  export type AvailabilityLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * The data used to update AvailabilityLogs.
-     */
-    data: XOR<AvailabilityLogUpdateManyMutationInput, AvailabilityLogUncheckedUpdateManyInput>
-    /**
-     * Filter which AvailabilityLogs to update
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * Limit how many AvailabilityLogs to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * AvailabilityLog upsert
-   */
-  export type AvailabilityLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * The filter to search for the AvailabilityLog to update in case it exists.
-     */
-    where: AvailabilityLogWhereUniqueInput
-    /**
-     * In case the AvailabilityLog found by the `where` argument doesn't exist, create a new AvailabilityLog with this data.
-     */
-    create: XOR<AvailabilityLogCreateInput, AvailabilityLogUncheckedCreateInput>
-    /**
-     * In case the AvailabilityLog was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<AvailabilityLogUpdateInput, AvailabilityLogUncheckedUpdateInput>
-  }
-
-  /**
-   * AvailabilityLog delete
-   */
-  export type AvailabilityLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
-    /**
-     * Filter which AvailabilityLog to delete.
-     */
-    where: AvailabilityLogWhereUniqueInput
-  }
-
-  /**
-   * AvailabilityLog deleteMany
-   */
-  export type AvailabilityLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which AvailabilityLogs to delete
-     */
-    where?: AvailabilityLogWhereInput
-    /**
-     * Limit how many AvailabilityLogs to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * AvailabilityLog without action
-   */
-  export type AvailabilityLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AvailabilityLog
-     */
-    select?: AvailabilityLogSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AvailabilityLog
-     */
-    omit?: AvailabilityLogOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AvailabilityLogInclude<ExtArgs> | null
   }
 
 
@@ -19501,6 +19501,16 @@ export namespace Prisma {
   export type ParkingSpaceScalarFieldEnum = (typeof ParkingSpaceScalarFieldEnum)[keyof typeof ParkingSpaceScalarFieldEnum]
 
 
+  export const AvailabilityLogScalarFieldEnum: {
+    log_id: 'log_id',
+    space_id: 'space_id',
+    status: 'status',
+    timestamp: 'timestamp'
+  };
+
+  export type AvailabilityLogScalarFieldEnum = (typeof AvailabilityLogScalarFieldEnum)[keyof typeof AvailabilityLogScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     user_id: 'user_id',
     first_name: 'first_name',
@@ -19525,16 +19535,6 @@ export namespace Prisma {
   };
 
   export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
-
-
-  export const AvailabilityLogScalarFieldEnum: {
-    log_id: 'log_id',
-    space_id: 'space_id',
-    status: 'status',
-    timestamp: 'timestamp'
-  };
-
-  export type AvailabilityLogScalarFieldEnum = (typeof AvailabilityLogScalarFieldEnum)[keyof typeof AvailabilityLogScalarFieldEnum]
 
 
   export const BookingScalarFieldEnum: {
@@ -19774,6 +19774,7 @@ export namespace Prisma {
 
   export type CityWhereUniqueInput = Prisma.AtLeast<{
     city_id?: number
+    city_name_state?: CityCity_nameStateCompoundUniqueInput
     AND?: CityWhereInput | CityWhereInput[]
     OR?: CityWhereInput[]
     NOT?: CityWhereInput | CityWhereInput[]
@@ -19781,7 +19782,7 @@ export namespace Prisma {
     state?: StringFilter<"City"> | string
     created_at?: DateTimeFilter<"City"> | Date | string
     subCities?: SubCityListRelationFilter
-  }, "city_id">
+  }, "city_id" | "city_name_state">
 
   export type CityOrderByWithAggregationInput = {
     city_id?: SortOrder
@@ -19828,6 +19829,7 @@ export namespace Prisma {
 
   export type SubCityWhereUniqueInput = Prisma.AtLeast<{
     sub_city_id?: number
+    city_id_sub_city_name?: SubCityCity_idSub_city_nameCompoundUniqueInput
     AND?: SubCityWhereInput | SubCityWhereInput[]
     OR?: SubCityWhereInput[]
     NOT?: SubCityWhereInput | SubCityWhereInput[]
@@ -19836,7 +19838,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"SubCity"> | Date | string
     city?: XOR<CityScalarRelationFilter, CityWhereInput>
     addresses?: StreetAddressListRelationFilter
-  }, "sub_city_id">
+  }, "sub_city_id" | "city_id_sub_city_name">
 
   export type SubCityOrderByWithAggregationInput = {
     sub_city_id?: SortOrder
@@ -19885,6 +19887,7 @@ export namespace Prisma {
 
   export type StreetAddressWhereUniqueInput = Prisma.AtLeast<{
     street_address_id?: number
+    sub_city_id_street_address_zip_code?: StreetAddressSub_city_idStreet_addressZip_codeCompoundUniqueInput
     AND?: StreetAddressWhereInput | StreetAddressWhereInput[]
     OR?: StreetAddressWhereInput[]
     NOT?: StreetAddressWhereInput | StreetAddressWhereInput[]
@@ -19894,7 +19897,7 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"StreetAddress"> | Date | string
     subCity?: XOR<SubCityScalarRelationFilter, SubCityWhereInput>
     locations?: LocationListRelationFilter
-  }, "street_address_id">
+  }, "street_address_id" | "sub_city_id_street_address_zip_code">
 
   export type StreetAddressOrderByWithAggregationInput = {
     street_address_id?: SortOrder
@@ -20122,6 +20125,58 @@ export namespace Prisma {
     created_at?: DateTimeWithAggregatesFilter<"ParkingSpace"> | Date | string
   }
 
+  export type AvailabilityLogWhereInput = {
+    AND?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
+    OR?: AvailabilityLogWhereInput[]
+    NOT?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
+    log_id?: IntFilter<"AvailabilityLog"> | number
+    space_id?: IntFilter<"AvailabilityLog"> | number
+    status?: StringFilter<"AvailabilityLog"> | string
+    timestamp?: DateTimeFilter<"AvailabilityLog"> | Date | string
+    space?: XOR<ParkingSpaceScalarRelationFilter, ParkingSpaceWhereInput>
+  }
+
+  export type AvailabilityLogOrderByWithRelationInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+    status?: SortOrder
+    timestamp?: SortOrder
+    space?: ParkingSpaceOrderByWithRelationInput
+  }
+
+  export type AvailabilityLogWhereUniqueInput = Prisma.AtLeast<{
+    log_id?: number
+    AND?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
+    OR?: AvailabilityLogWhereInput[]
+    NOT?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
+    space_id?: IntFilter<"AvailabilityLog"> | number
+    status?: StringFilter<"AvailabilityLog"> | string
+    timestamp?: DateTimeFilter<"AvailabilityLog"> | Date | string
+    space?: XOR<ParkingSpaceScalarRelationFilter, ParkingSpaceWhereInput>
+  }, "log_id">
+
+  export type AvailabilityLogOrderByWithAggregationInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+    status?: SortOrder
+    timestamp?: SortOrder
+    _count?: AvailabilityLogCountOrderByAggregateInput
+    _avg?: AvailabilityLogAvgOrderByAggregateInput
+    _max?: AvailabilityLogMaxOrderByAggregateInput
+    _min?: AvailabilityLogMinOrderByAggregateInput
+    _sum?: AvailabilityLogSumOrderByAggregateInput
+  }
+
+  export type AvailabilityLogScalarWhereWithAggregatesInput = {
+    AND?: AvailabilityLogScalarWhereWithAggregatesInput | AvailabilityLogScalarWhereWithAggregatesInput[]
+    OR?: AvailabilityLogScalarWhereWithAggregatesInput[]
+    NOT?: AvailabilityLogScalarWhereWithAggregatesInput | AvailabilityLogScalarWhereWithAggregatesInput[]
+    log_id?: IntWithAggregatesFilter<"AvailabilityLog"> | number
+    space_id?: IntWithAggregatesFilter<"AvailabilityLog"> | number
+    status?: StringWithAggregatesFilter<"AvailabilityLog"> | string
+    timestamp?: DateTimeWithAggregatesFilter<"AvailabilityLog"> | Date | string
+  }
+
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -20266,58 +20321,6 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"Owner"> | string
     phone?: StringWithAggregatesFilter<"Owner"> | string
     created_at?: DateTimeWithAggregatesFilter<"Owner"> | Date | string
-  }
-
-  export type AvailabilityLogWhereInput = {
-    AND?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
-    OR?: AvailabilityLogWhereInput[]
-    NOT?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
-    log_id?: IntFilter<"AvailabilityLog"> | number
-    space_id?: IntFilter<"AvailabilityLog"> | number
-    status?: StringFilter<"AvailabilityLog"> | string
-    timestamp?: DateTimeFilter<"AvailabilityLog"> | Date | string
-    space?: XOR<ParkingSpaceScalarRelationFilter, ParkingSpaceWhereInput>
-  }
-
-  export type AvailabilityLogOrderByWithRelationInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
-    status?: SortOrder
-    timestamp?: SortOrder
-    space?: ParkingSpaceOrderByWithRelationInput
-  }
-
-  export type AvailabilityLogWhereUniqueInput = Prisma.AtLeast<{
-    log_id?: number
-    AND?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
-    OR?: AvailabilityLogWhereInput[]
-    NOT?: AvailabilityLogWhereInput | AvailabilityLogWhereInput[]
-    space_id?: IntFilter<"AvailabilityLog"> | number
-    status?: StringFilter<"AvailabilityLog"> | string
-    timestamp?: DateTimeFilter<"AvailabilityLog"> | Date | string
-    space?: XOR<ParkingSpaceScalarRelationFilter, ParkingSpaceWhereInput>
-  }, "log_id">
-
-  export type AvailabilityLogOrderByWithAggregationInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
-    status?: SortOrder
-    timestamp?: SortOrder
-    _count?: AvailabilityLogCountOrderByAggregateInput
-    _avg?: AvailabilityLogAvgOrderByAggregateInput
-    _max?: AvailabilityLogMaxOrderByAggregateInput
-    _min?: AvailabilityLogMinOrderByAggregateInput
-    _sum?: AvailabilityLogSumOrderByAggregateInput
-  }
-
-  export type AvailabilityLogScalarWhereWithAggregatesInput = {
-    AND?: AvailabilityLogScalarWhereWithAggregatesInput | AvailabilityLogScalarWhereWithAggregatesInput[]
-    OR?: AvailabilityLogScalarWhereWithAggregatesInput[]
-    NOT?: AvailabilityLogScalarWhereWithAggregatesInput | AvailabilityLogScalarWhereWithAggregatesInput[]
-    log_id?: IntWithAggregatesFilter<"AvailabilityLog"> | number
-    space_id?: IntWithAggregatesFilter<"AvailabilityLog"> | number
-    status?: StringWithAggregatesFilter<"AvailabilityLog"> | string
-    timestamp?: DateTimeWithAggregatesFilter<"AvailabilityLog"> | Date | string
   }
 
   export type BookingWhereInput = {
@@ -21045,6 +21048,51 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AvailabilityLogCreateInput = {
+    status: string
+    timestamp?: Date | string
+    space: ParkingSpaceCreateNestedOneWithoutAvailabilityInput
+  }
+
+  export type AvailabilityLogUncheckedCreateInput = {
+    log_id?: number
+    space_id: number
+    status: string
+    timestamp?: Date | string
+  }
+
+  export type AvailabilityLogUpdateInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+    space?: ParkingSpaceUpdateOneRequiredWithoutAvailabilityNestedInput
+  }
+
+  export type AvailabilityLogUncheckedUpdateInput = {
+    log_id?: IntFieldUpdateOperationsInput | number
+    space_id?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AvailabilityLogCreateManyInput = {
+    log_id?: number
+    space_id: number
+    status: string
+    timestamp?: Date | string
+  }
+
+  export type AvailabilityLogUpdateManyMutationInput = {
+    status?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AvailabilityLogUncheckedUpdateManyInput = {
+    log_id?: IntFieldUpdateOperationsInput | number
+    space_id?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateInput = {
     first_name: string
     last_name: string
@@ -21201,51 +21249,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AvailabilityLogCreateInput = {
-    status: string
-    timestamp?: Date | string
-    space: ParkingSpaceCreateNestedOneWithoutAvailabilityInput
-  }
-
-  export type AvailabilityLogUncheckedCreateInput = {
-    log_id?: number
-    space_id: number
-    status: string
-    timestamp?: Date | string
-  }
-
-  export type AvailabilityLogUpdateInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-    space?: ParkingSpaceUpdateOneRequiredWithoutAvailabilityNestedInput
-  }
-
-  export type AvailabilityLogUncheckedUpdateInput = {
-    log_id?: IntFieldUpdateOperationsInput | number
-    space_id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AvailabilityLogCreateManyInput = {
-    log_id?: number
-    space_id: number
-    status: string
-    timestamp?: Date | string
-  }
-
-  export type AvailabilityLogUpdateManyMutationInput = {
-    status?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AvailabilityLogUncheckedUpdateManyInput = {
-    log_id?: IntFieldUpdateOperationsInput | number
-    space_id?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BookingCreateInput = {
@@ -21655,6 +21658,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type CityCity_nameStateCompoundUniqueInput = {
+    city_name: string
+    state: string
+  }
+
   export type CityCountOrderByAggregateInput = {
     city_id?: SortOrder
     city_name?: SortOrder
@@ -21697,6 +21705,11 @@ export namespace Prisma {
 
   export type StreetAddressOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type SubCityCity_idSub_city_nameCompoundUniqueInput = {
+    city_id: number
+    sub_city_name: string
   }
 
   export type SubCityCountOrderByAggregateInput = {
@@ -21743,6 +21756,12 @@ export namespace Prisma {
 
   export type LocationOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type StreetAddressSub_city_idStreet_addressZip_codeCompoundUniqueInput = {
+    sub_city_id: number
+    street_address: string
+    zip_code: string
   }
 
   export type StreetAddressCountOrderByAggregateInput = {
@@ -22000,6 +22019,42 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type ParkingSpaceScalarRelationFilter = {
+    is?: ParkingSpaceWhereInput
+    isNot?: ParkingSpaceWhereInput
+  }
+
+  export type AvailabilityLogCountOrderByAggregateInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+    status?: SortOrder
+    timestamp?: SortOrder
+  }
+
+  export type AvailabilityLogAvgOrderByAggregateInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+  }
+
+  export type AvailabilityLogMaxOrderByAggregateInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+    status?: SortOrder
+    timestamp?: SortOrder
+  }
+
+  export type AvailabilityLogMinOrderByAggregateInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+    status?: SortOrder
+    timestamp?: SortOrder
+  }
+
+  export type AvailabilityLogSumOrderByAggregateInput = {
+    log_id?: SortOrder
+    space_id?: SortOrder
+  }
+
   export type PaymentListRelationFilter = {
     every?: PaymentWhereInput
     some?: PaymentWhereInput
@@ -22104,42 +22159,6 @@ export namespace Prisma {
 
   export type OwnerSumOrderByAggregateInput = {
     owner_id?: SortOrder
-  }
-
-  export type ParkingSpaceScalarRelationFilter = {
-    is?: ParkingSpaceWhereInput
-    isNot?: ParkingSpaceWhereInput
-  }
-
-  export type AvailabilityLogCountOrderByAggregateInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
-    status?: SortOrder
-    timestamp?: SortOrder
-  }
-
-  export type AvailabilityLogAvgOrderByAggregateInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
-  }
-
-  export type AvailabilityLogMaxOrderByAggregateInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
-    status?: SortOrder
-    timestamp?: SortOrder
-  }
-
-  export type AvailabilityLogMinOrderByAggregateInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
-    status?: SortOrder
-    timestamp?: SortOrder
-  }
-
-  export type AvailabilityLogSumOrderByAggregateInput = {
-    log_id?: SortOrder
-    space_id?: SortOrder
   }
 
   export type UserScalarRelationFilter = {
@@ -22879,6 +22898,20 @@ export namespace Prisma {
     deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
   }
 
+  export type ParkingSpaceCreateNestedOneWithoutAvailabilityInput = {
+    create?: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
+    connectOrCreate?: ParkingSpaceCreateOrConnectWithoutAvailabilityInput
+    connect?: ParkingSpaceWhereUniqueInput
+  }
+
+  export type ParkingSpaceUpdateOneRequiredWithoutAvailabilityNestedInput = {
+    create?: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
+    connectOrCreate?: ParkingSpaceCreateOrConnectWithoutAvailabilityInput
+    upsert?: ParkingSpaceUpsertWithoutAvailabilityInput
+    connect?: ParkingSpaceWhereUniqueInput
+    update?: XOR<XOR<ParkingSpaceUpdateToOneWithWhereWithoutAvailabilityInput, ParkingSpaceUpdateWithoutAvailabilityInput>, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
+  }
+
   export type BookingCreateNestedManyWithoutUserInput = {
     create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
@@ -23129,20 +23162,6 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutOwnerInput | NotificationUpdateWithWhereUniqueWithoutOwnerInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutOwnerInput | NotificationUpdateManyWithWhereWithoutOwnerInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type ParkingSpaceCreateNestedOneWithoutAvailabilityInput = {
-    create?: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
-    connectOrCreate?: ParkingSpaceCreateOrConnectWithoutAvailabilityInput
-    connect?: ParkingSpaceWhereUniqueInput
-  }
-
-  export type ParkingSpaceUpdateOneRequiredWithoutAvailabilityNestedInput = {
-    create?: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
-    connectOrCreate?: ParkingSpaceCreateOrConnectWithoutAvailabilityInput
-    upsert?: ParkingSpaceUpsertWithoutAvailabilityInput
-    connect?: ParkingSpaceWhereUniqueInput
-    update?: XOR<XOR<ParkingSpaceUpdateToOneWithWhereWithoutAvailabilityInput, ParkingSpaceUpdateWithoutAvailabilityInput>, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
   }
 
   export type UserCreateNestedOneWithoutBookingsInput = {
@@ -24234,6 +24253,60 @@ export namespace Prisma {
     status?: StringFilter<"Booking"> | string
   }
 
+  export type ParkingSpaceCreateWithoutAvailabilityInput = {
+    space_number: string
+    is_handicap: boolean
+    status: string
+    created_at?: Date | string
+    lot: ParkingLotCreateNestedOneWithoutSpacesInput
+    bookings?: BookingCreateNestedManyWithoutSpaceInput
+  }
+
+  export type ParkingSpaceUncheckedCreateWithoutAvailabilityInput = {
+    space_id?: number
+    lot_id: number
+    space_number: string
+    is_handicap: boolean
+    status: string
+    created_at?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutSpaceInput
+  }
+
+  export type ParkingSpaceCreateOrConnectWithoutAvailabilityInput = {
+    where: ParkingSpaceWhereUniqueInput
+    create: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
+  }
+
+  export type ParkingSpaceUpsertWithoutAvailabilityInput = {
+    update: XOR<ParkingSpaceUpdateWithoutAvailabilityInput, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
+    create: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
+    where?: ParkingSpaceWhereInput
+  }
+
+  export type ParkingSpaceUpdateToOneWithWhereWithoutAvailabilityInput = {
+    where?: ParkingSpaceWhereInput
+    data: XOR<ParkingSpaceUpdateWithoutAvailabilityInput, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
+  }
+
+  export type ParkingSpaceUpdateWithoutAvailabilityInput = {
+    space_number?: StringFieldUpdateOperationsInput | string
+    is_handicap?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    lot?: ParkingLotUpdateOneRequiredWithoutSpacesNestedInput
+    bookings?: BookingUpdateManyWithoutSpaceNestedInput
+  }
+
+  export type ParkingSpaceUncheckedUpdateWithoutAvailabilityInput = {
+    space_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
+    space_number?: StringFieldUpdateOperationsInput | string
+    is_handicap?: BoolFieldUpdateOperationsInput | boolean
+    status?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutSpaceNestedInput
+  }
+
   export type BookingCreateWithoutUserInput = {
     start_time: Date | string
     end_time: Date | string
@@ -24516,60 +24589,6 @@ export namespace Prisma {
   export type NotificationUpdateManyWithWhereWithoutOwnerInput = {
     where: NotificationScalarWhereInput
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutOwnerInput>
-  }
-
-  export type ParkingSpaceCreateWithoutAvailabilityInput = {
-    space_number: string
-    is_handicap: boolean
-    status: string
-    created_at?: Date | string
-    lot: ParkingLotCreateNestedOneWithoutSpacesInput
-    bookings?: BookingCreateNestedManyWithoutSpaceInput
-  }
-
-  export type ParkingSpaceUncheckedCreateWithoutAvailabilityInput = {
-    space_id?: number
-    lot_id: number
-    space_number: string
-    is_handicap: boolean
-    status: string
-    created_at?: Date | string
-    bookings?: BookingUncheckedCreateNestedManyWithoutSpaceInput
-  }
-
-  export type ParkingSpaceCreateOrConnectWithoutAvailabilityInput = {
-    where: ParkingSpaceWhereUniqueInput
-    create: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
-  }
-
-  export type ParkingSpaceUpsertWithoutAvailabilityInput = {
-    update: XOR<ParkingSpaceUpdateWithoutAvailabilityInput, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
-    create: XOR<ParkingSpaceCreateWithoutAvailabilityInput, ParkingSpaceUncheckedCreateWithoutAvailabilityInput>
-    where?: ParkingSpaceWhereInput
-  }
-
-  export type ParkingSpaceUpdateToOneWithWhereWithoutAvailabilityInput = {
-    where?: ParkingSpaceWhereInput
-    data: XOR<ParkingSpaceUpdateWithoutAvailabilityInput, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
-  }
-
-  export type ParkingSpaceUpdateWithoutAvailabilityInput = {
-    space_number?: StringFieldUpdateOperationsInput | string
-    is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    lot?: ParkingLotUpdateOneRequiredWithoutSpacesNestedInput
-    bookings?: BookingUpdateManyWithoutSpaceNestedInput
-  }
-
-  export type ParkingSpaceUncheckedUpdateWithoutAvailabilityInput = {
-    space_id?: IntFieldUpdateOperationsInput | number
-    lot_id?: IntFieldUpdateOperationsInput | number
-    space_number?: StringFieldUpdateOperationsInput | string
-    is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookings?: BookingUncheckedUpdateManyWithoutSpaceNestedInput
   }
 
   export type UserCreateWithoutBookingsInput = {

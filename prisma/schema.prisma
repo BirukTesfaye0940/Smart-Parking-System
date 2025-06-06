@@ -23,26 +23,27 @@ model Admin {
   phone      String
   createdAt  DateTime @default(now())
 }
-
 model City {
-  city_id   Int         @id @default(autoincrement())
+  city_id   Int       @id @default(autoincrement())
   city_name String
   state     String
-  created_at DateTime   @default(now())
+  created_at DateTime @default(now())
   subCities SubCity[]
 
+  @@unique([city_name, state]) // Prevent same city_name + state
   @@map("Cities")
 }
 
 model SubCity {
-  sub_city_id Int       @id @default(autoincrement())
-  city_id     Int
+  sub_city_id   Int       @id @default(autoincrement())
+  city_id       Int
   sub_city_name String
-  created_at  DateTime  @default(now())
+  created_at    DateTime  @default(now())
 
-  city        City      @relation(fields: [city_id], references: [city_id], onDelete: Cascade, onUpdate: Cascade)
-  addresses   StreetAddress[]
+  city          City      @relation(fields: [city_id], references: [city_id], onDelete: Cascade, onUpdate: Cascade)
+  addresses     StreetAddress[]
 
+  @@unique([city_id, sub_city_name]) // Prevent duplicate sub-city under same city
   @@map("Sub_Cities")
 }
 
@@ -56,6 +57,7 @@ model StreetAddress {
   subCity           SubCity   @relation(fields: [sub_city_id], references: [sub_city_id], onDelete: Cascade, onUpdate: Cascade)
   locations         Location[]
 
+  @@unique([sub_city_id, street_address, zip_code]) // Avoid duplicates
   @@map("Street_Addresses")
 }
 
@@ -104,6 +106,16 @@ model ParkingSpace {
   @@map("Parking_Spaces")
 }
 
+model AvailabilityLog {
+  log_id    Int       @id @default(autoincrement())
+  space_id  Int
+  status    String
+  timestamp DateTime  @default(now())
+
+  space     ParkingSpace @relation(fields: [space_id], references: [space_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("Availability_Logs")
+}
 model User {
   user_id    Int       @id @default(autoincrement())
   first_name String
@@ -136,16 +148,6 @@ model Owner {
   @@map("Owners")
 }
 
-model AvailabilityLog {
-  log_id    Int       @id @default(autoincrement())
-  space_id  Int
-  status    String
-  timestamp DateTime  @default(now())
-
-  space     ParkingSpace @relation(fields: [space_id], references: [space_id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@map("Availability_Logs")
-}
 
 model Booking {
   booking_id Int       @id @default(autoincrement())

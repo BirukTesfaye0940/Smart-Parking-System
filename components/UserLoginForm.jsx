@@ -14,8 +14,7 @@ export default function UserLoginForm() {
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   setError('');
 
@@ -26,14 +25,14 @@ export default function UserLoginForm() {
     redirect: false,
   });
 
-  // DEBUG LOGGING (temporarily)
-  console.log("SignIn response:", res);
+  console.log('SignIn response:', res); // Helpful
 
-  if (res?.ok) {
-    router.push('/user/home');
-  } else {
+  if (res?.error || !res?.ok) {
     setError('Invalid email or password');
+    return;
   }
+
+  router.push('/user/home');
 };
 
   return (
