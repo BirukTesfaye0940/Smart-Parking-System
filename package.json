@@ -14,6 +14,7 @@
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "better-auth": "^1.2.8",
+    "daisyui": "^5.0.43",
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
