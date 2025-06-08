@@ -1,15 +1,157 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Cities {
+  city_id    Int      @id @default(autoincrement())
+  city_name  String
+  state      String
+  created_at DateTime @default(now())
+  sub_cities Sub_Cities[]
+}
+
+model Sub_Cities {
+  sub_city_id    Int      @id @default(autoincrement())
+  city_id        Int
+  sub_city_name  String
+  created_at     DateTime @default(now())
+  city           Cities   @relation(fields: [city_id], references: [city_id])
+  street_addresses Street_Addresses[]
+}
+
+model Street_Addresses {
+  street_address_id Int      @id @default(autoincrement())
+  sub_city_id       Int
+  street_address    String
+  zip_code          String
+  created_at        DateTime @default(now())
+  sub_city          Sub_Cities @relation(fields: [sub_city_id], references: [sub_city_id])
+  locations         Locations[]
+}
+
+model Locations {
+  location_id       Int      @id @default(autoincrement())
+  lot_id            Int      @unique
+  street_address_id Int
+  latitude          Float
+  longitude         Float
+  created_at        DateTime @default(now())
+  parking_lot       Parking_Lots @relation(fields: [lot_id], references: [lot_id])
+  street_address    Street_Addresses @relation(fields: [street_address_id], references: [street_address_id])
+}
+
+model Parking_Lots {
+  lot_id       Int      @id @default(autoincrement())
+  owner_id     Int
+  lot_name     String
+  capacity     Int
+  created_at   DateTime @default(now())
+  owner        Owners   @relation(fields: [owner_id], references: [owner_id])
+  location     Locations?
+  parking_spaces Parking_Spaces[]
+  prices       Prices[]
+  reviews      Reviews[]
+}
+
+model Parking_Spaces {
+  space_id        Int      @id @default(autoincrement())
+  lot_id          Int
+  space_number    String
+  is_handicap     Boolean
+  status          String
+  created_at      DateTime @default(now())
+  parking_lot     Parking_Lots @relation(fields: [lot_id], references: [lot_id])
+  availability_logs Availability_Logs[]
+  bookings        Bookings[]
+}
+
+model Users {
+  user_id     Int      @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  email       String   @unique
+  password    String
+  phone       String
+  created_at  DateTime @default(now())
+  bookings    Bookings[]
+  payments    Payments[]
+  reviews     Reviews[]
+  notifications Notifications[]
+}
+
+model Owners {
+  owner_id    Int      @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  email       String   @unique
+  password    String
+  phone       String
+  created_at  DateTime @default(now())
+  parking_lots Parking_Lots[]
+  notifications Notifications[]
+}
+
+model Availability_Logs {
+  log_id      Int      @id @default(autoincrement())
+  space_id    Int
+  status      String
+  timestamp   DateTime @default(now())
+  parking_space Parking_Spaces @relation(fields: [space_id], references: [space_id])
+}
+
+model Bookings {
+  booking_id  Int      @id @default(autoincrement())
+  user_id     Int
+  space_id    Int
+  start_time  DateTime
+  end_time    DateTime
+  status      String
+  user        Users    @relation(fields: [user_id], references: [user_id])
+  parking_space Parking_Spaces @relation(fields: [space_id], references: [space_id])
+  payment     Payments?
+}
+
+model Payments {
+  payment_id     Int      @id @default(autoincrement())
+  booking_id     Int      @unique
+  user_id        Int
+  amount         Float
+  payment_method String
+  payment_date   DateTime @default(now())
+  booking        Bookings @relation(fields: [booking_id], references: [booking_id])
+  user           Users    @relation(fields: [user_id], references: [user_id])
+}
+
+model Prices {
+  price_id       Int      @id @default(autoincrement())
+  lot_id         Int
+  price_per_hour Float
+  effective_date DateTime
+  parking_lot    Parking_Lots @relation(fields: [lot_id], references: [lot_id])
+}
+
+model Reviews {
+  review_id   Int      @id @default(autoincrement())
+  user_id     Int
+  lot_id      Int
+  rating      Int
+  comment     String?
+  review_date DateTime @default(now())
+  user        Users    @relation(fields: [user_id], references: [user_id])
+  parking_lot Parking_Lots @relation(fields: [lot_id], references: [lot_id])
+}
+
+model Notifications {
+  notification_id Int      @id @default(autoincrement())
+  user_id         Int?
+  owner_id        Int?
+  message         String
+  sent_at         DateTime @default(now())
+  user            Users?   @relation(fields: [user_id], references: [user_id])
+  owner           Owners?  @relation(fields: [owner_id], references: [owner_id])
 }

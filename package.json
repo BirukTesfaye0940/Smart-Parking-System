@@ -11,7 +11,10 @@
   "dependencies": {
     "@prisma/client": "^6.8.1",
     "axios": "^1.9.0",
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
+    "better-auth": "^1.2.8",
+    "daisyui": "^5.0.43",
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
@@ -25,6 +28,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/node": "22.15.21",
+    "@types/react": "19.1.5",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "prisma": "^6.8.1",
