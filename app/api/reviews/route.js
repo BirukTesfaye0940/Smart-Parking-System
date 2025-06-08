@@ -1,26 +1,33 @@
-import { NextResponse } from 'next/server';
-import prisma from '../../../lib/prisma';
 
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import prisma from "../../../lib/prisma";
+import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { email, lot_id, rating, comment } = body;
+    const session = await getServerSession(authOptions);
 
-    // Validate input
-    if (!email || !lot_id || typeof rating !== 'number' || !comment) {
+    if (!session || !session.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { lot_id, rating, comment } = body;
+
+    if (!lot_id || typeof rating !== 'number' || !comment) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Find user
+    // Get user from session email
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { email: session.user.email },
     });
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Validate parking lot exists
+    // Validate parking lot
     const lot = await prisma.parkingLot.findUnique({
       where: { lot_id },
     });

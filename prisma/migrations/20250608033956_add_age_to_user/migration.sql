@@ -1,14 +1,43 @@
+-- CreateEnum
+CREATE TYPE "BookStatus" AS ENUM ('unpaid', 'paid');
+
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" SERIAL NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Users" (
+    "user_id" SERIAL NOT NULL,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Users_pkey" PRIMARY KEY ("user_id")
+);
+
+-- CreateTable
+CREATE TABLE "Owners" (
+    "owner_id" SERIAL NOT NULL,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Owners_pkey" PRIMARY KEY ("owner_id")
 );
 
 -- CreateTable
@@ -59,6 +88,7 @@ CREATE TABLE "Parking_Lots" (
     "lot_id" SERIAL NOT NULL,
     "owner_id" INTEGER NOT NULL,
     "lot_name" TEXT NOT NULL,
+    "image" TEXT,
     "capacity" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -78,32 +108,6 @@ CREATE TABLE "Parking_Spaces" (
 );
 
 -- CreateTable
-CREATE TABLE "Users" (
-    "user_id" SERIAL NOT NULL,
-    "first_name" TEXT NOT NULL,
-    "last_name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Users_pkey" PRIMARY KEY ("user_id")
-);
-
--- CreateTable
-CREATE TABLE "Owners" (
-    "owner_id" SERIAL NOT NULL,
-    "first_name" TEXT NOT NULL,
-    "last_name" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Owners_pkey" PRIMARY KEY ("owner_id")
-);
-
--- CreateTable
 CREATE TABLE "Availability_Logs" (
     "log_id" SERIAL NOT NULL,
     "space_id" INTEGER NOT NULL,
@@ -116,11 +120,12 @@ CREATE TABLE "Availability_Logs" (
 -- CreateTable
 CREATE TABLE "Bookings" (
     "booking_id" SERIAL NOT NULL,
+    "lot_id" INTEGER NOT NULL,
     "user_id" INTEGER NOT NULL,
     "space_id" INTEGER NOT NULL,
     "start_time" TIMESTAMP(3) NOT NULL,
     "end_time" TIMESTAMP(3) NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "BookStatus" NOT NULL,
 
     CONSTRAINT "Bookings_pkey" PRIMARY KEY ("booking_id")
 );
@@ -162,7 +167,6 @@ CREATE TABLE "Reviews" (
 -- CreateTable
 CREATE TABLE "Notifications" (
     "notification_id" SERIAL NOT NULL,
-    "user_id" INTEGER,
     "owner_id" INTEGER,
     "message" TEXT NOT NULL,
     "sent_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -174,6 +178,12 @@ CREATE TABLE "Notifications" (
 CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Owners_email_key" ON "Owners"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Cities_city_name_state_key" ON "Cities"("city_name", "state");
 
 -- CreateIndex
@@ -183,13 +193,10 @@ CREATE UNIQUE INDEX "Sub_Cities_city_id_sub_city_name_key" ON "Sub_Cities"("city
 CREATE UNIQUE INDEX "Street_Addresses_sub_city_id_street_address_zip_code_key" ON "Street_Addresses"("sub_city_id", "street_address", "zip_code");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Owners_email_key" ON "Owners"("email");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Payments_booking_id_key" ON "Payments"("booking_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Prices_lot_id_key" ON "Prices"("lot_id");
 
 -- AddForeignKey
 ALTER TABLE "Sub_Cities" ADD CONSTRAINT "Sub_Cities_city_id_fkey" FOREIGN KEY ("city_id") REFERENCES "Cities"("city_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -219,6 +226,9 @@ ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_user_id_fkey" FOREIGN KEY ("user
 ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_space_id_fkey" FOREIGN KEY ("space_id") REFERENCES "Parking_Spaces"("space_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Bookings" ADD CONSTRAINT "Bookings_lot_id_fkey" FOREIGN KEY ("lot_id") REFERENCES "Parking_Lots"("lot_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Payments" ADD CONSTRAINT "Payments_booking_id_fkey" FOREIGN KEY ("booking_id") REFERENCES "Bookings"("booking_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -232,9 +242,6 @@ ALTER TABLE "Reviews" ADD CONSTRAINT "Reviews_user_id_fkey" FOREIGN KEY ("user_i
 
 -- AddForeignKey
 ALTER TABLE "Reviews" ADD CONSTRAINT "Reviews_lot_id_fkey" FOREIGN KEY ("lot_id") REFERENCES "Parking_Lots"("lot_id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Notifications" ADD CONSTRAINT "Notifications_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Notifications" ADD CONSTRAINT "Notifications_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "Owners"("owner_id") ON DELETE CASCADE ON UPDATE CASCADE;

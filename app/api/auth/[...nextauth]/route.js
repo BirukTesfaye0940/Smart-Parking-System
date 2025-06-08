@@ -1,85 +1,157 @@
-import bcrypt from 'bcrypt';
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import prisma from '../../../../lib/prisma';
+// import bcrypt from "bcrypt";
+// import NextAuth from "next-auth";
+// import CredentialsProvider from "next-auth/providers/credentials";
+// import prisma from "../../../../lib/prisma"; // Adjust this path if needed
 
-const handler = NextAuth({
+// const handler = NextAuth({
+//   providers: [
+//     CredentialsProvider({
+//       name: "Credentials",
+//       credentials: {
+//         email: {},
+//         password: {},
+//         role: {}, // 'admin' | 'user' | 'owner'
+//       },
+//       async authorize(credentials) {
+//         const { email, password, role } = credentials ?? {};
+
+//         if (!email || !password || !role) return null;
+
+//         let dbUser;
+
+//         switch (role) {
+//           case "admin":
+//             dbUser = await prisma.admin.findUnique({ where: { email } });
+//             break;
+//           case "user":
+//             dbUser = await prisma.user.findUnique({ where: { email } });
+//             break;
+//           case "owner":
+//             dbUser = await prisma.owner.findUnique({ where: { email } });
+//             break;
+//           default:
+//             return null;
+//         }
+
+//         const isValid = dbUser && (await bcrypt.compare(password, dbUser.password));
+//         if (!isValid) return null;
+
+//         return {
+//           id: dbUser.id ?? dbUser.user_id ?? dbUser.owner_id,
+//           name: dbUser.firstName ?? dbUser.first_name,
+//           email: dbUser.email,
+//           role,
+//         };
+//       },
+//     }),
+//   ],
+
+//   session: {
+//     strategy: "jwt",
+//   },
+
+//   callbacks: {
+//     async jwt({ token, user }) {
+//       if (user) {
+//         token.id = user.id;
+//         token.email = user.email;
+//         token.role = user.role;
+//       }
+//       return token;
+//     },
+//     async session({ session, token }) {
+//       if (token) {
+//         session.user.id = token.id;
+//         session.user.email = token.email;
+//         session.user.role = token.role;
+//       }
+//       return session;
+//     },
+//   },
+
+//   pages: {
+//     signIn: "/login", // Your custom login page
+//   },
+
+//   secret: process.env.NEXTAUTH_SECRET,
+// });
+
+// export { handler as GET, handler as POST };
+import bcrypt from "bcrypt";
+import NextAuth from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from "../../../../lib/prisma"; // Adjust this path if needed
+
+export const authOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
         email: {},
         password: {},
-        role: {}, // include role field
+        role: {},
       },
       async authorize(credentials) {
-        try {
-          const { email, password, role } = credentials || {};
+        const { email, password, role } = credentials ?? {};
 
-          if (!email || !password || !role) {
-            console.log('Missing credentials');
+        if (!email || !password || !role) return null;
+
+        let dbUser;
+
+        switch (role) {
+          case "admin":
+            dbUser = await prisma.admin.findUnique({ where: { email } });
+            break;
+          case "user":
+            dbUser = await prisma.user.findUnique({ where: { email } });
+            break;
+          case "owner":
+            dbUser = await prisma.owner.findUnique({ where: { email } });
+            break;
+          default:
             return null;
-          }
-
-          let user = null;
-
-          if (role === 'admin') {
-            user = await prisma.admin.findUnique({ where: { email } });
-          } else if (role === 'user') {
-            user = await prisma.user.findUnique({ where: { email } });
-          } else if (role === 'owner') {
-            user = await prisma.owner.findUnique({ where: { email } });
-          }
-
-          if (!user) {
-            console.log('No user found with email:', email);
-            return null;
-          }
-
-          if (!user.password) {
-            console.log('User has no password set');
-            return null;
-          }
-
-          const isValid = await bcrypt.compare(password, user.password);
-          if (!isValid) {
-            console.log('Invalid password');
-            return null;
-          }
-
-          return {
-            id: user.id,
-            email: user.email,
-            role,
-          };
-        } catch (err) {
-          console.error('Error during authorize:', err);
-          return null; // never throw from authorize
         }
+
+        if (!dbUser || !(await bcrypt.compare(password, dbUser.password))) {
+          return null;
+        }
+
+        return {
+          id: dbUser.id ?? dbUser.user_id ?? dbUser.owner_id,
+          name: dbUser.firstName ?? dbUser.first_name,
+          email: dbUser.email,
+          role,
+        };
       },
     }),
   ],
-  session: {
-    strategy: 'jwt',
-  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
+        token.id = user.id;
+        token.email = user.email;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
+        session.user.id = token.id;
         session.user.role = token.role;
+        session.user.email = token.email;
       }
       return session;
     },
   },
+  session: {
+    strategy: "jwt",
+  },
   pages: {
-    signIn: '/auth/signin',
+    signIn: "/login",
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

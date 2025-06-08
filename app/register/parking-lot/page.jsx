@@ -1,16 +1,19 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function RegisterParkingLot() {
   const [lotName, setLotName] = useState('');
   const [capacity, setCapacity] = useState('');
-  const [ownerId, setOwnerId] = useState('');
   const [spaces, setSpaces] = useState([]);
 
   // New state for location
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [streetAddressId, setStreetAddressId] = useState('');
+
+   const { data: session } = useSession();
+  
 
   const addSpace = () => {
     setSpaces([...spaces, { space_number: '', is_handicap: false, status: 'available' }]);
@@ -29,7 +32,7 @@ export default function RegisterParkingLot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      owner_id: Number(ownerId),
+      owner_id: Number(session.user.id),
       lot_name: lotName,
       capacity: Number(capacity),
       spaces,
@@ -69,14 +72,7 @@ export default function RegisterParkingLot() {
             className="border p-3 rounded-xl focus:outline-none focus:ring-2 ring-blue-400 text-black"
             required
           />
-          <input
-            type="number"
-            placeholder="Owner ID"
-            value={ownerId}
-            onChange={(e) => setOwnerId(e.target.value)}
-            className="border p-3 rounded-xl focus:outline-none focus:ring-2 ring-blue-400 text-black"
-            required
-          />
+          
         </div>
 
         {/* Location Fields */}

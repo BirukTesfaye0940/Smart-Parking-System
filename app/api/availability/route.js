@@ -14,6 +14,13 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Parking space not found' }, { status: 404 });
     }
 
+    // ✅ Step 1: Update ParkingSpace.status directly
+    await prisma.parkingSpace.update({
+      where: { space_id },
+      data: { status },
+    });
+
+    // ✅ Step 2: Log the change
     const log = await prisma.availabilityLog.create({
       data: {
         space_id,

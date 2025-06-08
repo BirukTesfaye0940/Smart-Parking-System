@@ -1,9 +1,8 @@
 'use client';
 import { useState } from 'react';
 
-export default function BookingPopup({ lot_id }) {
-  const [email, setEmail] = useState('');
-  const [spaceId, setSpaceId] = useState('');
+export default function BookingPopup({ lot_id, availableSpaceIds = [] }) {
+  const [spaceId, setSpaceId] = useState(availableSpaceIds[0] || '');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [open, setOpen] = useState(false);
@@ -12,12 +11,11 @@ export default function BookingPopup({ lot_id }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('/api/bookings', {
+    const res = await fetch('/api/booking', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email,
-        lot_id:lot_id,
+        lot_id,
         space_id: Number(spaceId),
         start_time: startTime,
         end_time: endTime,
@@ -27,11 +25,13 @@ export default function BookingPopup({ lot_id }) {
     const result = await res.json();
     if (result.success) {
       setMessage('✅ Booking created successfully!');
-      setEmail('');
-      setSpaceId('');
-      setStartTime('');
-      setEndTime('');
-      setTimeout(() => setOpen(false), 1500);
+      setTimeout(() => {
+        setOpen(false);
+        setMessage('');
+        setSpaceId(availableSpaceIds[0] || '');
+        setStartTime('');
+        setEndTime('');
+      }, 1500);
     } else {
       setMessage(`❌ ${result.error}`);
     }
@@ -47,42 +47,42 @@ export default function BookingPopup({ lot_id }) {
       </button>
 
       {open && (
-        <div className="fixed inset-0 b bg-opacity-40 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
             <h2 className="text-2xl font-bold mb-5 text-center text-gray-800">Reserve Parking Space</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="email"
-                placeholder="Your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
-              />
-              <input
-                type="number"
-                placeholder="Space ID"
+
+              <label className="block text-gray-700 font-semibold text-black">Select Space:</label>
+              <select
                 value={spaceId}
                 onChange={(e) => setSpaceId(e.target.value)}
-                required
-                min={1}
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
-              />
-              <label className="block text-gray-700 font-semibold">Start Time:</label>
+                className="w-full border border-gray-300 rounded-lg p-3 text-black"
+              >
+                {availableSpaceIds.length === 0 ? (
+                  <option disabled>No available spaces</option>
+                ) : (
+                  availableSpaceIds.map(id => (
+                    <option key={id} value={id}>Space #{id}</option>
+                  ))
+                )}
+              </select>
+
+              <label className="block text-gray-700 font-semibold text-black">Start Time:</label>
               <input
                 type="datetime-local"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
                 required
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
+                className="w-full border border-gray-300 rounded-lg p-3 text-black"
               />
-              <label className="block text-gray-700 font-semibold">End Time:</label>
+
+              <label className="block text-gray-700 font-semibold text-black">End Time:</label>
               <input
                 type="datetime-local"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
                 required
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-800"
+                className="w-full border border-gray-300 rounded-lg p-3 text-black"
               />
 
               <div className="flex justify-between items-center">

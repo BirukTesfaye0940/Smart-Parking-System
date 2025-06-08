@@ -1,48 +1,52 @@
-import { NextResponse } from 'next/server';
-import prisma from '../../../lib/prisma';
 
+import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
+import prisma from "../../../lib/prisma";
+import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(req) {
-  try {
-    const body = await req.json();
-    const { email, space_id, start_time, end_time } = body;
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
 
-    // Validate inputs
-    if (!email || !space_id || !start_time || !end_time) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-    }
+  const body = await req.json();
+  const { lot_id, space_id,start_time,end_time } = body;
 
-    // Find user by email
-    const user = await prisma.user.findUnique({
-      where: { email },
+  if (!lot_id || !space_id|| !start_time || !end_time) {
+    return NextResponse.json({ error: 'Missing lot or space ID' }, { status: 400 });
+  }
+
+   const user = await prisma.user.findUnique({
+      where: { email: session.user.email },
     });
 
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Check if space exists
-    const space = await prisma.parkingSpace.findUnique({
-      where: { space_id },
-    });
 
-    if (!space) {
-      return NextResponse.json({ error: 'Parking space not found' }, { status: 404 });
-    }
-
-    // Create booking
+  try {
     const booking = await prisma.booking.create({
       data: {
-        user_id: user.user_id,
+        user_id:user.user_id,
+        lot_id,
         space_id,
         start_time: new Date(start_time),
         end_time: new Date(end_time),
-        status: 'reserved',
+        status :"unpaid"
+        // Add other required fields
       },
     });
 
-    return NextResponse.json({ success: true, data: booking }, { status: 201 });
-  } catch (error) {
-    console.error('[CREATE_BOOKING_ERROR]', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    // Optionally update space status
+    await prisma.parkingSpace.update({
+      where: { space_id },
+      data: { status: 'unavailable' },
+    });
+
+    return NextResponse.json({ success: true, data: booking });
+  } catch (err) {
+    console.error('Booking error:', err);
+    return NextResponse.json({ error: 'Internal error' }, { status: 500 });
   }
 }

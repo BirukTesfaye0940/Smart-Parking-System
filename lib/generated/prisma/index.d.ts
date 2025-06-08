@@ -19,6 +19,16 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Admin = $Result.DefaultSelection<Prisma.$AdminPayload>
 /**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Owner
+ * 
+ */
+export type Owner = $Result.DefaultSelection<Prisma.$OwnerPayload>
+/**
  * Model City
  * 
  */
@@ -54,16 +64,6 @@ export type ParkingSpace = $Result.DefaultSelection<Prisma.$ParkingSpacePayload>
  */
 export type AvailabilityLog = $Result.DefaultSelection<Prisma.$AvailabilityLogPayload>
 /**
- * Model User
- * 
- */
-export type User = $Result.DefaultSelection<Prisma.$UserPayload>
-/**
- * Model Owner
- * 
- */
-export type Owner = $Result.DefaultSelection<Prisma.$OwnerPayload>
-/**
  * Model Booking
  * 
  */
@@ -88,6 +88,35 @@ export type Review = $Result.DefaultSelection<Prisma.$ReviewPayload>
  * 
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const SpaceStatus: {
+  available: 'available',
+  unavailable: 'unavailable'
+};
+
+export type SpaceStatus = (typeof SpaceStatus)[keyof typeof SpaceStatus]
+
+
+export const BookStatus: {
+  unpaid: 'unpaid',
+  paid: 'paid'
+};
+
+export type BookStatus = (typeof BookStatus)[keyof typeof BookStatus]
+
+}
+
+export type SpaceStatus = $Enums.SpaceStatus
+
+export const SpaceStatus: typeof $Enums.SpaceStatus
+
+export type BookStatus = $Enums.BookStatus
+
+export const BookStatus: typeof $Enums.BookStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -225,6 +254,26 @@ export class PrismaClient<
   get admin(): Prisma.AdminDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.owner`: Exposes CRUD operations for the **Owner** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Owners
+    * const owners = await prisma.owner.findMany()
+    * ```
+    */
+  get owner(): Prisma.OwnerDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.city`: Exposes CRUD operations for the **City** model.
     * Example usage:
     * ```ts
@@ -293,26 +342,6 @@ export class PrismaClient<
     * ```
     */
   get availabilityLog(): Prisma.AvailabilityLogDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.user`: Exposes CRUD operations for the **User** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
-    * ```
-    */
-  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.owner`: Exposes CRUD operations for the **Owner** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Owners
-    * const owners = await prisma.owner.findMany()
-    * ```
-    */
-  get owner(): Prisma.OwnerDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.booking`: Exposes CRUD operations for the **Booking** model.
@@ -421,8 +450,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.8.1
-   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -804,6 +833,8 @@ export namespace Prisma {
 
   export const ModelName: {
     Admin: 'Admin',
+    User: 'User',
+    Owner: 'Owner',
     City: 'City',
     SubCity: 'SubCity',
     StreetAddress: 'StreetAddress',
@@ -811,8 +842,6 @@ export namespace Prisma {
     ParkingLot: 'ParkingLot',
     ParkingSpace: 'ParkingSpace',
     AvailabilityLog: 'AvailabilityLog',
-    User: 'User',
-    Owner: 'Owner',
     Booking: 'Booking',
     Payment: 'Payment',
     Price: 'Price',
@@ -836,7 +865,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "admin" | "city" | "subCity" | "streetAddress" | "location" | "parkingLot" | "parkingSpace" | "availabilityLog" | "user" | "owner" | "booking" | "payment" | "price" | "review" | "notification"
+      modelProps: "admin" | "user" | "owner" | "city" | "subCity" | "streetAddress" | "location" | "parkingLot" | "parkingSpace" | "availabilityLog" | "booking" | "payment" | "price" | "review" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -911,6 +940,154 @@ export namespace Prisma {
           count: {
             args: Prisma.AdminCountArgs<ExtArgs>
             result: $Utils.Optional<AdminCountAggregateOutputType> | number
+          }
+        }
+      }
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Owner: {
+        payload: Prisma.$OwnerPayload<ExtArgs>
+        fields: Prisma.OwnerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OwnerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OwnerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          findFirst: {
+            args: Prisma.OwnerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OwnerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          findMany: {
+            args: Prisma.OwnerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          create: {
+            args: Prisma.OwnerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          createMany: {
+            args: Prisma.OwnerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OwnerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          delete: {
+            args: Prisma.OwnerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          update: {
+            args: Prisma.OwnerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          deleteMany: {
+            args: Prisma.OwnerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OwnerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OwnerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
+          }
+          upsert: {
+            args: Prisma.OwnerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
+          }
+          aggregate: {
+            args: Prisma.OwnerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOwner>
+          }
+          groupBy: {
+            args: Prisma.OwnerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OwnerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OwnerCountArgs<ExtArgs>
+            result: $Utils.Optional<OwnerCountAggregateOutputType> | number
           }
         }
       }
@@ -1432,154 +1609,6 @@ export namespace Prisma {
           }
         }
       }
-      User: {
-        payload: Prisma.$UserPayload<ExtArgs>
-        fields: Prisma.UserFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.UserFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          findFirst: {
-            args: Prisma.UserFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          findMany: {
-            args: Prisma.UserFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
-          }
-          create: {
-            args: Prisma.UserCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          createMany: {
-            args: Prisma.UserCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
-          }
-          delete: {
-            args: Prisma.UserDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          update: {
-            args: Prisma.UserUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          deleteMany: {
-            args: Prisma.UserDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.UserUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
-          }
-          upsert: {
-            args: Prisma.UserUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$UserPayload>
-          }
-          aggregate: {
-            args: Prisma.UserAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateUser>
-          }
-          groupBy: {
-            args: Prisma.UserGroupByArgs<ExtArgs>
-            result: $Utils.Optional<UserGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.UserCountArgs<ExtArgs>
-            result: $Utils.Optional<UserCountAggregateOutputType> | number
-          }
-        }
-      }
-      Owner: {
-        payload: Prisma.$OwnerPayload<ExtArgs>
-        fields: Prisma.OwnerFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.OwnerFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.OwnerFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
-          }
-          findFirst: {
-            args: Prisma.OwnerFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.OwnerFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
-          }
-          findMany: {
-            args: Prisma.OwnerFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
-          }
-          create: {
-            args: Prisma.OwnerCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
-          }
-          createMany: {
-            args: Prisma.OwnerCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.OwnerCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
-          }
-          delete: {
-            args: Prisma.OwnerDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
-          }
-          update: {
-            args: Prisma.OwnerUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
-          }
-          deleteMany: {
-            args: Prisma.OwnerDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.OwnerUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.OwnerUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>[]
-          }
-          upsert: {
-            args: Prisma.OwnerUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OwnerPayload>
-          }
-          aggregate: {
-            args: Prisma.OwnerAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateOwner>
-          }
-          groupBy: {
-            args: Prisma.OwnerGroupByArgs<ExtArgs>
-            result: $Utils.Optional<OwnerGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.OwnerCountArgs<ExtArgs>
-            result: $Utils.Optional<OwnerCountAggregateOutputType> | number
-          }
-        }
-      }
       Booking: {
         payload: Prisma.$BookingPayload<ExtArgs>
         fields: Prisma.BookingFieldRefs
@@ -2035,6 +2064,8 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     admin?: AdminOmit
+    user?: UserOmit
+    owner?: OwnerOmit
     city?: CityOmit
     subCity?: SubCityOmit
     streetAddress?: StreetAddressOmit
@@ -2042,8 +2073,6 @@ export namespace Prisma {
     parkingLot?: ParkingLotOmit
     parkingSpace?: ParkingSpaceOmit
     availabilityLog?: AvailabilityLogOmit
-    user?: UserOmit
-    owner?: OwnerOmit
     booking?: BookingOmit
     payment?: PaymentOmit
     price?: PriceOmit
@@ -2136,6 +2165,95 @@ export namespace Prisma {
   /**
    * Count Types
    */
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    bookings: number
+    payments: number
+    reviews: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bookings?: boolean | UserCountOutputTypeCountBookingsArgs
+    payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+    reviews?: boolean | UserCountOutputTypeCountReviewsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookingWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
+  }
+
+
+  /**
+   * Count Type OwnerCountOutputType
+   */
+
+  export type OwnerCountOutputType = {
+    parkingLots: number
+    notifications: number
+  }
+
+  export type OwnerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parkingLots?: boolean | OwnerCountOutputTypeCountParkingLotsArgs
+    notifications?: boolean | OwnerCountOutputTypeCountNotificationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OwnerCountOutputType without action
+   */
+  export type OwnerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OwnerCountOutputType
+     */
+    select?: OwnerCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OwnerCountOutputType without action
+   */
+  export type OwnerCountOutputTypeCountParkingLotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParkingLotWhereInput
+  }
+
+  /**
+   * OwnerCountOutputType without action
+   */
+  export type OwnerCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
 
 
   /**
@@ -2240,6 +2358,7 @@ export namespace Prisma {
     locations: number
     prices: number
     reviews: number
+    booking: number
   }
 
   export type ParkingLotCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2247,6 +2366,7 @@ export namespace Prisma {
     locations?: boolean | ParkingLotCountOutputTypeCountLocationsArgs
     prices?: boolean | ParkingLotCountOutputTypeCountPricesArgs
     reviews?: boolean | ParkingLotCountOutputTypeCountReviewsArgs
+    booking?: boolean | ParkingLotCountOutputTypeCountBookingArgs
   }
 
   // Custom InputTypes
@@ -2286,6 +2406,13 @@ export namespace Prisma {
    */
   export type ParkingLotCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * ParkingLotCountOutputType without action
+   */
+  export type ParkingLotCountOutputTypeCountBookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BookingWhereInput
   }
 
 
@@ -2330,100 +2457,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type UserCountOutputType
+   * Count Type BookingCountOutputType
    */
 
-  export type UserCountOutputType = {
-    bookings: number
-    payments: number
-    reviews: number
-    notifications: number
+  export type BookingCountOutputType = {
+    payment: number
   }
 
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    bookings?: boolean | UserCountOutputTypeCountBookingsArgs
-    payments?: boolean | UserCountOutputTypeCountPaymentsArgs
-    reviews?: boolean | UserCountOutputTypeCountReviewsArgs
-    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  export type BookingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    payment?: boolean | BookingCountOutputTypeCountPaymentArgs
   }
 
   // Custom InputTypes
   /**
-   * UserCountOutputType without action
+   * BookingCountOutputType without action
    */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BookingCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the UserCountOutputType
+     * Select specific fields to fetch from the BookingCountOutputType
      */
-    select?: UserCountOutputTypeSelect<ExtArgs> | null
+    select?: BookingCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * UserCountOutputType without action
+   * BookingCountOutputType without action
    */
-  export type UserCountOutputTypeCountBookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: BookingWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BookingCountOutputTypeCountPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ReviewWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
-  }
-
-
-  /**
-   * Count Type OwnerCountOutputType
-   */
-
-  export type OwnerCountOutputType = {
-    parkingLots: number
-    notifications: number
-  }
-
-  export type OwnerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parkingLots?: boolean | OwnerCountOutputTypeCountParkingLotsArgs
-    notifications?: boolean | OwnerCountOutputTypeCountNotificationsArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * OwnerCountOutputType without action
-   */
-  export type OwnerCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OwnerCountOutputType
-     */
-    select?: OwnerCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * OwnerCountOutputType without action
-   */
-  export type OwnerCountOutputTypeCountParkingLotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ParkingLotWhereInput
-  }
-
-  /**
-   * OwnerCountOutputType without action
-   */
-  export type OwnerCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
   }
 
 
@@ -2453,8 +2513,8 @@ export namespace Prisma {
 
   export type AdminMinAggregateOutputType = {
     id: number | null
-    firstName: string | null
-    lastName: string | null
+    first_name: string | null
+    last_name: string | null
     email: string | null
     password: string | null
     phone: string | null
@@ -2463,8 +2523,8 @@ export namespace Prisma {
 
   export type AdminMaxAggregateOutputType = {
     id: number | null
-    firstName: string | null
-    lastName: string | null
+    first_name: string | null
+    last_name: string | null
     email: string | null
     password: string | null
     phone: string | null
@@ -2473,8 +2533,8 @@ export namespace Prisma {
 
   export type AdminCountAggregateOutputType = {
     id: number
-    firstName: number
-    lastName: number
+    first_name: number
+    last_name: number
     email: number
     password: number
     phone: number
@@ -2493,8 +2553,8 @@ export namespace Prisma {
 
   export type AdminMinAggregateInputType = {
     id?: true
-    firstName?: true
-    lastName?: true
+    first_name?: true
+    last_name?: true
     email?: true
     password?: true
     phone?: true
@@ -2503,8 +2563,8 @@ export namespace Prisma {
 
   export type AdminMaxAggregateInputType = {
     id?: true
-    firstName?: true
-    lastName?: true
+    first_name?: true
+    last_name?: true
     email?: true
     password?: true
     phone?: true
@@ -2513,8 +2573,8 @@ export namespace Prisma {
 
   export type AdminCountAggregateInputType = {
     id?: true
-    firstName?: true
-    lastName?: true
+    first_name?: true
+    last_name?: true
     email?: true
     password?: true
     phone?: true
@@ -2610,8 +2670,8 @@ export namespace Prisma {
 
   export type AdminGroupByOutputType = {
     id: number
-    firstName: string
-    lastName: string
+    first_name: string
+    last_name: string
     email: string
     password: string
     phone: string
@@ -2639,8 +2699,8 @@ export namespace Prisma {
 
   export type AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    firstName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    last_name?: boolean
     email?: boolean
     password?: boolean
     phone?: boolean
@@ -2649,8 +2709,8 @@ export namespace Prisma {
 
   export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    firstName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    last_name?: boolean
     email?: boolean
     password?: boolean
     phone?: boolean
@@ -2659,8 +2719,8 @@ export namespace Prisma {
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    firstName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    last_name?: boolean
     email?: boolean
     password?: boolean
     phone?: boolean
@@ -2669,23 +2729,23 @@ export namespace Prisma {
 
   export type AdminSelectScalar = {
     id?: boolean
-    firstName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    last_name?: boolean
     email?: boolean
     password?: boolean
     phone?: boolean
     createdAt?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "phone" | "createdAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "password" | "phone" | "createdAt", ExtArgs["result"]["admin"]>
 
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      firstName: string
-      lastName: string
+      first_name: string
+      last_name: string
       email: string
       password: string
       phone: string
@@ -3114,8 +3174,8 @@ export namespace Prisma {
    */
   interface AdminFieldRefs {
     readonly id: FieldRef<"Admin", 'Int'>
-    readonly firstName: FieldRef<"Admin", 'String'>
-    readonly lastName: FieldRef<"Admin", 'String'>
+    readonly first_name: FieldRef<"Admin", 'String'>
+    readonly last_name: FieldRef<"Admin", 'String'>
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
     readonly phone: FieldRef<"Admin", 'String'>
@@ -3483,6 +3543,2350 @@ export namespace Prisma {
      * Omit specific fields from the Admin
      */
     omit?: AdminOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    user_id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    user_id: number | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    user_id: number | null
+    first_name: string | null
+    last_name: string | null
+    email: string | null
+    password: string | null
+    phone: string | null
+    created_at: Date | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    user_id: number | null
+    first_name: string | null
+    last_name: string | null
+    email: string | null
+    password: string | null
+    phone: string | null
+    created_at: Date | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    user_id: number
+    first_name: number
+    last_name: number
+    email: number
+    password: number
+    phone: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    user_id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    user_id?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    user_id?: true
+    first_name?: true
+    last_name?: true
+    email?: true
+    password?: true
+    phone?: true
+    created_at?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    user_id?: true
+    first_name?: true
+    last_name?: true
+    email?: true
+    password?: true
+    phone?: true
+    created_at?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    user_id?: true
+    first_name?: true
+    last_name?: true
+    email?: true
+    password?: true
+    phone?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    user_id: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at: Date
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+    bookings?: boolean | User$bookingsArgs<ExtArgs>
+    payments?: boolean | User$paymentsArgs<ExtArgs>
+    reviews?: boolean | User$reviewsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    user_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    user_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "created_at", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bookings?: boolean | User$bookingsArgs<ExtArgs>
+    payments?: boolean | User$paymentsArgs<ExtArgs>
+    reviews?: boolean | User$reviewsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      bookings: Prisma.$BookingPayload<ExtArgs>[]
+      payments: Prisma.$PaymentPayload<ExtArgs>[]
+      reviews: Prisma.$ReviewPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      user_id: number
+      first_name: string
+      last_name: string
+      email: string
+      password: string
+      phone: string
+      created_at: Date
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `user_id`
+     * const userWithUser_idOnly = await prisma.user.findMany({ select: { user_id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `user_id`
+     * const userWithUser_idOnly = await prisma.user.createManyAndReturn({
+     *   select: { user_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `user_id`
+     * const userWithUser_idOnly = await prisma.user.updateManyAndReturn({
+     *   select: { user_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    bookings<T extends User$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly user_id: FieldRef<"User", 'Int'>
+    readonly first_name: FieldRef<"User", 'String'>
+    readonly last_name: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly phone: FieldRef<"User", 'String'>
+    readonly created_at: FieldRef<"User", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User.bookings
+   */
+  export type User$bookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Booking
+     */
+    select?: BookingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Booking
+     */
+    omit?: BookingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookingInclude<ExtArgs> | null
+    where?: BookingWhereInput
+    orderBy?: BookingOrderByWithRelationInput | BookingOrderByWithRelationInput[]
+    cursor?: BookingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookingScalarFieldEnum | BookingScalarFieldEnum[]
+  }
+
+  /**
+   * User.payments
+   */
+  export type User$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Payment
+     */
+    select?: PaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Payment
+     */
+    omit?: PaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentInclude<ExtArgs> | null
+    where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    cursor?: PaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
+  }
+
+  /**
+   * User.reviews
+   */
+  export type User$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Review
+     */
+    select?: ReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Review
+     */
+    omit?: ReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReviewInclude<ExtArgs> | null
+    where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Owner
+   */
+
+  export type AggregateOwner = {
+    _count: OwnerCountAggregateOutputType | null
+    _avg: OwnerAvgAggregateOutputType | null
+    _sum: OwnerSumAggregateOutputType | null
+    _min: OwnerMinAggregateOutputType | null
+    _max: OwnerMaxAggregateOutputType | null
+  }
+
+  export type OwnerAvgAggregateOutputType = {
+    owner_id: number | null
+  }
+
+  export type OwnerSumAggregateOutputType = {
+    owner_id: number | null
+  }
+
+  export type OwnerMinAggregateOutputType = {
+    owner_id: number | null
+    first_name: string | null
+    last_name: string | null
+    email: string | null
+    password: string | null
+    phone: string | null
+    created_at: Date | null
+  }
+
+  export type OwnerMaxAggregateOutputType = {
+    owner_id: number | null
+    first_name: string | null
+    last_name: string | null
+    email: string | null
+    password: string | null
+    phone: string | null
+    created_at: Date | null
+  }
+
+  export type OwnerCountAggregateOutputType = {
+    owner_id: number
+    first_name: number
+    last_name: number
+    email: number
+    password: number
+    phone: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type OwnerAvgAggregateInputType = {
+    owner_id?: true
+  }
+
+  export type OwnerSumAggregateInputType = {
+    owner_id?: true
+  }
+
+  export type OwnerMinAggregateInputType = {
+    owner_id?: true
+    first_name?: true
+    last_name?: true
+    email?: true
+    password?: true
+    phone?: true
+    created_at?: true
+  }
+
+  export type OwnerMaxAggregateInputType = {
+    owner_id?: true
+    first_name?: true
+    last_name?: true
+    email?: true
+    password?: true
+    phone?: true
+    created_at?: true
+  }
+
+  export type OwnerCountAggregateInputType = {
+    owner_id?: true
+    first_name?: true
+    last_name?: true
+    email?: true
+    password?: true
+    phone?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type OwnerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Owner to aggregate.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Owners
+    **/
+    _count?: true | OwnerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OwnerAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OwnerSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OwnerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OwnerMaxAggregateInputType
+  }
+
+  export type GetOwnerAggregateType<T extends OwnerAggregateArgs> = {
+        [P in keyof T & keyof AggregateOwner]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOwner[P]>
+      : GetScalarType<T[P], AggregateOwner[P]>
+  }
+
+
+
+
+  export type OwnerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OwnerWhereInput
+    orderBy?: OwnerOrderByWithAggregationInput | OwnerOrderByWithAggregationInput[]
+    by: OwnerScalarFieldEnum[] | OwnerScalarFieldEnum
+    having?: OwnerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OwnerCountAggregateInputType | true
+    _avg?: OwnerAvgAggregateInputType
+    _sum?: OwnerSumAggregateInputType
+    _min?: OwnerMinAggregateInputType
+    _max?: OwnerMaxAggregateInputType
+  }
+
+  export type OwnerGroupByOutputType = {
+    owner_id: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at: Date
+    _count: OwnerCountAggregateOutputType | null
+    _avg: OwnerAvgAggregateOutputType | null
+    _sum: OwnerSumAggregateOutputType | null
+    _min: OwnerMinAggregateOutputType | null
+    _max: OwnerMaxAggregateOutputType | null
+  }
+
+  type GetOwnerGroupByPayload<T extends OwnerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OwnerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OwnerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OwnerGroupByOutputType[P]>
+            : GetScalarType<T[P], OwnerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OwnerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    owner_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+    parkingLots?: boolean | Owner$parkingLotsArgs<ExtArgs>
+    notifications?: boolean | Owner$notificationsArgs<ExtArgs>
+    _count?: boolean | OwnerCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    owner_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    owner_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["owner"]>
+
+  export type OwnerSelectScalar = {
+    owner_id?: boolean
+    first_name?: boolean
+    last_name?: boolean
+    email?: boolean
+    password?: boolean
+    phone?: boolean
+    created_at?: boolean
+  }
+
+  export type OwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"owner_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "created_at", ExtArgs["result"]["owner"]>
+  export type OwnerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parkingLots?: boolean | Owner$parkingLotsArgs<ExtArgs>
+    notifications?: boolean | Owner$notificationsArgs<ExtArgs>
+    _count?: boolean | OwnerCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type OwnerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type OwnerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $OwnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Owner"
+    objects: {
+      parkingLots: Prisma.$ParkingLotPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      owner_id: number
+      first_name: string
+      last_name: string
+      email: string
+      password: string
+      phone: string
+      created_at: Date
+    }, ExtArgs["result"]["owner"]>
+    composites: {}
+  }
+
+  type OwnerGetPayload<S extends boolean | null | undefined | OwnerDefaultArgs> = $Result.GetResult<Prisma.$OwnerPayload, S>
+
+  type OwnerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OwnerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OwnerCountAggregateInputType | true
+    }
+
+  export interface OwnerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Owner'], meta: { name: 'Owner' } }
+    /**
+     * Find zero or one Owner that matches the filter.
+     * @param {OwnerFindUniqueArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OwnerFindUniqueArgs>(args: SelectSubset<T, OwnerFindUniqueArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Owner that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OwnerFindUniqueOrThrowArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OwnerFindUniqueOrThrowArgs>(args: SelectSubset<T, OwnerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Owner that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindFirstArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OwnerFindFirstArgs>(args?: SelectSubset<T, OwnerFindFirstArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Owner that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindFirstOrThrowArgs} args - Arguments to find a Owner
+     * @example
+     * // Get one Owner
+     * const owner = await prisma.owner.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OwnerFindFirstOrThrowArgs>(args?: SelectSubset<T, OwnerFindFirstOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Owners that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Owners
+     * const owners = await prisma.owner.findMany()
+     * 
+     * // Get first 10 Owners
+     * const owners = await prisma.owner.findMany({ take: 10 })
+     * 
+     * // Only select the `owner_id`
+     * const ownerWithOwner_idOnly = await prisma.owner.findMany({ select: { owner_id: true } })
+     * 
+     */
+    findMany<T extends OwnerFindManyArgs>(args?: SelectSubset<T, OwnerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Owner.
+     * @param {OwnerCreateArgs} args - Arguments to create a Owner.
+     * @example
+     * // Create one Owner
+     * const Owner = await prisma.owner.create({
+     *   data: {
+     *     // ... data to create a Owner
+     *   }
+     * })
+     * 
+     */
+    create<T extends OwnerCreateArgs>(args: SelectSubset<T, OwnerCreateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Owners.
+     * @param {OwnerCreateManyArgs} args - Arguments to create many Owners.
+     * @example
+     * // Create many Owners
+     * const owner = await prisma.owner.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OwnerCreateManyArgs>(args?: SelectSubset<T, OwnerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Owners and returns the data saved in the database.
+     * @param {OwnerCreateManyAndReturnArgs} args - Arguments to create many Owners.
+     * @example
+     * // Create many Owners
+     * const owner = await prisma.owner.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Owners and only return the `owner_id`
+     * const ownerWithOwner_idOnly = await prisma.owner.createManyAndReturn({
+     *   select: { owner_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OwnerCreateManyAndReturnArgs>(args?: SelectSubset<T, OwnerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Owner.
+     * @param {OwnerDeleteArgs} args - Arguments to delete one Owner.
+     * @example
+     * // Delete one Owner
+     * const Owner = await prisma.owner.delete({
+     *   where: {
+     *     // ... filter to delete one Owner
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OwnerDeleteArgs>(args: SelectSubset<T, OwnerDeleteArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Owner.
+     * @param {OwnerUpdateArgs} args - Arguments to update one Owner.
+     * @example
+     * // Update one Owner
+     * const owner = await prisma.owner.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OwnerUpdateArgs>(args: SelectSubset<T, OwnerUpdateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Owners.
+     * @param {OwnerDeleteManyArgs} args - Arguments to filter Owners to delete.
+     * @example
+     * // Delete a few Owners
+     * const { count } = await prisma.owner.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OwnerDeleteManyArgs>(args?: SelectSubset<T, OwnerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Owners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Owners
+     * const owner = await prisma.owner.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OwnerUpdateManyArgs>(args: SelectSubset<T, OwnerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Owners and returns the data updated in the database.
+     * @param {OwnerUpdateManyAndReturnArgs} args - Arguments to update many Owners.
+     * @example
+     * // Update many Owners
+     * const owner = await prisma.owner.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Owners and only return the `owner_id`
+     * const ownerWithOwner_idOnly = await prisma.owner.updateManyAndReturn({
+     *   select: { owner_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OwnerUpdateManyAndReturnArgs>(args: SelectSubset<T, OwnerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Owner.
+     * @param {OwnerUpsertArgs} args - Arguments to update or create a Owner.
+     * @example
+     * // Update or create a Owner
+     * const owner = await prisma.owner.upsert({
+     *   create: {
+     *     // ... data to create a Owner
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Owner we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OwnerUpsertArgs>(args: SelectSubset<T, OwnerUpsertArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Owners.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerCountArgs} args - Arguments to filter Owners to count.
+     * @example
+     * // Count the number of Owners
+     * const count = await prisma.owner.count({
+     *   where: {
+     *     // ... the filter for the Owners we want to count
+     *   }
+     * })
+    **/
+    count<T extends OwnerCountArgs>(
+      args?: Subset<T, OwnerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OwnerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Owner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OwnerAggregateArgs>(args: Subset<T, OwnerAggregateArgs>): Prisma.PrismaPromise<GetOwnerAggregateType<T>>
+
+    /**
+     * Group by Owner.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OwnerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OwnerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OwnerGroupByArgs['orderBy'] }
+        : { orderBy?: OwnerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OwnerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOwnerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Owner model
+   */
+  readonly fields: OwnerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Owner.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OwnerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    parkingLots<T extends Owner$parkingLotsArgs<ExtArgs> = {}>(args?: Subset<T, Owner$parkingLotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParkingLotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends Owner$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Owner$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Owner model
+   */
+  interface OwnerFieldRefs {
+    readonly owner_id: FieldRef<"Owner", 'Int'>
+    readonly first_name: FieldRef<"Owner", 'String'>
+    readonly last_name: FieldRef<"Owner", 'String'>
+    readonly email: FieldRef<"Owner", 'String'>
+    readonly password: FieldRef<"Owner", 'String'>
+    readonly phone: FieldRef<"Owner", 'String'>
+    readonly created_at: FieldRef<"Owner", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Owner findUnique
+   */
+  export type OwnerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner findUniqueOrThrow
+   */
+  export type OwnerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner findFirst
+   */
+  export type OwnerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Owners.
+     */
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner findFirstOrThrow
+   */
+  export type OwnerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owner to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Owners.
+     */
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner findMany
+   */
+  export type OwnerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter, which Owners to fetch.
+     */
+    where?: OwnerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Owners to fetch.
+     */
+    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Owners.
+     */
+    cursor?: OwnerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Owners from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Owners.
+     */
+    skip?: number
+    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
+  }
+
+  /**
+   * Owner create
+   */
+  export type OwnerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Owner.
+     */
+    data: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
+  }
+
+  /**
+   * Owner createMany
+   */
+  export type OwnerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Owners.
+     */
+    data: OwnerCreateManyInput | OwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Owner createManyAndReturn
+   */
+  export type OwnerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data used to create many Owners.
+     */
+    data: OwnerCreateManyInput | OwnerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Owner update
+   */
+  export type OwnerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Owner.
+     */
+    data: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
+    /**
+     * Choose, which Owner to update.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner updateMany
+   */
+  export type OwnerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Owners.
+     */
+    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which Owners to update
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner updateManyAndReturn
+   */
+  export type OwnerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * The data used to update Owners.
+     */
+    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
+    /**
+     * Filter which Owners to update
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner upsert
+   */
+  export type OwnerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Owner to update in case it exists.
+     */
+    where: OwnerWhereUniqueInput
+    /**
+     * In case the Owner found by the `where` argument doesn't exist, create a new Owner with this data.
+     */
+    create: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
+    /**
+     * In case the Owner was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
+  }
+
+  /**
+   * Owner delete
+   */
+  export type OwnerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
+    /**
+     * Filter which Owner to delete.
+     */
+    where: OwnerWhereUniqueInput
+  }
+
+  /**
+   * Owner deleteMany
+   */
+  export type OwnerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Owners to delete
+     */
+    where?: OwnerWhereInput
+    /**
+     * Limit how many Owners to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Owner.parkingLots
+   */
+  export type Owner$parkingLotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParkingLot
+     */
+    select?: ParkingLotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParkingLot
+     */
+    omit?: ParkingLotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParkingLotInclude<ExtArgs> | null
+    where?: ParkingLotWhereInput
+    orderBy?: ParkingLotOrderByWithRelationInput | ParkingLotOrderByWithRelationInput[]
+    cursor?: ParkingLotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ParkingLotScalarFieldEnum | ParkingLotScalarFieldEnum[]
+  }
+
+  /**
+   * Owner.notifications
+   */
+  export type Owner$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Owner without action
+   */
+  export type OwnerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Owner
+     */
+    select?: OwnerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Owner
+     */
+    omit?: OwnerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OwnerInclude<ExtArgs> | null
   }
 
 
@@ -7973,6 +10377,7 @@ export namespace Prisma {
     lot_id: number | null
     owner_id: number | null
     lot_name: string | null
+    image: string | null
     capacity: number | null
     created_at: Date | null
   }
@@ -7981,6 +10386,7 @@ export namespace Prisma {
     lot_id: number | null
     owner_id: number | null
     lot_name: string | null
+    image: string | null
     capacity: number | null
     created_at: Date | null
   }
@@ -7989,6 +10395,7 @@ export namespace Prisma {
     lot_id: number
     owner_id: number
     lot_name: number
+    image: number
     capacity: number
     created_at: number
     _all: number
@@ -8011,6 +10418,7 @@ export namespace Prisma {
     lot_id?: true
     owner_id?: true
     lot_name?: true
+    image?: true
     capacity?: true
     created_at?: true
   }
@@ -8019,6 +10427,7 @@ export namespace Prisma {
     lot_id?: true
     owner_id?: true
     lot_name?: true
+    image?: true
     capacity?: true
     created_at?: true
   }
@@ -8027,6 +10436,7 @@ export namespace Prisma {
     lot_id?: true
     owner_id?: true
     lot_name?: true
+    image?: true
     capacity?: true
     created_at?: true
     _all?: true
@@ -8122,6 +10532,7 @@ export namespace Prisma {
     lot_id: number
     owner_id: number
     lot_name: string
+    image: string | null
     capacity: number
     created_at: Date
     _count: ParkingLotCountAggregateOutputType | null
@@ -8149,6 +10560,7 @@ export namespace Prisma {
     lot_id?: boolean
     owner_id?: boolean
     lot_name?: boolean
+    image?: boolean
     capacity?: boolean
     created_at?: boolean
     owner?: boolean | OwnerDefaultArgs<ExtArgs>
@@ -8156,6 +10568,7 @@ export namespace Prisma {
     locations?: boolean | ParkingLot$locationsArgs<ExtArgs>
     prices?: boolean | ParkingLot$pricesArgs<ExtArgs>
     reviews?: boolean | ParkingLot$reviewsArgs<ExtArgs>
+    booking?: boolean | ParkingLot$bookingArgs<ExtArgs>
     _count?: boolean | ParkingLotCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["parkingLot"]>
 
@@ -8163,6 +10576,7 @@ export namespace Prisma {
     lot_id?: boolean
     owner_id?: boolean
     lot_name?: boolean
+    image?: boolean
     capacity?: boolean
     created_at?: boolean
     owner?: boolean | OwnerDefaultArgs<ExtArgs>
@@ -8172,6 +10586,7 @@ export namespace Prisma {
     lot_id?: boolean
     owner_id?: boolean
     lot_name?: boolean
+    image?: boolean
     capacity?: boolean
     created_at?: boolean
     owner?: boolean | OwnerDefaultArgs<ExtArgs>
@@ -8181,17 +10596,19 @@ export namespace Prisma {
     lot_id?: boolean
     owner_id?: boolean
     lot_name?: boolean
+    image?: boolean
     capacity?: boolean
     created_at?: boolean
   }
 
-  export type ParkingLotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"lot_id" | "owner_id" | "lot_name" | "capacity" | "created_at", ExtArgs["result"]["parkingLot"]>
+  export type ParkingLotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"lot_id" | "owner_id" | "lot_name" | "image" | "capacity" | "created_at", ExtArgs["result"]["parkingLot"]>
   export type ParkingLotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | OwnerDefaultArgs<ExtArgs>
     spaces?: boolean | ParkingLot$spacesArgs<ExtArgs>
     locations?: boolean | ParkingLot$locationsArgs<ExtArgs>
     prices?: boolean | ParkingLot$pricesArgs<ExtArgs>
     reviews?: boolean | ParkingLot$reviewsArgs<ExtArgs>
+    booking?: boolean | ParkingLot$bookingArgs<ExtArgs>
     _count?: boolean | ParkingLotCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ParkingLotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8209,11 +10626,13 @@ export namespace Prisma {
       locations: Prisma.$LocationPayload<ExtArgs>[]
       prices: Prisma.$PricePayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      booking: Prisma.$BookingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       lot_id: number
       owner_id: number
       lot_name: string
+      image: string | null
       capacity: number
       created_at: Date
     }, ExtArgs["result"]["parkingLot"]>
@@ -8615,6 +11034,7 @@ export namespace Prisma {
     locations<T extends ParkingLot$locationsArgs<ExtArgs> = {}>(args?: Subset<T, ParkingLot$locationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     prices<T extends ParkingLot$pricesArgs<ExtArgs> = {}>(args?: Subset<T, ParkingLot$pricesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PricePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends ParkingLot$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, ParkingLot$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    booking<T extends ParkingLot$bookingArgs<ExtArgs> = {}>(args?: Subset<T, ParkingLot$bookingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8647,6 +11067,7 @@ export namespace Prisma {
     readonly lot_id: FieldRef<"ParkingLot", 'Int'>
     readonly owner_id: FieldRef<"ParkingLot", 'Int'>
     readonly lot_name: FieldRef<"ParkingLot", 'String'>
+    readonly image: FieldRef<"ParkingLot", 'String'>
     readonly capacity: FieldRef<"ParkingLot", 'Int'>
     readonly created_at: FieldRef<"ParkingLot", 'DateTime'>
   }
@@ -9141,6 +11562,30 @@ export namespace Prisma {
   }
 
   /**
+   * ParkingLot.booking
+   */
+  export type ParkingLot$bookingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Booking
+     */
+    select?: BookingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Booking
+     */
+    omit?: BookingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BookingInclude<ExtArgs> | null
+    where?: BookingWhereInput
+    orderBy?: BookingOrderByWithRelationInput | BookingOrderByWithRelationInput[]
+    cursor?: BookingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BookingScalarFieldEnum | BookingScalarFieldEnum[]
+  }
+
+  /**
    * ParkingLot without action
    */
   export type ParkingLotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9186,7 +11631,7 @@ export namespace Prisma {
     lot_id: number | null
     space_number: string | null
     is_handicap: boolean | null
-    status: string | null
+    status: $Enums.SpaceStatus | null
     created_at: Date | null
   }
 
@@ -9195,7 +11640,7 @@ export namespace Prisma {
     lot_id: number | null
     space_number: string | null
     is_handicap: boolean | null
-    status: string | null
+    status: $Enums.SpaceStatus | null
     created_at: Date | null
   }
 
@@ -9339,7 +11784,7 @@ export namespace Prisma {
     lot_id: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status: $Enums.SpaceStatus
     created_at: Date
     _count: ParkingSpaceCountAggregateOutputType | null
     _avg: ParkingSpaceAvgAggregateOutputType | null
@@ -9430,7 +11875,7 @@ export namespace Prisma {
       lot_id: number
       space_number: string
       is_handicap: boolean
-      status: string
+      status: $Enums.SpaceStatus
       created_at: Date
     }, ExtArgs["result"]["parkingSpace"]>
     composites: {}
@@ -9862,7 +12307,7 @@ export namespace Prisma {
     readonly lot_id: FieldRef<"ParkingSpace", 'Int'>
     readonly space_number: FieldRef<"ParkingSpace", 'String'>
     readonly is_handicap: FieldRef<"ParkingSpace", 'Boolean'>
-    readonly status: FieldRef<"ParkingSpace", 'String'>
+    readonly status: FieldRef<"ParkingSpace", 'SpaceStatus'>
     readonly created_at: FieldRef<"ParkingSpace", 'DateTime'>
   }
     
@@ -11410,2378 +13855,6 @@ export namespace Prisma {
 
 
   /**
-   * Model User
-   */
-
-  export type AggregateUser = {
-    _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
-  }
-
-  export type UserAvgAggregateOutputType = {
-    user_id: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    user_id: number | null
-  }
-
-  export type UserMinAggregateOutputType = {
-    user_id: number | null
-    first_name: string | null
-    last_name: string | null
-    email: string | null
-    password: string | null
-    phone: string | null
-    created_at: Date | null
-  }
-
-  export type UserMaxAggregateOutputType = {
-    user_id: number | null
-    first_name: string | null
-    last_name: string | null
-    email: string | null
-    password: string | null
-    phone: string | null
-    created_at: Date | null
-  }
-
-  export type UserCountAggregateOutputType = {
-    user_id: number
-    first_name: number
-    last_name: number
-    email: number
-    password: number
-    phone: number
-    created_at: number
-    _all: number
-  }
-
-
-  export type UserAvgAggregateInputType = {
-    user_id?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    user_id?: true
-  }
-
-  export type UserMinAggregateInputType = {
-    user_id?: true
-    first_name?: true
-    last_name?: true
-    email?: true
-    password?: true
-    phone?: true
-    created_at?: true
-  }
-
-  export type UserMaxAggregateInputType = {
-    user_id?: true
-    first_name?: true
-    last_name?: true
-    email?: true
-    password?: true
-    phone?: true
-    created_at?: true
-  }
-
-  export type UserCountAggregateInputType = {
-    user_id?: true
-    first_name?: true
-    last_name?: true
-    email?: true
-    password?: true
-    phone?: true
-    created_at?: true
-    _all?: true
-  }
-
-  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which User to aggregate.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Users
-    **/
-    _count?: true | UserCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: UserMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: UserMaxAggregateInputType
-  }
-
-  export type GetUserAggregateType<T extends UserAggregateArgs> = {
-        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateUser[P]>
-      : GetScalarType<T[P], AggregateUser[P]>
-  }
-
-
-
-
-  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
-    by: UserScalarFieldEnum[] | UserScalarFieldEnum
-    having?: UserScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
-    _min?: UserMinAggregateInputType
-    _max?: UserMaxAggregateInputType
-  }
-
-  export type UserGroupByOutputType = {
-    user_id: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at: Date
-    _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
-    _min: UserMinAggregateOutputType | null
-    _max: UserMaxAggregateOutputType | null
-  }
-
-  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<UserGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserGroupByOutputType[P]>
-            : GetScalarType<T[P], UserGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    user_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-    bookings?: boolean | User$bookingsArgs<ExtArgs>
-    payments?: boolean | User$paymentsArgs<ExtArgs>
-    reviews?: boolean | User$reviewsArgs<ExtArgs>
-    notifications?: boolean | User$notificationsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["user"]>
-
-  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    user_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-  }, ExtArgs["result"]["user"]>
-
-  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    user_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-  }, ExtArgs["result"]["user"]>
-
-  export type UserSelectScalar = {
-    user_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-  }
-
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "created_at", ExtArgs["result"]["user"]>
-  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    bookings?: boolean | User$bookingsArgs<ExtArgs>
-    payments?: boolean | User$paymentsArgs<ExtArgs>
-    reviews?: boolean | User$reviewsArgs<ExtArgs>
-    notifications?: boolean | User$notificationsArgs<ExtArgs>
-    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "User"
-    objects: {
-      bookings: Prisma.$BookingPayload<ExtArgs>[]
-      payments: Prisma.$PaymentPayload<ExtArgs>[]
-      reviews: Prisma.$ReviewPayload<ExtArgs>[]
-      notifications: Prisma.$NotificationPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      user_id: number
-      first_name: string
-      last_name: string
-      email: string
-      password: string
-      phone: string
-      created_at: Date
-    }, ExtArgs["result"]["user"]>
-    composites: {}
-  }
-
-  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
-
-  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: UserCountAggregateInputType | true
-    }
-
-  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
-    /**
-     * Find zero or one User that matches the filter.
-     * @param {UserFindUniqueArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one User that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first User that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first User that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
-     * @example
-     * // Get one User
-     * const user = await prisma.user.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Users that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Users
-     * const users = await prisma.user.findMany()
-     * 
-     * // Get first 10 Users
-     * const users = await prisma.user.findMany({ take: 10 })
-     * 
-     * // Only select the `user_id`
-     * const userWithUser_idOnly = await prisma.user.findMany({ select: { user_id: true } })
-     * 
-     */
-    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a User.
-     * @param {UserCreateArgs} args - Arguments to create a User.
-     * @example
-     * // Create one User
-     * const User = await prisma.user.create({
-     *   data: {
-     *     // ... data to create a User
-     *   }
-     * })
-     * 
-     */
-    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Users.
-     * @param {UserCreateManyArgs} args - Arguments to create many Users.
-     * @example
-     * // Create many Users
-     * const user = await prisma.user.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Users and returns the data saved in the database.
-     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
-     * @example
-     * // Create many Users
-     * const user = await prisma.user.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Users and only return the `user_id`
-     * const userWithUser_idOnly = await prisma.user.createManyAndReturn({
-     *   select: { user_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a User.
-     * @param {UserDeleteArgs} args - Arguments to delete one User.
-     * @example
-     * // Delete one User
-     * const User = await prisma.user.delete({
-     *   where: {
-     *     // ... filter to delete one User
-     *   }
-     * })
-     * 
-     */
-    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one User.
-     * @param {UserUpdateArgs} args - Arguments to update one User.
-     * @example
-     * // Update one User
-     * const user = await prisma.user.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Users.
-     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
-     * @example
-     * // Delete a few Users
-     * const { count } = await prisma.user.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Users
-     * const user = await prisma.user.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Users and returns the data updated in the database.
-     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
-     * @example
-     * // Update many Users
-     * const user = await prisma.user.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Users and only return the `user_id`
-     * const userWithUser_idOnly = await prisma.user.updateManyAndReturn({
-     *   select: { user_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one User.
-     * @param {UserUpsertArgs} args - Arguments to update or create a User.
-     * @example
-     * // Update or create a User
-     * const user = await prisma.user.upsert({
-     *   create: {
-     *     // ... data to create a User
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the User we want to update
-     *   }
-     * })
-     */
-    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Users.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserCountArgs} args - Arguments to filter Users to count.
-     * @example
-     * // Count the number of Users
-     * const count = await prisma.user.count({
-     *   where: {
-     *     // ... the filter for the Users we want to count
-     *   }
-     * })
-    **/
-    count<T extends UserCountArgs>(
-      args?: Subset<T, UserCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], UserCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a User.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
-
-    /**
-     * Group by User.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {UserGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends UserGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserGroupByArgs['orderBy'] }
-        : { orderBy?: UserGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the User model
-   */
-  readonly fields: UserFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for User.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    bookings<T extends User$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the User model
-   */
-  interface UserFieldRefs {
-    readonly user_id: FieldRef<"User", 'Int'>
-    readonly first_name: FieldRef<"User", 'String'>
-    readonly last_name: FieldRef<"User", 'String'>
-    readonly email: FieldRef<"User", 'String'>
-    readonly password: FieldRef<"User", 'String'>
-    readonly phone: FieldRef<"User", 'String'>
-    readonly created_at: FieldRef<"User", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * User findUnique
-   */
-  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where: UserWhereUniqueInput
-  }
-
-  /**
-   * User findUniqueOrThrow
-   */
-  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where: UserWhereUniqueInput
-  }
-
-  /**
-   * User findFirst
-   */
-  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Users.
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Users.
-     */
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * User findFirstOrThrow
-   */
-  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter, which User to fetch.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Users.
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Users.
-     */
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * User findMany
-   */
-  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter, which Users to fetch.
-     */
-    where?: UserWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Users to fetch.
-     */
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Users.
-     */
-    cursor?: UserWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Users from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Users.
-     */
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
-   * User create
-   */
-  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * The data needed to create a User.
-     */
-    data: XOR<UserCreateInput, UserUncheckedCreateInput>
-  }
-
-  /**
-   * User createMany
-   */
-  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Users.
-     */
-    data: UserCreateManyInput | UserCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * User createManyAndReturn
-   */
-  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * The data used to create many Users.
-     */
-    data: UserCreateManyInput | UserCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * User update
-   */
-  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * The data needed to update a User.
-     */
-    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
-    /**
-     * Choose, which User to update.
-     */
-    where: UserWhereUniqueInput
-  }
-
-  /**
-   * User updateMany
-   */
-  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Users.
-     */
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
-    /**
-     * Filter which Users to update
-     */
-    where?: UserWhereInput
-    /**
-     * Limit how many Users to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * User updateManyAndReturn
-   */
-  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * The data used to update Users.
-     */
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
-    /**
-     * Filter which Users to update
-     */
-    where?: UserWhereInput
-    /**
-     * Limit how many Users to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * User upsert
-   */
-  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * The filter to search for the User to update in case it exists.
-     */
-    where: UserWhereUniqueInput
-    /**
-     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
-     */
-    create: XOR<UserCreateInput, UserUncheckedCreateInput>
-    /**
-     * In case the User was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
-  }
-
-  /**
-   * User delete
-   */
-  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
-     * Filter which User to delete.
-     */
-    where: UserWhereUniqueInput
-  }
-
-  /**
-   * User deleteMany
-   */
-  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Users to delete
-     */
-    where?: UserWhereInput
-    /**
-     * Limit how many Users to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * User.bookings
-   */
-  export type User$bookingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Booking
-     */
-    select?: BookingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Booking
-     */
-    omit?: BookingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: BookingInclude<ExtArgs> | null
-    where?: BookingWhereInput
-    orderBy?: BookingOrderByWithRelationInput | BookingOrderByWithRelationInput[]
-    cursor?: BookingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: BookingScalarFieldEnum | BookingScalarFieldEnum[]
-  }
-
-  /**
-   * User.payments
-   */
-  export type User$paymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Payment
-     */
-    select?: PaymentSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Payment
-     */
-    omit?: PaymentOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PaymentInclude<ExtArgs> | null
-    where?: PaymentWhereInput
-    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
-    cursor?: PaymentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
-  }
-
-  /**
-   * User.reviews
-   */
-  export type User$reviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Review
-     */
-    select?: ReviewSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Review
-     */
-    omit?: ReviewOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ReviewInclude<ExtArgs> | null
-    where?: ReviewWhereInput
-    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
-    cursor?: ReviewWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
-  }
-
-  /**
-   * User.notifications
-   */
-  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Notification
-     */
-    select?: NotificationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Notification
-     */
-    omit?: NotificationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NotificationInclude<ExtArgs> | null
-    where?: NotificationWhereInput
-    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
-    cursor?: NotificationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
-  }
-
-  /**
-   * User without action
-   */
-  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Owner
-   */
-
-  export type AggregateOwner = {
-    _count: OwnerCountAggregateOutputType | null
-    _avg: OwnerAvgAggregateOutputType | null
-    _sum: OwnerSumAggregateOutputType | null
-    _min: OwnerMinAggregateOutputType | null
-    _max: OwnerMaxAggregateOutputType | null
-  }
-
-  export type OwnerAvgAggregateOutputType = {
-    owner_id: number | null
-  }
-
-  export type OwnerSumAggregateOutputType = {
-    owner_id: number | null
-  }
-
-  export type OwnerMinAggregateOutputType = {
-    owner_id: number | null
-    first_name: string | null
-    last_name: string | null
-    email: string | null
-    password: string | null
-    phone: string | null
-    created_at: Date | null
-  }
-
-  export type OwnerMaxAggregateOutputType = {
-    owner_id: number | null
-    first_name: string | null
-    last_name: string | null
-    email: string | null
-    password: string | null
-    phone: string | null
-    created_at: Date | null
-  }
-
-  export type OwnerCountAggregateOutputType = {
-    owner_id: number
-    first_name: number
-    last_name: number
-    email: number
-    password: number
-    phone: number
-    created_at: number
-    _all: number
-  }
-
-
-  export type OwnerAvgAggregateInputType = {
-    owner_id?: true
-  }
-
-  export type OwnerSumAggregateInputType = {
-    owner_id?: true
-  }
-
-  export type OwnerMinAggregateInputType = {
-    owner_id?: true
-    first_name?: true
-    last_name?: true
-    email?: true
-    password?: true
-    phone?: true
-    created_at?: true
-  }
-
-  export type OwnerMaxAggregateInputType = {
-    owner_id?: true
-    first_name?: true
-    last_name?: true
-    email?: true
-    password?: true
-    phone?: true
-    created_at?: true
-  }
-
-  export type OwnerCountAggregateInputType = {
-    owner_id?: true
-    first_name?: true
-    last_name?: true
-    email?: true
-    password?: true
-    phone?: true
-    created_at?: true
-    _all?: true
-  }
-
-  export type OwnerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Owner to aggregate.
-     */
-    where?: OwnerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Owners to fetch.
-     */
-    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: OwnerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Owners from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Owners.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Owners
-    **/
-    _count?: true | OwnerCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: OwnerAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: OwnerSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: OwnerMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: OwnerMaxAggregateInputType
-  }
-
-  export type GetOwnerAggregateType<T extends OwnerAggregateArgs> = {
-        [P in keyof T & keyof AggregateOwner]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateOwner[P]>
-      : GetScalarType<T[P], AggregateOwner[P]>
-  }
-
-
-
-
-  export type OwnerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: OwnerWhereInput
-    orderBy?: OwnerOrderByWithAggregationInput | OwnerOrderByWithAggregationInput[]
-    by: OwnerScalarFieldEnum[] | OwnerScalarFieldEnum
-    having?: OwnerScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: OwnerCountAggregateInputType | true
-    _avg?: OwnerAvgAggregateInputType
-    _sum?: OwnerSumAggregateInputType
-    _min?: OwnerMinAggregateInputType
-    _max?: OwnerMaxAggregateInputType
-  }
-
-  export type OwnerGroupByOutputType = {
-    owner_id: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at: Date
-    _count: OwnerCountAggregateOutputType | null
-    _avg: OwnerAvgAggregateOutputType | null
-    _sum: OwnerSumAggregateOutputType | null
-    _min: OwnerMinAggregateOutputType | null
-    _max: OwnerMaxAggregateOutputType | null
-  }
-
-  type GetOwnerGroupByPayload<T extends OwnerGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<OwnerGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof OwnerGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], OwnerGroupByOutputType[P]>
-            : GetScalarType<T[P], OwnerGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type OwnerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    owner_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-    parkingLots?: boolean | Owner$parkingLotsArgs<ExtArgs>
-    notifications?: boolean | Owner$notificationsArgs<ExtArgs>
-    _count?: boolean | OwnerCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["owner"]>
-
-  export type OwnerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    owner_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-  }, ExtArgs["result"]["owner"]>
-
-  export type OwnerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    owner_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-  }, ExtArgs["result"]["owner"]>
-
-  export type OwnerSelectScalar = {
-    owner_id?: boolean
-    first_name?: boolean
-    last_name?: boolean
-    email?: boolean
-    password?: boolean
-    phone?: boolean
-    created_at?: boolean
-  }
-
-  export type OwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"owner_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "created_at", ExtArgs["result"]["owner"]>
-  export type OwnerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    parkingLots?: boolean | Owner$parkingLotsArgs<ExtArgs>
-    notifications?: boolean | Owner$notificationsArgs<ExtArgs>
-    _count?: boolean | OwnerCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type OwnerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type OwnerIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $OwnerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Owner"
-    objects: {
-      parkingLots: Prisma.$ParkingLotPayload<ExtArgs>[]
-      notifications: Prisma.$NotificationPayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      owner_id: number
-      first_name: string
-      last_name: string
-      email: string
-      password: string
-      phone: string
-      created_at: Date
-    }, ExtArgs["result"]["owner"]>
-    composites: {}
-  }
-
-  type OwnerGetPayload<S extends boolean | null | undefined | OwnerDefaultArgs> = $Result.GetResult<Prisma.$OwnerPayload, S>
-
-  type OwnerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<OwnerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: OwnerCountAggregateInputType | true
-    }
-
-  export interface OwnerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Owner'], meta: { name: 'Owner' } }
-    /**
-     * Find zero or one Owner that matches the filter.
-     * @param {OwnerFindUniqueArgs} args - Arguments to find a Owner
-     * @example
-     * // Get one Owner
-     * const owner = await prisma.owner.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends OwnerFindUniqueArgs>(args: SelectSubset<T, OwnerFindUniqueArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Owner that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {OwnerFindUniqueOrThrowArgs} args - Arguments to find a Owner
-     * @example
-     * // Get one Owner
-     * const owner = await prisma.owner.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends OwnerFindUniqueOrThrowArgs>(args: SelectSubset<T, OwnerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Owner that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerFindFirstArgs} args - Arguments to find a Owner
-     * @example
-     * // Get one Owner
-     * const owner = await prisma.owner.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends OwnerFindFirstArgs>(args?: SelectSubset<T, OwnerFindFirstArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Owner that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerFindFirstOrThrowArgs} args - Arguments to find a Owner
-     * @example
-     * // Get one Owner
-     * const owner = await prisma.owner.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends OwnerFindFirstOrThrowArgs>(args?: SelectSubset<T, OwnerFindFirstOrThrowArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Owners that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Owners
-     * const owners = await prisma.owner.findMany()
-     * 
-     * // Get first 10 Owners
-     * const owners = await prisma.owner.findMany({ take: 10 })
-     * 
-     * // Only select the `owner_id`
-     * const ownerWithOwner_idOnly = await prisma.owner.findMany({ select: { owner_id: true } })
-     * 
-     */
-    findMany<T extends OwnerFindManyArgs>(args?: SelectSubset<T, OwnerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Owner.
-     * @param {OwnerCreateArgs} args - Arguments to create a Owner.
-     * @example
-     * // Create one Owner
-     * const Owner = await prisma.owner.create({
-     *   data: {
-     *     // ... data to create a Owner
-     *   }
-     * })
-     * 
-     */
-    create<T extends OwnerCreateArgs>(args: SelectSubset<T, OwnerCreateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Owners.
-     * @param {OwnerCreateManyArgs} args - Arguments to create many Owners.
-     * @example
-     * // Create many Owners
-     * const owner = await prisma.owner.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends OwnerCreateManyArgs>(args?: SelectSubset<T, OwnerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Owners and returns the data saved in the database.
-     * @param {OwnerCreateManyAndReturnArgs} args - Arguments to create many Owners.
-     * @example
-     * // Create many Owners
-     * const owner = await prisma.owner.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Owners and only return the `owner_id`
-     * const ownerWithOwner_idOnly = await prisma.owner.createManyAndReturn({
-     *   select: { owner_id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends OwnerCreateManyAndReturnArgs>(args?: SelectSubset<T, OwnerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Owner.
-     * @param {OwnerDeleteArgs} args - Arguments to delete one Owner.
-     * @example
-     * // Delete one Owner
-     * const Owner = await prisma.owner.delete({
-     *   where: {
-     *     // ... filter to delete one Owner
-     *   }
-     * })
-     * 
-     */
-    delete<T extends OwnerDeleteArgs>(args: SelectSubset<T, OwnerDeleteArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Owner.
-     * @param {OwnerUpdateArgs} args - Arguments to update one Owner.
-     * @example
-     * // Update one Owner
-     * const owner = await prisma.owner.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends OwnerUpdateArgs>(args: SelectSubset<T, OwnerUpdateArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Owners.
-     * @param {OwnerDeleteManyArgs} args - Arguments to filter Owners to delete.
-     * @example
-     * // Delete a few Owners
-     * const { count } = await prisma.owner.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends OwnerDeleteManyArgs>(args?: SelectSubset<T, OwnerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Owners.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Owners
-     * const owner = await prisma.owner.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends OwnerUpdateManyArgs>(args: SelectSubset<T, OwnerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Owners and returns the data updated in the database.
-     * @param {OwnerUpdateManyAndReturnArgs} args - Arguments to update many Owners.
-     * @example
-     * // Update many Owners
-     * const owner = await prisma.owner.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Owners and only return the `owner_id`
-     * const ownerWithOwner_idOnly = await prisma.owner.updateManyAndReturn({
-     *   select: { owner_id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends OwnerUpdateManyAndReturnArgs>(args: SelectSubset<T, OwnerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Owner.
-     * @param {OwnerUpsertArgs} args - Arguments to update or create a Owner.
-     * @example
-     * // Update or create a Owner
-     * const owner = await prisma.owner.upsert({
-     *   create: {
-     *     // ... data to create a Owner
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Owner we want to update
-     *   }
-     * })
-     */
-    upsert<T extends OwnerUpsertArgs>(args: SelectSubset<T, OwnerUpsertArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Owners.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerCountArgs} args - Arguments to filter Owners to count.
-     * @example
-     * // Count the number of Owners
-     * const count = await prisma.owner.count({
-     *   where: {
-     *     // ... the filter for the Owners we want to count
-     *   }
-     * })
-    **/
-    count<T extends OwnerCountArgs>(
-      args?: Subset<T, OwnerCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], OwnerCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Owner.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends OwnerAggregateArgs>(args: Subset<T, OwnerAggregateArgs>): Prisma.PrismaPromise<GetOwnerAggregateType<T>>
-
-    /**
-     * Group by Owner.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OwnerGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends OwnerGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: OwnerGroupByArgs['orderBy'] }
-        : { orderBy?: OwnerGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, OwnerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOwnerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Owner model
-   */
-  readonly fields: OwnerFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Owner.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__OwnerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    parkingLots<T extends Owner$parkingLotsArgs<ExtArgs> = {}>(args?: Subset<T, Owner$parkingLotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParkingLotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    notifications<T extends Owner$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Owner$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Owner model
-   */
-  interface OwnerFieldRefs {
-    readonly owner_id: FieldRef<"Owner", 'Int'>
-    readonly first_name: FieldRef<"Owner", 'String'>
-    readonly last_name: FieldRef<"Owner", 'String'>
-    readonly email: FieldRef<"Owner", 'String'>
-    readonly password: FieldRef<"Owner", 'String'>
-    readonly phone: FieldRef<"Owner", 'String'>
-    readonly created_at: FieldRef<"Owner", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Owner findUnique
-   */
-  export type OwnerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * Filter, which Owner to fetch.
-     */
-    where: OwnerWhereUniqueInput
-  }
-
-  /**
-   * Owner findUniqueOrThrow
-   */
-  export type OwnerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * Filter, which Owner to fetch.
-     */
-    where: OwnerWhereUniqueInput
-  }
-
-  /**
-   * Owner findFirst
-   */
-  export type OwnerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * Filter, which Owner to fetch.
-     */
-    where?: OwnerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Owners to fetch.
-     */
-    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Owners.
-     */
-    cursor?: OwnerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Owners from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Owners.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Owners.
-     */
-    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
-  }
-
-  /**
-   * Owner findFirstOrThrow
-   */
-  export type OwnerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * Filter, which Owner to fetch.
-     */
-    where?: OwnerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Owners to fetch.
-     */
-    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Owners.
-     */
-    cursor?: OwnerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Owners from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Owners.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Owners.
-     */
-    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
-  }
-
-  /**
-   * Owner findMany
-   */
-  export type OwnerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * Filter, which Owners to fetch.
-     */
-    where?: OwnerWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Owners to fetch.
-     */
-    orderBy?: OwnerOrderByWithRelationInput | OwnerOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Owners.
-     */
-    cursor?: OwnerWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Owners from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Owners.
-     */
-    skip?: number
-    distinct?: OwnerScalarFieldEnum | OwnerScalarFieldEnum[]
-  }
-
-  /**
-   * Owner create
-   */
-  export type OwnerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Owner.
-     */
-    data: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
-  }
-
-  /**
-   * Owner createMany
-   */
-  export type OwnerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Owners.
-     */
-    data: OwnerCreateManyInput | OwnerCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Owner createManyAndReturn
-   */
-  export type OwnerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * The data used to create many Owners.
-     */
-    data: OwnerCreateManyInput | OwnerCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Owner update
-   */
-  export type OwnerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Owner.
-     */
-    data: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
-    /**
-     * Choose, which Owner to update.
-     */
-    where: OwnerWhereUniqueInput
-  }
-
-  /**
-   * Owner updateMany
-   */
-  export type OwnerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Owners.
-     */
-    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
-    /**
-     * Filter which Owners to update
-     */
-    where?: OwnerWhereInput
-    /**
-     * Limit how many Owners to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Owner updateManyAndReturn
-   */
-  export type OwnerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * The data used to update Owners.
-     */
-    data: XOR<OwnerUpdateManyMutationInput, OwnerUncheckedUpdateManyInput>
-    /**
-     * Filter which Owners to update
-     */
-    where?: OwnerWhereInput
-    /**
-     * Limit how many Owners to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Owner upsert
-   */
-  export type OwnerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Owner to update in case it exists.
-     */
-    where: OwnerWhereUniqueInput
-    /**
-     * In case the Owner found by the `where` argument doesn't exist, create a new Owner with this data.
-     */
-    create: XOR<OwnerCreateInput, OwnerUncheckedCreateInput>
-    /**
-     * In case the Owner was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<OwnerUpdateInput, OwnerUncheckedUpdateInput>
-  }
-
-  /**
-   * Owner delete
-   */
-  export type OwnerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-    /**
-     * Filter which Owner to delete.
-     */
-    where: OwnerWhereUniqueInput
-  }
-
-  /**
-   * Owner deleteMany
-   */
-  export type OwnerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Owners to delete
-     */
-    where?: OwnerWhereInput
-    /**
-     * Limit how many Owners to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Owner.parkingLots
-   */
-  export type Owner$parkingLotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ParkingLot
-     */
-    select?: ParkingLotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ParkingLot
-     */
-    omit?: ParkingLotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ParkingLotInclude<ExtArgs> | null
-    where?: ParkingLotWhereInput
-    orderBy?: ParkingLotOrderByWithRelationInput | ParkingLotOrderByWithRelationInput[]
-    cursor?: ParkingLotWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ParkingLotScalarFieldEnum | ParkingLotScalarFieldEnum[]
-  }
-
-  /**
-   * Owner.notifications
-   */
-  export type Owner$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Notification
-     */
-    select?: NotificationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Notification
-     */
-    omit?: NotificationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: NotificationInclude<ExtArgs> | null
-    where?: NotificationWhereInput
-    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
-    cursor?: NotificationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
-  }
-
-  /**
-   * Owner without action
-   */
-  export type OwnerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Owner
-     */
-    select?: OwnerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Owner
-     */
-    omit?: OwnerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OwnerInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Booking
    */
 
@@ -13795,36 +13868,41 @@ export namespace Prisma {
 
   export type BookingAvgAggregateOutputType = {
     booking_id: number | null
+    lot_id: number | null
     user_id: number | null
     space_id: number | null
   }
 
   export type BookingSumAggregateOutputType = {
     booking_id: number | null
+    lot_id: number | null
     user_id: number | null
     space_id: number | null
   }
 
   export type BookingMinAggregateOutputType = {
     booking_id: number | null
+    lot_id: number | null
     user_id: number | null
     space_id: number | null
     start_time: Date | null
     end_time: Date | null
-    status: string | null
+    status: $Enums.BookStatus | null
   }
 
   export type BookingMaxAggregateOutputType = {
     booking_id: number | null
+    lot_id: number | null
     user_id: number | null
     space_id: number | null
     start_time: Date | null
     end_time: Date | null
-    status: string | null
+    status: $Enums.BookStatus | null
   }
 
   export type BookingCountAggregateOutputType = {
     booking_id: number
+    lot_id: number
     user_id: number
     space_id: number
     start_time: number
@@ -13836,18 +13914,21 @@ export namespace Prisma {
 
   export type BookingAvgAggregateInputType = {
     booking_id?: true
+    lot_id?: true
     user_id?: true
     space_id?: true
   }
 
   export type BookingSumAggregateInputType = {
     booking_id?: true
+    lot_id?: true
     user_id?: true
     space_id?: true
   }
 
   export type BookingMinAggregateInputType = {
     booking_id?: true
+    lot_id?: true
     user_id?: true
     space_id?: true
     start_time?: true
@@ -13857,6 +13938,7 @@ export namespace Prisma {
 
   export type BookingMaxAggregateInputType = {
     booking_id?: true
+    lot_id?: true
     user_id?: true
     space_id?: true
     start_time?: true
@@ -13866,6 +13948,7 @@ export namespace Prisma {
 
   export type BookingCountAggregateInputType = {
     booking_id?: true
+    lot_id?: true
     user_id?: true
     space_id?: true
     start_time?: true
@@ -13962,11 +14045,12 @@ export namespace Prisma {
 
   export type BookingGroupByOutputType = {
     booking_id: number
+    lot_id: number
     user_id: number
     space_id: number
     start_time: Date
     end_time: Date
-    status: string
+    status: $Enums.BookStatus
     _count: BookingCountAggregateOutputType | null
     _avg: BookingAvgAggregateOutputType | null
     _sum: BookingSumAggregateOutputType | null
@@ -13990,6 +14074,7 @@ export namespace Prisma {
 
   export type BookingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     booking_id?: boolean
+    lot_id?: boolean
     user_id?: boolean
     space_id?: boolean
     start_time?: boolean
@@ -13997,11 +14082,14 @@ export namespace Prisma {
     status?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+    lot?: boolean | ParkingLotDefaultArgs<ExtArgs>
     payment?: boolean | Booking$paymentArgs<ExtArgs>
+    _count?: boolean | BookingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     booking_id?: boolean
+    lot_id?: boolean
     user_id?: boolean
     space_id?: boolean
     start_time?: boolean
@@ -14009,10 +14097,12 @@ export namespace Prisma {
     status?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+    lot?: boolean | ParkingLotDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     booking_id?: boolean
+    lot_id?: boolean
     user_id?: boolean
     space_id?: boolean
     start_time?: boolean
@@ -14020,10 +14110,12 @@ export namespace Prisma {
     status?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+    lot?: boolean | ParkingLotDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["booking"]>
 
   export type BookingSelectScalar = {
     booking_id?: boolean
+    lot_id?: boolean
     user_id?: boolean
     space_id?: boolean
     start_time?: boolean
@@ -14031,19 +14123,23 @@ export namespace Prisma {
     status?: boolean
   }
 
-  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"booking_id" | "user_id" | "space_id" | "start_time" | "end_time" | "status", ExtArgs["result"]["booking"]>
+  export type BookingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"booking_id" | "lot_id" | "user_id" | "space_id" | "start_time" | "end_time" | "status", ExtArgs["result"]["booking"]>
   export type BookingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+    lot?: boolean | ParkingLotDefaultArgs<ExtArgs>
     payment?: boolean | Booking$paymentArgs<ExtArgs>
+    _count?: boolean | BookingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BookingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+    lot?: boolean | ParkingLotDefaultArgs<ExtArgs>
   }
   export type BookingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     space?: boolean | ParkingSpaceDefaultArgs<ExtArgs>
+    lot?: boolean | ParkingLotDefaultArgs<ExtArgs>
   }
 
   export type $BookingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14051,15 +14147,17 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       space: Prisma.$ParkingSpacePayload<ExtArgs>
-      payment: Prisma.$PaymentPayload<ExtArgs> | null
+      lot: Prisma.$ParkingLotPayload<ExtArgs>
+      payment: Prisma.$PaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       booking_id: number
+      lot_id: number
       user_id: number
       space_id: number
       start_time: Date
       end_time: Date
-      status: string
+      status: $Enums.BookStatus
     }, ExtArgs["result"]["booking"]>
     composites: {}
   }
@@ -14456,7 +14554,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     space<T extends ParkingSpaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ParkingSpaceDefaultArgs<ExtArgs>>): Prisma__ParkingSpaceClient<$Result.GetResult<Prisma.$ParkingSpacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    payment<T extends Booking$paymentArgs<ExtArgs> = {}>(args?: Subset<T, Booking$paymentArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    lot<T extends ParkingLotDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ParkingLotDefaultArgs<ExtArgs>>): Prisma__ParkingLotClient<$Result.GetResult<Prisma.$ParkingLotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    payment<T extends Booking$paymentArgs<ExtArgs> = {}>(args?: Subset<T, Booking$paymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14487,11 +14586,12 @@ export namespace Prisma {
    */
   interface BookingFieldRefs {
     readonly booking_id: FieldRef<"Booking", 'Int'>
+    readonly lot_id: FieldRef<"Booking", 'Int'>
     readonly user_id: FieldRef<"Booking", 'Int'>
     readonly space_id: FieldRef<"Booking", 'Int'>
     readonly start_time: FieldRef<"Booking", 'DateTime'>
     readonly end_time: FieldRef<"Booking", 'DateTime'>
-    readonly status: FieldRef<"Booking", 'String'>
+    readonly status: FieldRef<"Booking", 'BookStatus'>
   }
     
 
@@ -14904,6 +15004,11 @@ export namespace Prisma {
      */
     include?: PaymentInclude<ExtArgs> | null
     where?: PaymentWhereInput
+    orderBy?: PaymentOrderByWithRelationInput | PaymentOrderByWithRelationInput[]
+    cursor?: PaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentScalarFieldEnum | PaymentScalarFieldEnum[]
   }
 
   /**
@@ -18276,19 +18381,16 @@ export namespace Prisma {
 
   export type NotificationAvgAggregateOutputType = {
     notification_id: number | null
-    user_id: number | null
     owner_id: number | null
   }
 
   export type NotificationSumAggregateOutputType = {
     notification_id: number | null
-    user_id: number | null
     owner_id: number | null
   }
 
   export type NotificationMinAggregateOutputType = {
     notification_id: number | null
-    user_id: number | null
     owner_id: number | null
     message: string | null
     sent_at: Date | null
@@ -18296,7 +18398,6 @@ export namespace Prisma {
 
   export type NotificationMaxAggregateOutputType = {
     notification_id: number | null
-    user_id: number | null
     owner_id: number | null
     message: string | null
     sent_at: Date | null
@@ -18304,7 +18405,6 @@ export namespace Prisma {
 
   export type NotificationCountAggregateOutputType = {
     notification_id: number
-    user_id: number
     owner_id: number
     message: number
     sent_at: number
@@ -18314,19 +18414,16 @@ export namespace Prisma {
 
   export type NotificationAvgAggregateInputType = {
     notification_id?: true
-    user_id?: true
     owner_id?: true
   }
 
   export type NotificationSumAggregateInputType = {
     notification_id?: true
-    user_id?: true
     owner_id?: true
   }
 
   export type NotificationMinAggregateInputType = {
     notification_id?: true
-    user_id?: true
     owner_id?: true
     message?: true
     sent_at?: true
@@ -18334,7 +18431,6 @@ export namespace Prisma {
 
   export type NotificationMaxAggregateInputType = {
     notification_id?: true
-    user_id?: true
     owner_id?: true
     message?: true
     sent_at?: true
@@ -18342,7 +18438,6 @@ export namespace Prisma {
 
   export type NotificationCountAggregateInputType = {
     notification_id?: true
-    user_id?: true
     owner_id?: true
     message?: true
     sent_at?: true
@@ -18437,7 +18532,6 @@ export namespace Prisma {
 
   export type NotificationGroupByOutputType = {
     notification_id: number
-    user_id: number | null
     owner_id: number | null
     message: string
     sent_at: Date
@@ -18464,65 +18558,53 @@ export namespace Prisma {
 
   export type NotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     notification_id?: boolean
-    user_id?: boolean
     owner_id?: boolean
     message?: boolean
     sent_at?: boolean
-    user?: boolean | Notification$userArgs<ExtArgs>
     owner?: boolean | Notification$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["notification"]>
 
   export type NotificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     notification_id?: boolean
-    user_id?: boolean
     owner_id?: boolean
     message?: boolean
     sent_at?: boolean
-    user?: boolean | Notification$userArgs<ExtArgs>
     owner?: boolean | Notification$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["notification"]>
 
   export type NotificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     notification_id?: boolean
-    user_id?: boolean
     owner_id?: boolean
     message?: boolean
     sent_at?: boolean
-    user?: boolean | Notification$userArgs<ExtArgs>
     owner?: boolean | Notification$ownerArgs<ExtArgs>
   }, ExtArgs["result"]["notification"]>
 
   export type NotificationSelectScalar = {
     notification_id?: boolean
-    user_id?: boolean
     owner_id?: boolean
     message?: boolean
     sent_at?: boolean
   }
 
-  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"notification_id" | "user_id" | "owner_id" | "message" | "sent_at", ExtArgs["result"]["notification"]>
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"notification_id" | "owner_id" | "message" | "sent_at", ExtArgs["result"]["notification"]>
   export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Notification$userArgs<ExtArgs>
     owner?: boolean | Notification$ownerArgs<ExtArgs>
   }
   export type NotificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Notification$userArgs<ExtArgs>
     owner?: boolean | Notification$ownerArgs<ExtArgs>
   }
   export type NotificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Notification$userArgs<ExtArgs>
     owner?: boolean | Notification$ownerArgs<ExtArgs>
   }
 
   export type $NotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Notification"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs> | null
       owner: Prisma.$OwnerPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       notification_id: number
-      user_id: number | null
       owner_id: number | null
       message: string
       sent_at: Date
@@ -18920,7 +19002,6 @@ export namespace Prisma {
    */
   export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends Notification$userArgs<ExtArgs> = {}>(args?: Subset<T, Notification$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     owner<T extends Notification$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Notification$ownerArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -18952,7 +19033,6 @@ export namespace Prisma {
    */
   interface NotificationFieldRefs {
     readonly notification_id: FieldRef<"Notification", 'Int'>
-    readonly user_id: FieldRef<"Notification", 'Int'>
     readonly owner_id: FieldRef<"Notification", 'Int'>
     readonly message: FieldRef<"Notification", 'String'>
     readonly sent_at: FieldRef<"Notification", 'DateTime'>
@@ -19352,25 +19432,6 @@ export namespace Prisma {
   }
 
   /**
-   * Notification.user
-   */
-  export type Notification$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
    * Notification.owner
    */
   export type Notification$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19424,8 +19485,8 @@ export namespace Prisma {
 
   export const AdminScalarFieldEnum: {
     id: 'id',
-    firstName: 'firstName',
-    lastName: 'lastName',
+    first_name: 'first_name',
+    last_name: 'last_name',
     email: 'email',
     password: 'password',
     phone: 'phone',
@@ -19433,6 +19494,32 @@ export namespace Prisma {
   };
 
   export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    user_id: 'user_id',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    email: 'email',
+    password: 'password',
+    phone: 'phone',
+    created_at: 'created_at'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const OwnerScalarFieldEnum: {
+    owner_id: 'owner_id',
+    first_name: 'first_name',
+    last_name: 'last_name',
+    email: 'email',
+    password: 'password',
+    phone: 'phone',
+    created_at: 'created_at'
+  };
+
+  export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
 
 
   export const CityScalarFieldEnum: {
@@ -19482,6 +19569,7 @@ export namespace Prisma {
     lot_id: 'lot_id',
     owner_id: 'owner_id',
     lot_name: 'lot_name',
+    image: 'image',
     capacity: 'capacity',
     created_at: 'created_at'
   };
@@ -19511,34 +19599,9 @@ export namespace Prisma {
   export type AvailabilityLogScalarFieldEnum = (typeof AvailabilityLogScalarFieldEnum)[keyof typeof AvailabilityLogScalarFieldEnum]
 
 
-  export const UserScalarFieldEnum: {
-    user_id: 'user_id',
-    first_name: 'first_name',
-    last_name: 'last_name',
-    email: 'email',
-    password: 'password',
-    phone: 'phone',
-    created_at: 'created_at'
-  };
-
-  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-  export const OwnerScalarFieldEnum: {
-    owner_id: 'owner_id',
-    first_name: 'first_name',
-    last_name: 'last_name',
-    email: 'email',
-    password: 'password',
-    phone: 'phone',
-    created_at: 'created_at'
-  };
-
-  export type OwnerScalarFieldEnum = (typeof OwnerScalarFieldEnum)[keyof typeof OwnerScalarFieldEnum]
-
-
   export const BookingScalarFieldEnum: {
     booking_id: 'booking_id',
+    lot_id: 'lot_id',
     user_id: 'user_id',
     space_id: 'space_id',
     start_time: 'start_time',
@@ -19585,7 +19648,6 @@ export namespace Prisma {
 
   export const NotificationScalarFieldEnum: {
     notification_id: 'notification_id',
-    user_id: 'user_id',
     owner_id: 'owner_id',
     message: 'message',
     sent_at: 'sent_at'
@@ -19684,6 +19746,34 @@ export namespace Prisma {
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
+
+
+  /**
+   * Reference to a field of type 'SpaceStatus'
+   */
+  export type EnumSpaceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpaceStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'SpaceStatus[]'
+   */
+  export type ListEnumSpaceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpaceStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BookStatus'
+   */
+  export type EnumBookStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BookStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'BookStatus[]'
+   */
+  export type ListEnumBookStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BookStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -19694,8 +19784,8 @@ export namespace Prisma {
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
     id?: IntFilter<"Admin"> | number
-    firstName?: StringFilter<"Admin"> | string
-    lastName?: StringFilter<"Admin"> | string
+    first_name?: StringFilter<"Admin"> | string
+    last_name?: StringFilter<"Admin"> | string
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     phone?: StringFilter<"Admin"> | string
@@ -19704,8 +19794,8 @@ export namespace Prisma {
 
   export type AdminOrderByWithRelationInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
@@ -19718,8 +19808,8 @@ export namespace Prisma {
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
-    firstName?: StringFilter<"Admin"> | string
-    lastName?: StringFilter<"Admin"> | string
+    first_name?: StringFilter<"Admin"> | string
+    last_name?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     phone?: StringFilter<"Admin"> | string
     createdAt?: DateTimeFilter<"Admin"> | Date | string
@@ -19727,8 +19817,8 @@ export namespace Prisma {
 
   export type AdminOrderByWithAggregationInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
@@ -19745,12 +19835,155 @@ export namespace Prisma {
     OR?: AdminScalarWhereWithAggregatesInput[]
     NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Admin"> | number
-    firstName?: StringWithAggregatesFilter<"Admin"> | string
-    lastName?: StringWithAggregatesFilter<"Admin"> | string
+    first_name?: StringWithAggregatesFilter<"Admin"> | string
+    last_name?: StringWithAggregatesFilter<"Admin"> | string
     email?: StringWithAggregatesFilter<"Admin"> | string
     password?: StringWithAggregatesFilter<"Admin"> | string
     phone?: StringWithAggregatesFilter<"Admin"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
+  }
+
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    user_id?: IntFilter<"User"> | number
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    phone?: StringFilter<"User"> | string
+    created_at?: DateTimeFilter<"User"> | Date | string
+    bookings?: BookingListRelationFilter
+    payments?: PaymentListRelationFilter
+    reviews?: ReviewListRelationFilter
+  }
+
+  export type UserOrderByWithRelationInput = {
+    user_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+    bookings?: BookingOrderByRelationAggregateInput
+    payments?: PaymentOrderByRelationAggregateInput
+    reviews?: ReviewOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    user_id?: number
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    first_name?: StringFilter<"User"> | string
+    last_name?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    phone?: StringFilter<"User"> | string
+    created_at?: DateTimeFilter<"User"> | Date | string
+    bookings?: BookingListRelationFilter
+    payments?: PaymentListRelationFilter
+    reviews?: ReviewListRelationFilter
+  }, "user_id" | "email">
+
+  export type UserOrderByWithAggregationInput = {
+    user_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    user_id?: IntWithAggregatesFilter<"User"> | number
+    first_name?: StringWithAggregatesFilter<"User"> | string
+    last_name?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    phone?: StringWithAggregatesFilter<"User"> | string
+    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type OwnerWhereInput = {
+    AND?: OwnerWhereInput | OwnerWhereInput[]
+    OR?: OwnerWhereInput[]
+    NOT?: OwnerWhereInput | OwnerWhereInput[]
+    owner_id?: IntFilter<"Owner"> | number
+    first_name?: StringFilter<"Owner"> | string
+    last_name?: StringFilter<"Owner"> | string
+    email?: StringFilter<"Owner"> | string
+    password?: StringFilter<"Owner"> | string
+    phone?: StringFilter<"Owner"> | string
+    created_at?: DateTimeFilter<"Owner"> | Date | string
+    parkingLots?: ParkingLotListRelationFilter
+    notifications?: NotificationListRelationFilter
+  }
+
+  export type OwnerOrderByWithRelationInput = {
+    owner_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+    parkingLots?: ParkingLotOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
+  }
+
+  export type OwnerWhereUniqueInput = Prisma.AtLeast<{
+    owner_id?: number
+    email?: string
+    AND?: OwnerWhereInput | OwnerWhereInput[]
+    OR?: OwnerWhereInput[]
+    NOT?: OwnerWhereInput | OwnerWhereInput[]
+    first_name?: StringFilter<"Owner"> | string
+    last_name?: StringFilter<"Owner"> | string
+    password?: StringFilter<"Owner"> | string
+    phone?: StringFilter<"Owner"> | string
+    created_at?: DateTimeFilter<"Owner"> | Date | string
+    parkingLots?: ParkingLotListRelationFilter
+    notifications?: NotificationListRelationFilter
+  }, "owner_id" | "email">
+
+  export type OwnerOrderByWithAggregationInput = {
+    owner_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+    _count?: OwnerCountOrderByAggregateInput
+    _avg?: OwnerAvgOrderByAggregateInput
+    _max?: OwnerMaxOrderByAggregateInput
+    _min?: OwnerMinOrderByAggregateInput
+    _sum?: OwnerSumOrderByAggregateInput
+  }
+
+  export type OwnerScalarWhereWithAggregatesInput = {
+    AND?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
+    OR?: OwnerScalarWhereWithAggregatesInput[]
+    NOT?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
+    owner_id?: IntWithAggregatesFilter<"Owner"> | number
+    first_name?: StringWithAggregatesFilter<"Owner"> | string
+    last_name?: StringWithAggregatesFilter<"Owner"> | string
+    email?: StringWithAggregatesFilter<"Owner"> | string
+    password?: StringWithAggregatesFilter<"Owner"> | string
+    phone?: StringWithAggregatesFilter<"Owner"> | string
+    created_at?: DateTimeWithAggregatesFilter<"Owner"> | Date | string
   }
 
   export type CityWhereInput = {
@@ -19995,6 +20228,7 @@ export namespace Prisma {
     lot_id?: IntFilter<"ParkingLot"> | number
     owner_id?: IntFilter<"ParkingLot"> | number
     lot_name?: StringFilter<"ParkingLot"> | string
+    image?: StringNullableFilter<"ParkingLot"> | string | null
     capacity?: IntFilter<"ParkingLot"> | number
     created_at?: DateTimeFilter<"ParkingLot"> | Date | string
     owner?: XOR<OwnerScalarRelationFilter, OwnerWhereInput>
@@ -20002,12 +20236,14 @@ export namespace Prisma {
     locations?: LocationListRelationFilter
     prices?: PriceListRelationFilter
     reviews?: ReviewListRelationFilter
+    booking?: BookingListRelationFilter
   }
 
   export type ParkingLotOrderByWithRelationInput = {
     lot_id?: SortOrder
     owner_id?: SortOrder
     lot_name?: SortOrder
+    image?: SortOrderInput | SortOrder
     capacity?: SortOrder
     created_at?: SortOrder
     owner?: OwnerOrderByWithRelationInput
@@ -20015,6 +20251,7 @@ export namespace Prisma {
     locations?: LocationOrderByRelationAggregateInput
     prices?: PriceOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
+    booking?: BookingOrderByRelationAggregateInput
   }
 
   export type ParkingLotWhereUniqueInput = Prisma.AtLeast<{
@@ -20024,6 +20261,7 @@ export namespace Prisma {
     NOT?: ParkingLotWhereInput | ParkingLotWhereInput[]
     owner_id?: IntFilter<"ParkingLot"> | number
     lot_name?: StringFilter<"ParkingLot"> | string
+    image?: StringNullableFilter<"ParkingLot"> | string | null
     capacity?: IntFilter<"ParkingLot"> | number
     created_at?: DateTimeFilter<"ParkingLot"> | Date | string
     owner?: XOR<OwnerScalarRelationFilter, OwnerWhereInput>
@@ -20031,12 +20269,14 @@ export namespace Prisma {
     locations?: LocationListRelationFilter
     prices?: PriceListRelationFilter
     reviews?: ReviewListRelationFilter
+    booking?: BookingListRelationFilter
   }, "lot_id">
 
   export type ParkingLotOrderByWithAggregationInput = {
     lot_id?: SortOrder
     owner_id?: SortOrder
     lot_name?: SortOrder
+    image?: SortOrderInput | SortOrder
     capacity?: SortOrder
     created_at?: SortOrder
     _count?: ParkingLotCountOrderByAggregateInput
@@ -20053,6 +20293,7 @@ export namespace Prisma {
     lot_id?: IntWithAggregatesFilter<"ParkingLot"> | number
     owner_id?: IntWithAggregatesFilter<"ParkingLot"> | number
     lot_name?: StringWithAggregatesFilter<"ParkingLot"> | string
+    image?: StringNullableWithAggregatesFilter<"ParkingLot"> | string | null
     capacity?: IntWithAggregatesFilter<"ParkingLot"> | number
     created_at?: DateTimeWithAggregatesFilter<"ParkingLot"> | Date | string
   }
@@ -20065,7 +20306,7 @@ export namespace Prisma {
     lot_id?: IntFilter<"ParkingSpace"> | number
     space_number?: StringFilter<"ParkingSpace"> | string
     is_handicap?: BoolFilter<"ParkingSpace"> | boolean
-    status?: StringFilter<"ParkingSpace"> | string
+    status?: EnumSpaceStatusFilter<"ParkingSpace"> | $Enums.SpaceStatus
     created_at?: DateTimeFilter<"ParkingSpace"> | Date | string
     lot?: XOR<ParkingLotScalarRelationFilter, ParkingLotWhereInput>
     availability?: AvailabilityLogListRelationFilter
@@ -20092,7 +20333,7 @@ export namespace Prisma {
     lot_id?: IntFilter<"ParkingSpace"> | number
     space_number?: StringFilter<"ParkingSpace"> | string
     is_handicap?: BoolFilter<"ParkingSpace"> | boolean
-    status?: StringFilter<"ParkingSpace"> | string
+    status?: EnumSpaceStatusFilter<"ParkingSpace"> | $Enums.SpaceStatus
     created_at?: DateTimeFilter<"ParkingSpace"> | Date | string
     lot?: XOR<ParkingLotScalarRelationFilter, ParkingLotWhereInput>
     availability?: AvailabilityLogListRelationFilter
@@ -20121,7 +20362,7 @@ export namespace Prisma {
     lot_id?: IntWithAggregatesFilter<"ParkingSpace"> | number
     space_number?: StringWithAggregatesFilter<"ParkingSpace"> | string
     is_handicap?: BoolWithAggregatesFilter<"ParkingSpace"> | boolean
-    status?: StringWithAggregatesFilter<"ParkingSpace"> | string
+    status?: EnumSpaceStatusWithAggregatesFilter<"ParkingSpace"> | $Enums.SpaceStatus
     created_at?: DateTimeWithAggregatesFilter<"ParkingSpace"> | Date | string
   }
 
@@ -20177,169 +20418,26 @@ export namespace Prisma {
     timestamp?: DateTimeWithAggregatesFilter<"AvailabilityLog"> | Date | string
   }
 
-  export type UserWhereInput = {
-    AND?: UserWhereInput | UserWhereInput[]
-    OR?: UserWhereInput[]
-    NOT?: UserWhereInput | UserWhereInput[]
-    user_id?: IntFilter<"User"> | number
-    first_name?: StringFilter<"User"> | string
-    last_name?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
-    phone?: StringFilter<"User"> | string
-    created_at?: DateTimeFilter<"User"> | Date | string
-    bookings?: BookingListRelationFilter
-    payments?: PaymentListRelationFilter
-    reviews?: ReviewListRelationFilter
-    notifications?: NotificationListRelationFilter
-  }
-
-  export type UserOrderByWithRelationInput = {
-    user_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-    bookings?: BookingOrderByRelationAggregateInput
-    payments?: PaymentOrderByRelationAggregateInput
-    reviews?: ReviewOrderByRelationAggregateInput
-    notifications?: NotificationOrderByRelationAggregateInput
-  }
-
-  export type UserWhereUniqueInput = Prisma.AtLeast<{
-    user_id?: number
-    email?: string
-    AND?: UserWhereInput | UserWhereInput[]
-    OR?: UserWhereInput[]
-    NOT?: UserWhereInput | UserWhereInput[]
-    first_name?: StringFilter<"User"> | string
-    last_name?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
-    phone?: StringFilter<"User"> | string
-    created_at?: DateTimeFilter<"User"> | Date | string
-    bookings?: BookingListRelationFilter
-    payments?: PaymentListRelationFilter
-    reviews?: ReviewListRelationFilter
-    notifications?: NotificationListRelationFilter
-  }, "user_id" | "email">
-
-  export type UserOrderByWithAggregationInput = {
-    user_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-    _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
-    _max?: UserMaxOrderByAggregateInput
-    _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
-  }
-
-  export type UserScalarWhereWithAggregatesInput = {
-    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    OR?: UserScalarWhereWithAggregatesInput[]
-    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    user_id?: IntWithAggregatesFilter<"User"> | number
-    first_name?: StringWithAggregatesFilter<"User"> | string
-    last_name?: StringWithAggregatesFilter<"User"> | string
-    email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
-    phone?: StringWithAggregatesFilter<"User"> | string
-    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
-  }
-
-  export type OwnerWhereInput = {
-    AND?: OwnerWhereInput | OwnerWhereInput[]
-    OR?: OwnerWhereInput[]
-    NOT?: OwnerWhereInput | OwnerWhereInput[]
-    owner_id?: IntFilter<"Owner"> | number
-    first_name?: StringFilter<"Owner"> | string
-    last_name?: StringFilter<"Owner"> | string
-    email?: StringFilter<"Owner"> | string
-    password?: StringFilter<"Owner"> | string
-    phone?: StringFilter<"Owner"> | string
-    created_at?: DateTimeFilter<"Owner"> | Date | string
-    parkingLots?: ParkingLotListRelationFilter
-    notifications?: NotificationListRelationFilter
-  }
-
-  export type OwnerOrderByWithRelationInput = {
-    owner_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-    parkingLots?: ParkingLotOrderByRelationAggregateInput
-    notifications?: NotificationOrderByRelationAggregateInput
-  }
-
-  export type OwnerWhereUniqueInput = Prisma.AtLeast<{
-    owner_id?: number
-    email?: string
-    AND?: OwnerWhereInput | OwnerWhereInput[]
-    OR?: OwnerWhereInput[]
-    NOT?: OwnerWhereInput | OwnerWhereInput[]
-    first_name?: StringFilter<"Owner"> | string
-    last_name?: StringFilter<"Owner"> | string
-    password?: StringFilter<"Owner"> | string
-    phone?: StringFilter<"Owner"> | string
-    created_at?: DateTimeFilter<"Owner"> | Date | string
-    parkingLots?: ParkingLotListRelationFilter
-    notifications?: NotificationListRelationFilter
-  }, "owner_id" | "email">
-
-  export type OwnerOrderByWithAggregationInput = {
-    owner_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-    _count?: OwnerCountOrderByAggregateInput
-    _avg?: OwnerAvgOrderByAggregateInput
-    _max?: OwnerMaxOrderByAggregateInput
-    _min?: OwnerMinOrderByAggregateInput
-    _sum?: OwnerSumOrderByAggregateInput
-  }
-
-  export type OwnerScalarWhereWithAggregatesInput = {
-    AND?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
-    OR?: OwnerScalarWhereWithAggregatesInput[]
-    NOT?: OwnerScalarWhereWithAggregatesInput | OwnerScalarWhereWithAggregatesInput[]
-    owner_id?: IntWithAggregatesFilter<"Owner"> | number
-    first_name?: StringWithAggregatesFilter<"Owner"> | string
-    last_name?: StringWithAggregatesFilter<"Owner"> | string
-    email?: StringWithAggregatesFilter<"Owner"> | string
-    password?: StringWithAggregatesFilter<"Owner"> | string
-    phone?: StringWithAggregatesFilter<"Owner"> | string
-    created_at?: DateTimeWithAggregatesFilter<"Owner"> | Date | string
-  }
-
   export type BookingWhereInput = {
     AND?: BookingWhereInput | BookingWhereInput[]
     OR?: BookingWhereInput[]
     NOT?: BookingWhereInput | BookingWhereInput[]
     booking_id?: IntFilter<"Booking"> | number
+    lot_id?: IntFilter<"Booking"> | number
     user_id?: IntFilter<"Booking"> | number
     space_id?: IntFilter<"Booking"> | number
     start_time?: DateTimeFilter<"Booking"> | Date | string
     end_time?: DateTimeFilter<"Booking"> | Date | string
-    status?: StringFilter<"Booking"> | string
+    status?: EnumBookStatusFilter<"Booking"> | $Enums.BookStatus
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     space?: XOR<ParkingSpaceScalarRelationFilter, ParkingSpaceWhereInput>
-    payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
+    lot?: XOR<ParkingLotScalarRelationFilter, ParkingLotWhereInput>
+    payment?: PaymentListRelationFilter
   }
 
   export type BookingOrderByWithRelationInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
     start_time?: SortOrder
@@ -20347,7 +20445,8 @@ export namespace Prisma {
     status?: SortOrder
     user?: UserOrderByWithRelationInput
     space?: ParkingSpaceOrderByWithRelationInput
-    payment?: PaymentOrderByWithRelationInput
+    lot?: ParkingLotOrderByWithRelationInput
+    payment?: PaymentOrderByRelationAggregateInput
   }
 
   export type BookingWhereUniqueInput = Prisma.AtLeast<{
@@ -20355,18 +20454,21 @@ export namespace Prisma {
     AND?: BookingWhereInput | BookingWhereInput[]
     OR?: BookingWhereInput[]
     NOT?: BookingWhereInput | BookingWhereInput[]
+    lot_id?: IntFilter<"Booking"> | number
     user_id?: IntFilter<"Booking"> | number
     space_id?: IntFilter<"Booking"> | number
     start_time?: DateTimeFilter<"Booking"> | Date | string
     end_time?: DateTimeFilter<"Booking"> | Date | string
-    status?: StringFilter<"Booking"> | string
+    status?: EnumBookStatusFilter<"Booking"> | $Enums.BookStatus
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     space?: XOR<ParkingSpaceScalarRelationFilter, ParkingSpaceWhereInput>
-    payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
+    lot?: XOR<ParkingLotScalarRelationFilter, ParkingLotWhereInput>
+    payment?: PaymentListRelationFilter
   }, "booking_id">
 
   export type BookingOrderByWithAggregationInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
     start_time?: SortOrder
@@ -20384,11 +20486,12 @@ export namespace Prisma {
     OR?: BookingScalarWhereWithAggregatesInput[]
     NOT?: BookingScalarWhereWithAggregatesInput | BookingScalarWhereWithAggregatesInput[]
     booking_id?: IntWithAggregatesFilter<"Booking"> | number
+    lot_id?: IntWithAggregatesFilter<"Booking"> | number
     user_id?: IntWithAggregatesFilter<"Booking"> | number
     space_id?: IntWithAggregatesFilter<"Booking"> | number
     start_time?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
     end_time?: DateTimeWithAggregatesFilter<"Booking"> | Date | string
-    status?: StringWithAggregatesFilter<"Booking"> | string
+    status?: EnumBookStatusWithAggregatesFilter<"Booking"> | $Enums.BookStatus
   }
 
   export type PaymentWhereInput = {
@@ -20477,14 +20580,14 @@ export namespace Prisma {
 
   export type PriceWhereUniqueInput = Prisma.AtLeast<{
     price_id?: number
+    lot_id?: number
     AND?: PriceWhereInput | PriceWhereInput[]
     OR?: PriceWhereInput[]
     NOT?: PriceWhereInput | PriceWhereInput[]
-    lot_id?: IntFilter<"Price"> | number
     price_per_hour?: FloatFilter<"Price"> | number
     effective_date?: DateTimeFilter<"Price"> | Date | string
     lot?: XOR<ParkingLotScalarRelationFilter, ParkingLotWhereInput>
-  }, "price_id">
+  }, "price_id" | "lot_id">
 
   export type PriceOrderByWithAggregationInput = {
     price_id?: SortOrder
@@ -20578,21 +20681,17 @@ export namespace Prisma {
     OR?: NotificationWhereInput[]
     NOT?: NotificationWhereInput | NotificationWhereInput[]
     notification_id?: IntFilter<"Notification"> | number
-    user_id?: IntNullableFilter<"Notification"> | number | null
     owner_id?: IntNullableFilter<"Notification"> | number | null
     message?: StringFilter<"Notification"> | string
     sent_at?: DateTimeFilter<"Notification"> | Date | string
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     owner?: XOR<OwnerNullableScalarRelationFilter, OwnerWhereInput> | null
   }
 
   export type NotificationOrderByWithRelationInput = {
     notification_id?: SortOrder
-    user_id?: SortOrderInput | SortOrder
     owner_id?: SortOrderInput | SortOrder
     message?: SortOrder
     sent_at?: SortOrder
-    user?: UserOrderByWithRelationInput
     owner?: OwnerOrderByWithRelationInput
   }
 
@@ -20601,17 +20700,14 @@ export namespace Prisma {
     AND?: NotificationWhereInput | NotificationWhereInput[]
     OR?: NotificationWhereInput[]
     NOT?: NotificationWhereInput | NotificationWhereInput[]
-    user_id?: IntNullableFilter<"Notification"> | number | null
     owner_id?: IntNullableFilter<"Notification"> | number | null
     message?: StringFilter<"Notification"> | string
     sent_at?: DateTimeFilter<"Notification"> | Date | string
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     owner?: XOR<OwnerNullableScalarRelationFilter, OwnerWhereInput> | null
   }, "notification_id">
 
   export type NotificationOrderByWithAggregationInput = {
     notification_id?: SortOrder
-    user_id?: SortOrderInput | SortOrder
     owner_id?: SortOrderInput | SortOrder
     message?: SortOrder
     sent_at?: SortOrder
@@ -20627,15 +20723,14 @@ export namespace Prisma {
     OR?: NotificationScalarWhereWithAggregatesInput[]
     NOT?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
     notification_id?: IntWithAggregatesFilter<"Notification"> | number
-    user_id?: IntNullableWithAggregatesFilter<"Notification"> | number | null
     owner_id?: IntNullableWithAggregatesFilter<"Notification"> | number | null
     message?: StringWithAggregatesFilter<"Notification"> | string
     sent_at?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
   }
 
   export type AdminCreateInput = {
-    firstName: string
-    lastName: string
+    first_name: string
+    last_name: string
     email: string
     password: string
     phone: string
@@ -20644,8 +20739,8 @@ export namespace Prisma {
 
   export type AdminUncheckedCreateInput = {
     id?: number
-    firstName: string
-    lastName: string
+    first_name: string
+    last_name: string
     email: string
     password: string
     phone: string
@@ -20653,8 +20748,8 @@ export namespace Prisma {
   }
 
   export type AdminUpdateInput = {
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -20663,8 +20758,8 @@ export namespace Prisma {
 
   export type AdminUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -20673,8 +20768,8 @@ export namespace Prisma {
 
   export type AdminCreateManyInput = {
     id?: number
-    firstName: string
-    lastName: string
+    first_name: string
+    last_name: string
     email: string
     password: string
     phone: string
@@ -20682,8 +20777,8 @@ export namespace Prisma {
   }
 
   export type AdminUpdateManyMutationInput = {
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
@@ -20692,12 +20787,166 @@ export namespace Prisma {
 
   export type AdminUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateInput = {
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at?: Date | string
+    bookings?: BookingCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    user_id?: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    user_id?: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at?: Date | string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OwnerCreateInput = {
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at?: Date | string
+    parkingLots?: ParkingLotCreateNestedManyWithoutOwnerInput
+    notifications?: NotificationCreateNestedManyWithoutOwnerInput
+  }
+
+  export type OwnerUncheckedCreateInput = {
+    owner_id?: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at?: Date | string
+    parkingLots?: ParkingLotUncheckedCreateNestedManyWithoutOwnerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type OwnerUpdateInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    parkingLots?: ParkingLotUpdateManyWithoutOwnerNestedInput
+    notifications?: NotificationUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type OwnerUncheckedUpdateInput = {
+    owner_id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    parkingLots?: ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type OwnerCreateManyInput = {
+    owner_id?: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    created_at?: Date | string
+  }
+
+  export type OwnerUpdateManyMutationInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OwnerUncheckedUpdateManyInput = {
+    owner_id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CityCreateInput = {
@@ -20915,6 +21164,7 @@ export namespace Prisma {
 
   export type ParkingLotCreateInput = {
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     owner: OwnerCreateNestedOneWithoutParkingLotsInput
@@ -20922,22 +21172,26 @@ export namespace Prisma {
     locations?: LocationCreateNestedManyWithoutParkingLotInput
     prices?: PriceCreateNestedManyWithoutLotInput
     reviews?: ReviewCreateNestedManyWithoutLotInput
+    booking?: BookingCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotUncheckedCreateInput = {
     lot_id?: number
     owner_id: number
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
     locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
     prices?: PriceUncheckedCreateNestedManyWithoutLotInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
+    booking?: BookingUncheckedCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotUpdateInput = {
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: OwnerUpdateOneRequiredWithoutParkingLotsNestedInput
@@ -20945,30 +21199,35 @@ export namespace Prisma {
     locations?: LocationUpdateManyWithoutParkingLotNestedInput
     prices?: PriceUpdateManyWithoutLotNestedInput
     reviews?: ReviewUpdateManyWithoutLotNestedInput
+    booking?: BookingUpdateManyWithoutLotNestedInput
   }
 
   export type ParkingLotUncheckedUpdateInput = {
     lot_id?: IntFieldUpdateOperationsInput | number
     owner_id?: IntFieldUpdateOperationsInput | number
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
     locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
     prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
+    booking?: BookingUncheckedUpdateManyWithoutLotNestedInput
   }
 
   export type ParkingLotCreateManyInput = {
     lot_id?: number
     owner_id: number
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
   }
 
   export type ParkingLotUpdateManyMutationInput = {
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20977,6 +21236,7 @@ export namespace Prisma {
     lot_id?: IntFieldUpdateOperationsInput | number
     owner_id?: IntFieldUpdateOperationsInput | number
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20984,7 +21244,7 @@ export namespace Prisma {
   export type ParkingSpaceCreateInput = {
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     lot: ParkingLotCreateNestedOneWithoutSpacesInput
     availability?: AvailabilityLogCreateNestedManyWithoutSpaceInput
@@ -20996,7 +21256,7 @@ export namespace Prisma {
     lot_id: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     availability?: AvailabilityLogUncheckedCreateNestedManyWithoutSpaceInput
     bookings?: BookingUncheckedCreateNestedManyWithoutSpaceInput
@@ -21005,7 +21265,7 @@ export namespace Prisma {
   export type ParkingSpaceUpdateInput = {
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     lot?: ParkingLotUpdateOneRequiredWithoutSpacesNestedInput
     availability?: AvailabilityLogUpdateManyWithoutSpaceNestedInput
@@ -21017,7 +21277,7 @@ export namespace Prisma {
     lot_id?: IntFieldUpdateOperationsInput | number
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     availability?: AvailabilityLogUncheckedUpdateManyWithoutSpaceNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutSpaceNestedInput
@@ -21028,14 +21288,14 @@ export namespace Prisma {
     lot_id: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
   }
 
   export type ParkingSpaceUpdateManyMutationInput = {
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21044,7 +21304,7 @@ export namespace Prisma {
     lot_id?: IntFieldUpdateOperationsInput | number
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21093,224 +21353,72 @@ export namespace Prisma {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateInput = {
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-    bookings?: BookingCreateNestedManyWithoutUserInput
-    payments?: PaymentCreateNestedManyWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateInput = {
-    user_id?: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUpdateInput = {
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookings?: BookingUpdateManyWithoutUserNestedInput
-    payments?: PaymentUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateInput = {
-    user_id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateManyInput = {
-    user_id?: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-  }
-
-  export type UserUpdateManyMutationInput = {
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateManyInput = {
-    user_id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OwnerCreateInput = {
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-    parkingLots?: ParkingLotCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationCreateNestedManyWithoutOwnerInput
-  }
-
-  export type OwnerUncheckedCreateInput = {
-    owner_id?: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-    parkingLots?: ParkingLotUncheckedCreateNestedManyWithoutOwnerInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutOwnerInput
-  }
-
-  export type OwnerUpdateInput = {
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    parkingLots?: ParkingLotUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type OwnerUncheckedUpdateInput = {
-    owner_id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    parkingLots?: ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutOwnerNestedInput
-  }
-
-  export type OwnerCreateManyInput = {
-    owner_id?: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-  }
-
-  export type OwnerUpdateManyMutationInput = {
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OwnerUncheckedUpdateManyInput = {
-    owner_id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type BookingCreateInput = {
     start_time: Date | string
     end_time: Date | string
-    status: string
+    status: $Enums.BookStatus
     user: UserCreateNestedOneWithoutBookingsInput
     space: ParkingSpaceCreateNestedOneWithoutBookingsInput
-    payment?: PaymentCreateNestedOneWithoutBookingInput
+    lot: ParkingLotCreateNestedOneWithoutBookingInput
+    payment?: PaymentCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateInput = {
     booking_id?: number
+    lot_id: number
     user_id: number
     space_id: number
     start_time: Date | string
     end_time: Date | string
-    status: string
-    payment?: PaymentUncheckedCreateNestedOneWithoutBookingInput
+    status: $Enums.BookStatus
+    payment?: PaymentUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUpdateInput = {
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
     space?: ParkingSpaceUpdateOneRequiredWithoutBookingsNestedInput
-    payment?: PaymentUpdateOneWithoutBookingNestedInput
+    lot?: ParkingLotUpdateOneRequiredWithoutBookingNestedInput
+    payment?: PaymentUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateInput = {
     booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     space_id?: IntFieldUpdateOperationsInput | number
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
-    payment?: PaymentUncheckedUpdateOneWithoutBookingNestedInput
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+    payment?: PaymentUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingCreateManyInput = {
     booking_id?: number
+    lot_id: number
     user_id: number
     space_id: number
     start_time: Date | string
     end_time: Date | string
-    status: string
+    status: $Enums.BookStatus
   }
 
   export type BookingUpdateManyMutationInput = {
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
   }
 
   export type BookingUncheckedUpdateManyInput = {
     booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     space_id?: IntFieldUpdateOperationsInput | number
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
   }
 
   export type PaymentCreateInput = {
@@ -21477,13 +21585,11 @@ export namespace Prisma {
   export type NotificationCreateInput = {
     message: string
     sent_at?: Date | string
-    user?: UserCreateNestedOneWithoutNotificationsInput
     owner?: OwnerCreateNestedOneWithoutNotificationsInput
   }
 
   export type NotificationUncheckedCreateInput = {
     notification_id?: number
-    user_id?: number | null
     owner_id?: number | null
     message: string
     sent_at?: Date | string
@@ -21492,13 +21598,11 @@ export namespace Prisma {
   export type NotificationUpdateInput = {
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutNotificationsNestedInput
     owner?: OwnerUpdateOneWithoutNotificationsNestedInput
   }
 
   export type NotificationUncheckedUpdateInput = {
     notification_id?: IntFieldUpdateOperationsInput | number
-    user_id?: NullableIntFieldUpdateOperationsInput | number | null
     owner_id?: NullableIntFieldUpdateOperationsInput | number | null
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21506,7 +21610,6 @@ export namespace Prisma {
 
   export type NotificationCreateManyInput = {
     notification_id?: number
-    user_id?: number | null
     owner_id?: number | null
     message: string
     sent_at?: Date | string
@@ -21519,7 +21622,6 @@ export namespace Prisma {
 
   export type NotificationUncheckedUpdateManyInput = {
     notification_id?: IntFieldUpdateOperationsInput | number
-    user_id?: NullableIntFieldUpdateOperationsInput | number | null
     owner_id?: NullableIntFieldUpdateOperationsInput | number | null
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21564,8 +21666,8 @@ export namespace Prisma {
 
   export type AdminCountOrderByAggregateInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
@@ -21578,8 +21680,8 @@ export namespace Prisma {
 
   export type AdminMaxOrderByAggregateInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
@@ -21588,8 +21690,8 @@ export namespace Prisma {
 
   export type AdminMinOrderByAggregateInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
@@ -21646,6 +21748,132 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BookingListRelationFilter = {
+    every?: BookingWhereInput
+    some?: BookingWhereInput
+    none?: BookingWhereInput
+  }
+
+  export type PaymentListRelationFilter = {
+    every?: PaymentWhereInput
+    some?: PaymentWhereInput
+    none?: PaymentWhereInput
+  }
+
+  export type ReviewListRelationFilter = {
+    every?: ReviewWhereInput
+    some?: ReviewWhereInput
+    none?: ReviewWhereInput
+  }
+
+  export type BookingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PaymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    user_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    user_id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    user_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    user_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    user_id?: SortOrder
+  }
+
+  export type ParkingLotListRelationFilter = {
+    every?: ParkingLotWhereInput
+    some?: ParkingLotWhereInput
+    none?: ParkingLotWhereInput
+  }
+
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
+  }
+
+  export type ParkingLotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OwnerCountOrderByAggregateInput = {
+    owner_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type OwnerAvgOrderByAggregateInput = {
+    owner_id?: SortOrder
+  }
+
+  export type OwnerMaxOrderByAggregateInput = {
+    owner_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type OwnerMinOrderByAggregateInput = {
+    owner_id?: SortOrder
+    first_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    phone?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type OwnerSumOrderByAggregateInput = {
+    owner_id?: SortOrder
   }
 
   export type SubCityListRelationFilter = {
@@ -21878,6 +22106,21 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type OwnerScalarRelationFilter = {
     is?: OwnerWhereInput
     isNot?: OwnerWhereInput
@@ -21895,10 +22138,9 @@ export namespace Prisma {
     none?: PriceWhereInput
   }
 
-  export type ReviewListRelationFilter = {
-    every?: ReviewWhereInput
-    some?: ReviewWhereInput
-    none?: ReviewWhereInput
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type ParkingSpaceOrderByRelationAggregateInput = {
@@ -21909,14 +22151,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ReviewOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type ParkingLotCountOrderByAggregateInput = {
     lot_id?: SortOrder
     owner_id?: SortOrder
     lot_name?: SortOrder
+    image?: SortOrder
     capacity?: SortOrder
     created_at?: SortOrder
   }
@@ -21931,6 +22170,7 @@ export namespace Prisma {
     lot_id?: SortOrder
     owner_id?: SortOrder
     lot_name?: SortOrder
+    image?: SortOrder
     capacity?: SortOrder
     created_at?: SortOrder
   }
@@ -21939,6 +22179,7 @@ export namespace Prisma {
     lot_id?: SortOrder
     owner_id?: SortOrder
     lot_name?: SortOrder
+    image?: SortOrder
     capacity?: SortOrder
     created_at?: SortOrder
   }
@@ -21949,9 +22190,34 @@ export namespace Prisma {
     capacity?: SortOrder
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type EnumSpaceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceStatus | EnumSpaceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceStatusFilter<$PrismaModel> | $Enums.SpaceStatus
   }
 
   export type AvailabilityLogListRelationFilter = {
@@ -21960,17 +22226,7 @@ export namespace Prisma {
     none?: AvailabilityLogWhereInput
   }
 
-  export type BookingListRelationFilter = {
-    every?: BookingWhereInput
-    some?: BookingWhereInput
-    none?: BookingWhereInput
-  }
-
   export type AvailabilityLogOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type BookingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -22019,6 +22275,16 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type EnumSpaceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceStatus | EnumSpaceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceStatusWithAggregatesFilter<$PrismaModel> | $Enums.SpaceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSpaceStatusFilter<$PrismaModel>
+    _max?: NestedEnumSpaceStatusFilter<$PrismaModel>
+  }
+
   export type ParkingSpaceScalarRelationFilter = {
     is?: ParkingSpaceWhereInput
     isNot?: ParkingSpaceWhereInput
@@ -22055,110 +22321,11 @@ export namespace Prisma {
     space_id?: SortOrder
   }
 
-  export type PaymentListRelationFilter = {
-    every?: PaymentWhereInput
-    some?: PaymentWhereInput
-    none?: PaymentWhereInput
-  }
-
-  export type NotificationListRelationFilter = {
-    every?: NotificationWhereInput
-    some?: NotificationWhereInput
-    none?: NotificationWhereInput
-  }
-
-  export type PaymentOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type NotificationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserCountOrderByAggregateInput = {
-    user_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type UserAvgOrderByAggregateInput = {
-    user_id?: SortOrder
-  }
-
-  export type UserMaxOrderByAggregateInput = {
-    user_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type UserMinOrderByAggregateInput = {
-    user_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    user_id?: SortOrder
-  }
-
-  export type ParkingLotListRelationFilter = {
-    every?: ParkingLotWhereInput
-    some?: ParkingLotWhereInput
-    none?: ParkingLotWhereInput
-  }
-
-  export type ParkingLotOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type OwnerCountOrderByAggregateInput = {
-    owner_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type OwnerAvgOrderByAggregateInput = {
-    owner_id?: SortOrder
-  }
-
-  export type OwnerMaxOrderByAggregateInput = {
-    owner_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type OwnerMinOrderByAggregateInput = {
-    owner_id?: SortOrder
-    first_name?: SortOrder
-    last_name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    phone?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type OwnerSumOrderByAggregateInput = {
-    owner_id?: SortOrder
+  export type EnumBookStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookStatus | EnumBookStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookStatusFilter<$PrismaModel> | $Enums.BookStatus
   }
 
   export type UserScalarRelationFilter = {
@@ -22166,13 +22333,9 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type PaymentNullableScalarRelationFilter = {
-    is?: PaymentWhereInput | null
-    isNot?: PaymentWhereInput | null
-  }
-
   export type BookingCountOrderByAggregateInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
     start_time?: SortOrder
@@ -22182,12 +22345,14 @@ export namespace Prisma {
 
   export type BookingAvgOrderByAggregateInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
   }
 
   export type BookingMaxOrderByAggregateInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
     start_time?: SortOrder
@@ -22197,6 +22362,7 @@ export namespace Prisma {
 
   export type BookingMinOrderByAggregateInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
     start_time?: SortOrder
@@ -22206,8 +22372,19 @@ export namespace Prisma {
 
   export type BookingSumOrderByAggregateInput = {
     booking_id?: SortOrder
+    lot_id?: SortOrder
     user_id?: SortOrder
     space_id?: SortOrder
+  }
+
+  export type EnumBookStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookStatus | EnumBookStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookStatusWithAggregatesFilter<$PrismaModel> | $Enums.BookStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBookStatusFilter<$PrismaModel>
+    _max?: NestedEnumBookStatusFilter<$PrismaModel>
   }
 
   export type BookingScalarRelationFilter = {
@@ -22341,24 +22518,13 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
   export type OwnerNullableScalarRelationFilter = {
     is?: OwnerWhereInput | null
     isNot?: OwnerWhereInput | null
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
   export type NotificationCountOrderByAggregateInput = {
     notification_id?: SortOrder
-    user_id?: SortOrder
     owner_id?: SortOrder
     message?: SortOrder
     sent_at?: SortOrder
@@ -22366,13 +22532,11 @@ export namespace Prisma {
 
   export type NotificationAvgOrderByAggregateInput = {
     notification_id?: SortOrder
-    user_id?: SortOrder
     owner_id?: SortOrder
   }
 
   export type NotificationMaxOrderByAggregateInput = {
     notification_id?: SortOrder
-    user_id?: SortOrder
     owner_id?: SortOrder
     message?: SortOrder
     sent_at?: SortOrder
@@ -22380,7 +22544,6 @@ export namespace Prisma {
 
   export type NotificationMinOrderByAggregateInput = {
     notification_id?: SortOrder
-    user_id?: SortOrder
     owner_id?: SortOrder
     message?: SortOrder
     sent_at?: SortOrder
@@ -22388,7 +22551,6 @@ export namespace Prisma {
 
   export type NotificationSumOrderByAggregateInput = {
     notification_id?: SortOrder
-    user_id?: SortOrder
     owner_id?: SortOrder
   }
 
@@ -22422,6 +22584,216 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BookingCreateNestedManyWithoutUserInput = {
+    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
+    createMany?: BookingCreateManyUserInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type PaymentCreateNestedManyWithoutUserInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type ReviewCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type BookingUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
+    createMany?: BookingCreateManyUserInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type PaymentUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type ReviewUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type BookingUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
+    upsert?: BookingUpsertWithWhereUniqueWithoutUserInput | BookingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BookingCreateManyUserInputEnvelope
+    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    update?: BookingUpdateWithWhereUniqueWithoutUserInput | BookingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BookingUpdateManyWithWhereWithoutUserInput | BookingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type PaymentUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutUserInput | PaymentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutUserInput | PaymentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutUserInput | PaymentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type ReviewUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type BookingUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
+    upsert?: BookingUpsertWithWhereUniqueWithoutUserInput | BookingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BookingCreateManyUserInputEnvelope
+    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    update?: BookingUpdateWithWhereUniqueWithoutUserInput | BookingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BookingUpdateManyWithWhereWithoutUserInput | BookingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutUserInput | PaymentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PaymentCreateManyUserInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutUserInput | PaymentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutUserInput | PaymentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReviewCreateManyUserInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type ParkingLotCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
+    createMany?: ParkingLotCreateManyOwnerInputEnvelope
+    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+  }
+
+  export type NotificationCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
+    createMany?: NotificationCreateManyOwnerInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type ParkingLotUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
+    createMany?: ParkingLotCreateManyOwnerInputEnvelope
+    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
+    createMany?: NotificationCreateManyOwnerInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type ParkingLotUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
+    upsert?: ParkingLotUpsertWithWhereUniqueWithoutOwnerInput | ParkingLotUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: ParkingLotCreateManyOwnerInputEnvelope
+    set?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    disconnect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    delete?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    update?: ParkingLotUpdateWithWhereUniqueWithoutOwnerInput | ParkingLotUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: ParkingLotUpdateManyWithWhereWithoutOwnerInput | ParkingLotUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
+  }
+
+  export type NotificationUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutOwnerInput | NotificationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: NotificationCreateManyOwnerInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutOwnerInput | NotificationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutOwnerInput | NotificationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
+    upsert?: ParkingLotUpsertWithWhereUniqueWithoutOwnerInput | ParkingLotUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: ParkingLotCreateManyOwnerInputEnvelope
+    set?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    disconnect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    delete?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
+    update?: ParkingLotUpdateWithWhereUniqueWithoutOwnerInput | ParkingLotUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: ParkingLotUpdateManyWithWhereWithoutOwnerInput | ParkingLotUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutOwnerInput | NotificationUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: NotificationCreateManyOwnerInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutOwnerInput | NotificationUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutOwnerInput | NotificationUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type SubCityCreateNestedManyWithoutCityInput = {
@@ -22648,6 +23020,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type BookingCreateNestedManyWithoutLotInput = {
+    create?: XOR<BookingCreateWithoutLotInput, BookingUncheckedCreateWithoutLotInput> | BookingCreateWithoutLotInput[] | BookingUncheckedCreateWithoutLotInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLotInput | BookingCreateOrConnectWithoutLotInput[]
+    createMany?: BookingCreateManyLotInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
   export type ParkingSpaceUncheckedCreateNestedManyWithoutLotInput = {
     create?: XOR<ParkingSpaceCreateWithoutLotInput, ParkingSpaceUncheckedCreateWithoutLotInput> | ParkingSpaceCreateWithoutLotInput[] | ParkingSpaceUncheckedCreateWithoutLotInput[]
     connectOrCreate?: ParkingSpaceCreateOrConnectWithoutLotInput | ParkingSpaceCreateOrConnectWithoutLotInput[]
@@ -22674,6 +23053,17 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutLotInput | ReviewCreateOrConnectWithoutLotInput[]
     createMany?: ReviewCreateManyLotInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type BookingUncheckedCreateNestedManyWithoutLotInput = {
+    create?: XOR<BookingCreateWithoutLotInput, BookingUncheckedCreateWithoutLotInput> | BookingCreateWithoutLotInput[] | BookingUncheckedCreateWithoutLotInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLotInput | BookingCreateOrConnectWithoutLotInput[]
+    createMany?: BookingCreateManyLotInputEnvelope
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type OwnerUpdateOneRequiredWithoutParkingLotsNestedInput = {
@@ -22740,6 +23130,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type BookingUpdateManyWithoutLotNestedInput = {
+    create?: XOR<BookingCreateWithoutLotInput, BookingUncheckedCreateWithoutLotInput> | BookingCreateWithoutLotInput[] | BookingUncheckedCreateWithoutLotInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLotInput | BookingCreateOrConnectWithoutLotInput[]
+    upsert?: BookingUpsertWithWhereUniqueWithoutLotInput | BookingUpsertWithWhereUniqueWithoutLotInput[]
+    createMany?: BookingCreateManyLotInputEnvelope
+    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    update?: BookingUpdateWithWhereUniqueWithoutLotInput | BookingUpdateWithWhereUniqueWithoutLotInput[]
+    updateMany?: BookingUpdateManyWithWhereWithoutLotInput | BookingUpdateManyWithWhereWithoutLotInput[]
+    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
   export type ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput = {
     create?: XOR<ParkingSpaceCreateWithoutLotInput, ParkingSpaceUncheckedCreateWithoutLotInput> | ParkingSpaceCreateWithoutLotInput[] | ParkingSpaceUncheckedCreateWithoutLotInput[]
     connectOrCreate?: ParkingSpaceCreateOrConnectWithoutLotInput | ParkingSpaceCreateOrConnectWithoutLotInput[]
@@ -22796,6 +23200,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type BookingUncheckedUpdateManyWithoutLotNestedInput = {
+    create?: XOR<BookingCreateWithoutLotInput, BookingUncheckedCreateWithoutLotInput> | BookingCreateWithoutLotInput[] | BookingUncheckedCreateWithoutLotInput[]
+    connectOrCreate?: BookingCreateOrConnectWithoutLotInput | BookingCreateOrConnectWithoutLotInput[]
+    upsert?: BookingUpsertWithWhereUniqueWithoutLotInput | BookingUpsertWithWhereUniqueWithoutLotInput[]
+    createMany?: BookingCreateManyLotInputEnvelope
+    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
+    update?: BookingUpdateWithWhereUniqueWithoutLotInput | BookingUpdateWithWhereUniqueWithoutLotInput[]
+    updateMany?: BookingUpdateManyWithWhereWithoutLotInput | BookingUpdateManyWithWhereWithoutLotInput[]
+    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
+  }
+
   export type ParkingLotCreateNestedOneWithoutSpacesInput = {
     create?: XOR<ParkingLotCreateWithoutSpacesInput, ParkingLotUncheckedCreateWithoutSpacesInput>
     connectOrCreate?: ParkingLotCreateOrConnectWithoutSpacesInput
@@ -22832,6 +23250,10 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type EnumSpaceStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SpaceStatus
   }
 
   export type ParkingLotUpdateOneRequiredWithoutSpacesNestedInput = {
@@ -22912,258 +23334,6 @@ export namespace Prisma {
     update?: XOR<XOR<ParkingSpaceUpdateToOneWithWhereWithoutAvailabilityInput, ParkingSpaceUpdateWithoutAvailabilityInput>, ParkingSpaceUncheckedUpdateWithoutAvailabilityInput>
   }
 
-  export type BookingCreateNestedManyWithoutUserInput = {
-    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
-    createMany?: BookingCreateManyUserInputEnvelope
-    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-  }
-
-  export type PaymentCreateNestedManyWithoutUserInput = {
-    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
-    createMany?: PaymentCreateManyUserInputEnvelope
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-  }
-
-  export type ReviewCreateNestedManyWithoutUserInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-  }
-
-  export type NotificationCreateNestedManyWithoutUserInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type BookingUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
-    createMany?: BookingCreateManyUserInputEnvelope
-    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-  }
-
-  export type PaymentUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
-    createMany?: PaymentCreateManyUserInputEnvelope
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-  }
-
-  export type ReviewUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-  }
-
-  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type BookingUpdateManyWithoutUserNestedInput = {
-    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
-    upsert?: BookingUpsertWithWhereUniqueWithoutUserInput | BookingUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: BookingCreateManyUserInputEnvelope
-    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    update?: BookingUpdateWithWhereUniqueWithoutUserInput | BookingUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: BookingUpdateManyWithWhereWithoutUserInput | BookingUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
-  }
-
-  export type PaymentUpdateManyWithoutUserNestedInput = {
-    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
-    upsert?: PaymentUpsertWithWhereUniqueWithoutUserInput | PaymentUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: PaymentCreateManyUserInputEnvelope
-    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    update?: PaymentUpdateWithWhereUniqueWithoutUserInput | PaymentUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: PaymentUpdateManyWithWhereWithoutUserInput | PaymentUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-  }
-
-  export type ReviewUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-  }
-
-  export type NotificationUpdateManyWithoutUserNestedInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type BookingUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
-    upsert?: BookingUpsertWithWhereUniqueWithoutUserInput | BookingUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: BookingCreateManyUserInputEnvelope
-    set?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    disconnect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    delete?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
-    update?: BookingUpdateWithWhereUniqueWithoutUserInput | BookingUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: BookingUpdateManyWithWhereWithoutUserInput | BookingUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: BookingScalarWhereInput | BookingScalarWhereInput[]
-  }
-
-  export type PaymentUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput> | PaymentCreateWithoutUserInput[] | PaymentUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PaymentCreateOrConnectWithoutUserInput | PaymentCreateOrConnectWithoutUserInput[]
-    upsert?: PaymentUpsertWithWhereUniqueWithoutUserInput | PaymentUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: PaymentCreateManyUserInputEnvelope
-    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
-    update?: PaymentUpdateWithWhereUniqueWithoutUserInput | PaymentUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: PaymentUpdateManyWithWhereWithoutUserInput | PaymentUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-  }
-
-  export type ReviewUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput> | ReviewCreateWithoutUserInput[] | ReviewUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
-    upsert?: ReviewUpsertWithWhereUniqueWithoutUserInput | ReviewUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: ReviewCreateManyUserInputEnvelope
-    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
-    update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: NotificationCreateManyUserInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type ParkingLotCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
-    createMany?: ParkingLotCreateManyOwnerInputEnvelope
-    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-  }
-
-  export type NotificationCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
-    createMany?: NotificationCreateManyOwnerInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type ParkingLotUncheckedCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
-    createMany?: ParkingLotCreateManyOwnerInputEnvelope
-    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-  }
-
-  export type NotificationUncheckedCreateNestedManyWithoutOwnerInput = {
-    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
-    createMany?: NotificationCreateManyOwnerInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type ParkingLotUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
-    upsert?: ParkingLotUpsertWithWhereUniqueWithoutOwnerInput | ParkingLotUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: ParkingLotCreateManyOwnerInputEnvelope
-    set?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    disconnect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    delete?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    update?: ParkingLotUpdateWithWhereUniqueWithoutOwnerInput | ParkingLotUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: ParkingLotUpdateManyWithWhereWithoutOwnerInput | ParkingLotUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
-  }
-
-  export type NotificationUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutOwnerInput | NotificationUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: NotificationCreateManyOwnerInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutOwnerInput | NotificationUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutOwnerInput | NotificationUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput> | ParkingLotCreateWithoutOwnerInput[] | ParkingLotUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: ParkingLotCreateOrConnectWithoutOwnerInput | ParkingLotCreateOrConnectWithoutOwnerInput[]
-    upsert?: ParkingLotUpsertWithWhereUniqueWithoutOwnerInput | ParkingLotUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: ParkingLotCreateManyOwnerInputEnvelope
-    set?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    disconnect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    delete?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    connect?: ParkingLotWhereUniqueInput | ParkingLotWhereUniqueInput[]
-    update?: ParkingLotUpdateWithWhereUniqueWithoutOwnerInput | ParkingLotUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: ParkingLotUpdateManyWithWhereWithoutOwnerInput | ParkingLotUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutOwnerNestedInput = {
-    create?: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput> | NotificationCreateWithoutOwnerInput[] | NotificationUncheckedCreateWithoutOwnerInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutOwnerInput | NotificationCreateOrConnectWithoutOwnerInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutOwnerInput | NotificationUpsertWithWhereUniqueWithoutOwnerInput[]
-    createMany?: NotificationCreateManyOwnerInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutOwnerInput | NotificationUpdateWithWhereUniqueWithoutOwnerInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutOwnerInput | NotificationUpdateManyWithWhereWithoutOwnerInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
   export type UserCreateNestedOneWithoutBookingsInput = {
     create?: XOR<UserCreateWithoutBookingsInput, UserUncheckedCreateWithoutBookingsInput>
     connectOrCreate?: UserCreateOrConnectWithoutBookingsInput
@@ -23176,16 +23346,28 @@ export namespace Prisma {
     connect?: ParkingSpaceWhereUniqueInput
   }
 
-  export type PaymentCreateNestedOneWithoutBookingInput = {
-    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
-    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput
-    connect?: PaymentWhereUniqueInput
+  export type ParkingLotCreateNestedOneWithoutBookingInput = {
+    create?: XOR<ParkingLotCreateWithoutBookingInput, ParkingLotUncheckedCreateWithoutBookingInput>
+    connectOrCreate?: ParkingLotCreateOrConnectWithoutBookingInput
+    connect?: ParkingLotWhereUniqueInput
   }
 
-  export type PaymentUncheckedCreateNestedOneWithoutBookingInput = {
-    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
-    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput
-    connect?: PaymentWhereUniqueInput
+  export type PaymentCreateNestedManyWithoutBookingInput = {
+    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput> | PaymentCreateWithoutBookingInput[] | PaymentUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput | PaymentCreateOrConnectWithoutBookingInput[]
+    createMany?: PaymentCreateManyBookingInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type PaymentUncheckedCreateNestedManyWithoutBookingInput = {
+    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput> | PaymentCreateWithoutBookingInput[] | PaymentUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput | PaymentCreateOrConnectWithoutBookingInput[]
+    createMany?: PaymentCreateManyBookingInputEnvelope
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type EnumBookStatusFieldUpdateOperationsInput = {
+    set?: $Enums.BookStatus
   }
 
   export type UserUpdateOneRequiredWithoutBookingsNestedInput = {
@@ -23204,24 +23386,40 @@ export namespace Prisma {
     update?: XOR<XOR<ParkingSpaceUpdateToOneWithWhereWithoutBookingsInput, ParkingSpaceUpdateWithoutBookingsInput>, ParkingSpaceUncheckedUpdateWithoutBookingsInput>
   }
 
-  export type PaymentUpdateOneWithoutBookingNestedInput = {
-    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
-    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput
-    upsert?: PaymentUpsertWithoutBookingInput
-    disconnect?: PaymentWhereInput | boolean
-    delete?: PaymentWhereInput | boolean
-    connect?: PaymentWhereUniqueInput
-    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutBookingInput, PaymentUpdateWithoutBookingInput>, PaymentUncheckedUpdateWithoutBookingInput>
+  export type ParkingLotUpdateOneRequiredWithoutBookingNestedInput = {
+    create?: XOR<ParkingLotCreateWithoutBookingInput, ParkingLotUncheckedCreateWithoutBookingInput>
+    connectOrCreate?: ParkingLotCreateOrConnectWithoutBookingInput
+    upsert?: ParkingLotUpsertWithoutBookingInput
+    connect?: ParkingLotWhereUniqueInput
+    update?: XOR<XOR<ParkingLotUpdateToOneWithWhereWithoutBookingInput, ParkingLotUpdateWithoutBookingInput>, ParkingLotUncheckedUpdateWithoutBookingInput>
   }
 
-  export type PaymentUncheckedUpdateOneWithoutBookingNestedInput = {
-    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
-    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput
-    upsert?: PaymentUpsertWithoutBookingInput
-    disconnect?: PaymentWhereInput | boolean
-    delete?: PaymentWhereInput | boolean
-    connect?: PaymentWhereUniqueInput
-    update?: XOR<XOR<PaymentUpdateToOneWithWhereWithoutBookingInput, PaymentUpdateWithoutBookingInput>, PaymentUncheckedUpdateWithoutBookingInput>
+  export type PaymentUpdateManyWithoutBookingNestedInput = {
+    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput> | PaymentCreateWithoutBookingInput[] | PaymentUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput | PaymentCreateOrConnectWithoutBookingInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutBookingInput | PaymentUpsertWithWhereUniqueWithoutBookingInput[]
+    createMany?: PaymentCreateManyBookingInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutBookingInput | PaymentUpdateWithWhereUniqueWithoutBookingInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutBookingInput | PaymentUpdateManyWithWhereWithoutBookingInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutBookingNestedInput = {
+    create?: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput> | PaymentCreateWithoutBookingInput[] | PaymentUncheckedCreateWithoutBookingInput[]
+    connectOrCreate?: PaymentCreateOrConnectWithoutBookingInput | PaymentCreateOrConnectWithoutBookingInput[]
+    upsert?: PaymentUpsertWithWhereUniqueWithoutBookingInput | PaymentUpsertWithWhereUniqueWithoutBookingInput[]
+    createMany?: PaymentCreateManyBookingInputEnvelope
+    set?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    disconnect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    delete?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+    update?: PaymentUpdateWithWhereUniqueWithoutBookingInput | PaymentUpdateWithWhereUniqueWithoutBookingInput[]
+    updateMany?: PaymentUpdateManyWithWhereWithoutBookingInput | PaymentUpdateManyWithWhereWithoutBookingInput[]
+    deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
   export type BookingCreateNestedOneWithoutPaymentInput = {
@@ -23294,26 +23492,10 @@ export namespace Prisma {
     update?: XOR<XOR<ParkingLotUpdateToOneWithWhereWithoutReviewsInput, ParkingLotUpdateWithoutReviewsInput>, ParkingLotUncheckedUpdateWithoutReviewsInput>
   }
 
-  export type UserCreateNestedOneWithoutNotificationsInput = {
-    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type OwnerCreateNestedOneWithoutNotificationsInput = {
     create?: XOR<OwnerCreateWithoutNotificationsInput, OwnerUncheckedCreateWithoutNotificationsInput>
     connectOrCreate?: OwnerCreateOrConnectWithoutNotificationsInput
     connect?: OwnerWhereUniqueInput
-  }
-
-  export type UserUpdateOneWithoutNotificationsNestedInput = {
-    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
-    upsert?: UserUpsertWithoutNotificationsInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
   }
 
   export type OwnerUpdateOneWithoutNotificationsNestedInput = {
@@ -23444,17 +23626,35 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableFilter<$PrismaModel = never> = {
@@ -23466,6 +23666,53 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumSpaceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceStatus | EnumSpaceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceStatusFilter<$PrismaModel> | $Enums.SpaceStatus
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumSpaceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceStatus | EnumSpaceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceStatusWithAggregatesFilter<$PrismaModel> | $Enums.SpaceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSpaceStatusFilter<$PrismaModel>
+    _max?: NestedEnumSpaceStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumBookStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookStatus | EnumBookStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookStatusFilter<$PrismaModel> | $Enums.BookStatus
+  }
+
+  export type NestedEnumBookStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BookStatus | EnumBookStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BookStatus[] | ListEnumBookStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumBookStatusWithAggregatesFilter<$PrismaModel> | $Enums.BookStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBookStatusFilter<$PrismaModel>
+    _max?: NestedEnumBookStatusFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23493,6 +23740,280 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type BookingCreateWithoutUserInput = {
+    start_time: Date | string
+    end_time: Date | string
+    status: $Enums.BookStatus
+    space: ParkingSpaceCreateNestedOneWithoutBookingsInput
+    lot: ParkingLotCreateNestedOneWithoutBookingInput
+    payment?: PaymentCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingUncheckedCreateWithoutUserInput = {
+    booking_id?: number
+    lot_id: number
+    space_id: number
+    start_time: Date | string
+    end_time: Date | string
+    status: $Enums.BookStatus
+    payment?: PaymentUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingCreateOrConnectWithoutUserInput = {
+    where: BookingWhereUniqueInput
+    create: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput>
+  }
+
+  export type BookingCreateManyUserInputEnvelope = {
+    data: BookingCreateManyUserInput | BookingCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaymentCreateWithoutUserInput = {
+    amount: number
+    payment_method: string
+    payment_date?: Date | string
+    booking: BookingCreateNestedOneWithoutPaymentInput
+  }
+
+  export type PaymentUncheckedCreateWithoutUserInput = {
+    payment_id?: number
+    booking_id: number
+    amount: number
+    payment_method: string
+    payment_date?: Date | string
+  }
+
+  export type PaymentCreateOrConnectWithoutUserInput = {
+    where: PaymentWhereUniqueInput
+    create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
+  }
+
+  export type PaymentCreateManyUserInputEnvelope = {
+    data: PaymentCreateManyUserInput | PaymentCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReviewCreateWithoutUserInput = {
+    rating: number
+    comment: string
+    review_date?: Date | string
+    lot: ParkingLotCreateNestedOneWithoutReviewsInput
+  }
+
+  export type ReviewUncheckedCreateWithoutUserInput = {
+    review_id?: number
+    lot_id: number
+    rating: number
+    comment: string
+    review_date?: Date | string
+  }
+
+  export type ReviewCreateOrConnectWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewCreateManyUserInputEnvelope = {
+    data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type BookingUpsertWithWhereUniqueWithoutUserInput = {
+    where: BookingWhereUniqueInput
+    update: XOR<BookingUpdateWithoutUserInput, BookingUncheckedUpdateWithoutUserInput>
+    create: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput>
+  }
+
+  export type BookingUpdateWithWhereUniqueWithoutUserInput = {
+    where: BookingWhereUniqueInput
+    data: XOR<BookingUpdateWithoutUserInput, BookingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BookingUpdateManyWithWhereWithoutUserInput = {
+    where: BookingScalarWhereInput
+    data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BookingScalarWhereInput = {
+    AND?: BookingScalarWhereInput | BookingScalarWhereInput[]
+    OR?: BookingScalarWhereInput[]
+    NOT?: BookingScalarWhereInput | BookingScalarWhereInput[]
+    booking_id?: IntFilter<"Booking"> | number
+    lot_id?: IntFilter<"Booking"> | number
+    user_id?: IntFilter<"Booking"> | number
+    space_id?: IntFilter<"Booking"> | number
+    start_time?: DateTimeFilter<"Booking"> | Date | string
+    end_time?: DateTimeFilter<"Booking"> | Date | string
+    status?: EnumBookStatusFilter<"Booking"> | $Enums.BookStatus
+  }
+
+  export type PaymentUpsertWithWhereUniqueWithoutUserInput = {
+    where: PaymentWhereUniqueInput
+    update: XOR<PaymentUpdateWithoutUserInput, PaymentUncheckedUpdateWithoutUserInput>
+    create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
+  }
+
+  export type PaymentUpdateWithWhereUniqueWithoutUserInput = {
+    where: PaymentWhereUniqueInput
+    data: XOR<PaymentUpdateWithoutUserInput, PaymentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PaymentUpdateManyWithWhereWithoutUserInput = {
+    where: PaymentScalarWhereInput
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PaymentScalarWhereInput = {
+    AND?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+    OR?: PaymentScalarWhereInput[]
+    NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
+    payment_id?: IntFilter<"Payment"> | number
+    booking_id?: IntFilter<"Payment"> | number
+    user_id?: IntFilter<"Payment"> | number
+    amount?: FloatFilter<"Payment"> | number
+    payment_method?: StringFilter<"Payment"> | string
+    payment_date?: DateTimeFilter<"Payment"> | Date | string
+  }
+
+  export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    update: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReviewUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReviewWhereUniqueInput
+    data: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReviewUpdateManyWithWhereWithoutUserInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ReviewScalarWhereInput = {
+    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    OR?: ReviewScalarWhereInput[]
+    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+    review_id?: IntFilter<"Review"> | number
+    user_id?: IntFilter<"Review"> | number
+    lot_id?: IntFilter<"Review"> | number
+    rating?: IntFilter<"Review"> | number
+    comment?: StringFilter<"Review"> | string
+    review_date?: DateTimeFilter<"Review"> | Date | string
+  }
+
+  export type ParkingLotCreateWithoutOwnerInput = {
+    lot_name: string
+    image?: string | null
+    capacity: number
+    created_at?: Date | string
+    spaces?: ParkingSpaceCreateNestedManyWithoutLotInput
+    locations?: LocationCreateNestedManyWithoutParkingLotInput
+    prices?: PriceCreateNestedManyWithoutLotInput
+    reviews?: ReviewCreateNestedManyWithoutLotInput
+    booking?: BookingCreateNestedManyWithoutLotInput
+  }
+
+  export type ParkingLotUncheckedCreateWithoutOwnerInput = {
+    lot_id?: number
+    lot_name: string
+    image?: string | null
+    capacity: number
+    created_at?: Date | string
+    spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
+    locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
+    prices?: PriceUncheckedCreateNestedManyWithoutLotInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
+    booking?: BookingUncheckedCreateNestedManyWithoutLotInput
+  }
+
+  export type ParkingLotCreateOrConnectWithoutOwnerInput = {
+    where: ParkingLotWhereUniqueInput
+    create: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type ParkingLotCreateManyOwnerInputEnvelope = {
+    data: ParkingLotCreateManyOwnerInput | ParkingLotCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NotificationCreateWithoutOwnerInput = {
+    message: string
+    sent_at?: Date | string
+  }
+
+  export type NotificationUncheckedCreateWithoutOwnerInput = {
+    notification_id?: number
+    message: string
+    sent_at?: Date | string
+  }
+
+  export type NotificationCreateOrConnectWithoutOwnerInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type NotificationCreateManyOwnerInputEnvelope = {
+    data: NotificationCreateManyOwnerInput | NotificationCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ParkingLotUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: ParkingLotWhereUniqueInput
+    update: XOR<ParkingLotUpdateWithoutOwnerInput, ParkingLotUncheckedUpdateWithoutOwnerInput>
+    create: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type ParkingLotUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: ParkingLotWhereUniqueInput
+    data: XOR<ParkingLotUpdateWithoutOwnerInput, ParkingLotUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type ParkingLotUpdateManyWithWhereWithoutOwnerInput = {
+    where: ParkingLotScalarWhereInput
+    data: XOR<ParkingLotUpdateManyMutationInput, ParkingLotUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type ParkingLotScalarWhereInput = {
+    AND?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
+    OR?: ParkingLotScalarWhereInput[]
+    NOT?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
+    lot_id?: IntFilter<"ParkingLot"> | number
+    owner_id?: IntFilter<"ParkingLot"> | number
+    lot_name?: StringFilter<"ParkingLot"> | string
+    image?: StringNullableFilter<"ParkingLot"> | string | null
+    capacity?: IntFilter<"ParkingLot"> | number
+    created_at?: DateTimeFilter<"ParkingLot"> | Date | string
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutOwnerInput, NotificationUncheckedUpdateWithoutOwnerInput>
+    create: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutOwnerInput, NotificationUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutOwnerInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    notification_id?: IntFilter<"Notification"> | number
+    owner_id?: IntNullableFilter<"Notification"> | number | null
+    message?: StringFilter<"Notification"> | string
+    sent_at?: DateTimeFilter<"Notification"> | Date | string
   }
 
   export type SubCityCreateWithoutCityInput = {
@@ -23735,23 +24256,27 @@ export namespace Prisma {
 
   export type ParkingLotCreateWithoutLocationsInput = {
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     owner: OwnerCreateNestedOneWithoutParkingLotsInput
     spaces?: ParkingSpaceCreateNestedManyWithoutLotInput
     prices?: PriceCreateNestedManyWithoutLotInput
     reviews?: ReviewCreateNestedManyWithoutLotInput
+    booking?: BookingCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotUncheckedCreateWithoutLocationsInput = {
     lot_id?: number
     owner_id: number
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
     prices?: PriceUncheckedCreateNestedManyWithoutLotInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
+    booking?: BookingUncheckedCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotCreateOrConnectWithoutLocationsInput = {
@@ -23792,23 +24317,27 @@ export namespace Prisma {
 
   export type ParkingLotUpdateWithoutLocationsInput = {
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: OwnerUpdateOneRequiredWithoutParkingLotsNestedInput
     spaces?: ParkingSpaceUpdateManyWithoutLotNestedInput
     prices?: PriceUpdateManyWithoutLotNestedInput
     reviews?: ReviewUpdateManyWithoutLotNestedInput
+    booking?: BookingUpdateManyWithoutLotNestedInput
   }
 
   export type ParkingLotUncheckedUpdateWithoutLocationsInput = {
     lot_id?: IntFieldUpdateOperationsInput | number
     owner_id?: IntFieldUpdateOperationsInput | number
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
     prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
+    booking?: BookingUncheckedUpdateManyWithoutLotNestedInput
   }
 
   export type StreetAddressUpsertWithoutLocationsInput = {
@@ -23866,7 +24395,7 @@ export namespace Prisma {
   export type ParkingSpaceCreateWithoutLotInput = {
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     availability?: AvailabilityLogCreateNestedManyWithoutSpaceInput
     bookings?: BookingCreateNestedManyWithoutSpaceInput
@@ -23876,7 +24405,7 @@ export namespace Prisma {
     space_id?: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     availability?: AvailabilityLogUncheckedCreateNestedManyWithoutSpaceInput
     bookings?: BookingUncheckedCreateNestedManyWithoutSpaceInput
@@ -23963,6 +24492,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BookingCreateWithoutLotInput = {
+    start_time: Date | string
+    end_time: Date | string
+    status: $Enums.BookStatus
+    user: UserCreateNestedOneWithoutBookingsInput
+    space: ParkingSpaceCreateNestedOneWithoutBookingsInput
+    payment?: PaymentCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingUncheckedCreateWithoutLotInput = {
+    booking_id?: number
+    user_id: number
+    space_id: number
+    start_time: Date | string
+    end_time: Date | string
+    status: $Enums.BookStatus
+    payment?: PaymentUncheckedCreateNestedManyWithoutBookingInput
+  }
+
+  export type BookingCreateOrConnectWithoutLotInput = {
+    where: BookingWhereUniqueInput
+    create: XOR<BookingCreateWithoutLotInput, BookingUncheckedCreateWithoutLotInput>
+  }
+
+  export type BookingCreateManyLotInputEnvelope = {
+    data: BookingCreateManyLotInput | BookingCreateManyLotInput[]
+    skipDuplicates?: boolean
+  }
+
   export type OwnerUpsertWithoutParkingLotsInput = {
     update: XOR<OwnerUpdateWithoutParkingLotsInput, OwnerUncheckedUpdateWithoutParkingLotsInput>
     create: XOR<OwnerCreateWithoutParkingLotsInput, OwnerUncheckedCreateWithoutParkingLotsInput>
@@ -24019,7 +24577,7 @@ export namespace Prisma {
     lot_id?: IntFilter<"ParkingSpace"> | number
     space_number?: StringFilter<"ParkingSpace"> | string
     is_handicap?: BoolFilter<"ParkingSpace"> | boolean
-    status?: StringFilter<"ParkingSpace"> | string
+    status?: EnumSpaceStatusFilter<"ParkingSpace"> | $Enums.SpaceStatus
     created_at?: DateTimeFilter<"ParkingSpace"> | Date | string
   }
 
@@ -24081,37 +24639,45 @@ export namespace Prisma {
     data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutLotInput>
   }
 
-  export type ReviewScalarWhereInput = {
-    AND?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-    OR?: ReviewScalarWhereInput[]
-    NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
-    review_id?: IntFilter<"Review"> | number
-    user_id?: IntFilter<"Review"> | number
-    lot_id?: IntFilter<"Review"> | number
-    rating?: IntFilter<"Review"> | number
-    comment?: StringFilter<"Review"> | string
-    review_date?: DateTimeFilter<"Review"> | Date | string
+  export type BookingUpsertWithWhereUniqueWithoutLotInput = {
+    where: BookingWhereUniqueInput
+    update: XOR<BookingUpdateWithoutLotInput, BookingUncheckedUpdateWithoutLotInput>
+    create: XOR<BookingCreateWithoutLotInput, BookingUncheckedCreateWithoutLotInput>
+  }
+
+  export type BookingUpdateWithWhereUniqueWithoutLotInput = {
+    where: BookingWhereUniqueInput
+    data: XOR<BookingUpdateWithoutLotInput, BookingUncheckedUpdateWithoutLotInput>
+  }
+
+  export type BookingUpdateManyWithWhereWithoutLotInput = {
+    where: BookingScalarWhereInput
+    data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutLotInput>
   }
 
   export type ParkingLotCreateWithoutSpacesInput = {
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     owner: OwnerCreateNestedOneWithoutParkingLotsInput
     locations?: LocationCreateNestedManyWithoutParkingLotInput
     prices?: PriceCreateNestedManyWithoutLotInput
     reviews?: ReviewCreateNestedManyWithoutLotInput
+    booking?: BookingCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotUncheckedCreateWithoutSpacesInput = {
     lot_id?: number
     owner_id: number
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
     prices?: PriceUncheckedCreateNestedManyWithoutLotInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
+    booking?: BookingUncheckedCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotCreateOrConnectWithoutSpacesInput = {
@@ -24143,18 +24709,20 @@ export namespace Prisma {
   export type BookingCreateWithoutSpaceInput = {
     start_time: Date | string
     end_time: Date | string
-    status: string
+    status: $Enums.BookStatus
     user: UserCreateNestedOneWithoutBookingsInput
-    payment?: PaymentCreateNestedOneWithoutBookingInput
+    lot: ParkingLotCreateNestedOneWithoutBookingInput
+    payment?: PaymentCreateNestedManyWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutSpaceInput = {
     booking_id?: number
+    lot_id: number
     user_id: number
     start_time: Date | string
     end_time: Date | string
-    status: string
-    payment?: PaymentUncheckedCreateNestedOneWithoutBookingInput
+    status: $Enums.BookStatus
+    payment?: PaymentUncheckedCreateNestedManyWithoutBookingInput
   }
 
   export type BookingCreateOrConnectWithoutSpaceInput = {
@@ -24180,23 +24748,27 @@ export namespace Prisma {
 
   export type ParkingLotUpdateWithoutSpacesInput = {
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: OwnerUpdateOneRequiredWithoutParkingLotsNestedInput
     locations?: LocationUpdateManyWithoutParkingLotNestedInput
     prices?: PriceUpdateManyWithoutLotNestedInput
     reviews?: ReviewUpdateManyWithoutLotNestedInput
+    booking?: BookingUpdateManyWithoutLotNestedInput
   }
 
   export type ParkingLotUncheckedUpdateWithoutSpacesInput = {
     lot_id?: IntFieldUpdateOperationsInput | number
     owner_id?: IntFieldUpdateOperationsInput | number
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
     prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
+    booking?: BookingUncheckedUpdateManyWithoutLotNestedInput
   }
 
   export type AvailabilityLogUpsertWithWhereUniqueWithoutSpaceInput = {
@@ -24241,22 +24813,10 @@ export namespace Prisma {
     data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutSpaceInput>
   }
 
-  export type BookingScalarWhereInput = {
-    AND?: BookingScalarWhereInput | BookingScalarWhereInput[]
-    OR?: BookingScalarWhereInput[]
-    NOT?: BookingScalarWhereInput | BookingScalarWhereInput[]
-    booking_id?: IntFilter<"Booking"> | number
-    user_id?: IntFilter<"Booking"> | number
-    space_id?: IntFilter<"Booking"> | number
-    start_time?: DateTimeFilter<"Booking"> | Date | string
-    end_time?: DateTimeFilter<"Booking"> | Date | string
-    status?: StringFilter<"Booking"> | string
-  }
-
   export type ParkingSpaceCreateWithoutAvailabilityInput = {
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     lot: ParkingLotCreateNestedOneWithoutSpacesInput
     bookings?: BookingCreateNestedManyWithoutSpaceInput
@@ -24267,7 +24827,7 @@ export namespace Prisma {
     lot_id: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -24291,7 +24851,7 @@ export namespace Prisma {
   export type ParkingSpaceUpdateWithoutAvailabilityInput = {
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     lot?: ParkingLotUpdateOneRequiredWithoutSpacesNestedInput
     bookings?: BookingUpdateManyWithoutSpaceNestedInput
@@ -24302,293 +24862,9 @@ export namespace Prisma {
     lot_id?: IntFieldUpdateOperationsInput | number
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutSpaceNestedInput
-  }
-
-  export type BookingCreateWithoutUserInput = {
-    start_time: Date | string
-    end_time: Date | string
-    status: string
-    space: ParkingSpaceCreateNestedOneWithoutBookingsInput
-    payment?: PaymentCreateNestedOneWithoutBookingInput
-  }
-
-  export type BookingUncheckedCreateWithoutUserInput = {
-    booking_id?: number
-    space_id: number
-    start_time: Date | string
-    end_time: Date | string
-    status: string
-    payment?: PaymentUncheckedCreateNestedOneWithoutBookingInput
-  }
-
-  export type BookingCreateOrConnectWithoutUserInput = {
-    where: BookingWhereUniqueInput
-    create: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput>
-  }
-
-  export type BookingCreateManyUserInputEnvelope = {
-    data: BookingCreateManyUserInput | BookingCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PaymentCreateWithoutUserInput = {
-    amount: number
-    payment_method: string
-    payment_date?: Date | string
-    booking: BookingCreateNestedOneWithoutPaymentInput
-  }
-
-  export type PaymentUncheckedCreateWithoutUserInput = {
-    payment_id?: number
-    booking_id: number
-    amount: number
-    payment_method: string
-    payment_date?: Date | string
-  }
-
-  export type PaymentCreateOrConnectWithoutUserInput = {
-    where: PaymentWhereUniqueInput
-    create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
-  }
-
-  export type PaymentCreateManyUserInputEnvelope = {
-    data: PaymentCreateManyUserInput | PaymentCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ReviewCreateWithoutUserInput = {
-    rating: number
-    comment: string
-    review_date?: Date | string
-    lot: ParkingLotCreateNestedOneWithoutReviewsInput
-  }
-
-  export type ReviewUncheckedCreateWithoutUserInput = {
-    review_id?: number
-    lot_id: number
-    rating: number
-    comment: string
-    review_date?: Date | string
-  }
-
-  export type ReviewCreateOrConnectWithoutUserInput = {
-    where: ReviewWhereUniqueInput
-    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
-  }
-
-  export type ReviewCreateManyUserInputEnvelope = {
-    data: ReviewCreateManyUserInput | ReviewCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type NotificationCreateWithoutUserInput = {
-    message: string
-    sent_at?: Date | string
-    owner?: OwnerCreateNestedOneWithoutNotificationsInput
-  }
-
-  export type NotificationUncheckedCreateWithoutUserInput = {
-    notification_id?: number
-    owner_id?: number | null
-    message: string
-    sent_at?: Date | string
-  }
-
-  export type NotificationCreateOrConnectWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
-  }
-
-  export type NotificationCreateManyUserInputEnvelope = {
-    data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type BookingUpsertWithWhereUniqueWithoutUserInput = {
-    where: BookingWhereUniqueInput
-    update: XOR<BookingUpdateWithoutUserInput, BookingUncheckedUpdateWithoutUserInput>
-    create: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput>
-  }
-
-  export type BookingUpdateWithWhereUniqueWithoutUserInput = {
-    where: BookingWhereUniqueInput
-    data: XOR<BookingUpdateWithoutUserInput, BookingUncheckedUpdateWithoutUserInput>
-  }
-
-  export type BookingUpdateManyWithWhereWithoutUserInput = {
-    where: BookingScalarWhereInput
-    data: XOR<BookingUpdateManyMutationInput, BookingUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type PaymentUpsertWithWhereUniqueWithoutUserInput = {
-    where: PaymentWhereUniqueInput
-    update: XOR<PaymentUpdateWithoutUserInput, PaymentUncheckedUpdateWithoutUserInput>
-    create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
-  }
-
-  export type PaymentUpdateWithWhereUniqueWithoutUserInput = {
-    where: PaymentWhereUniqueInput
-    data: XOR<PaymentUpdateWithoutUserInput, PaymentUncheckedUpdateWithoutUserInput>
-  }
-
-  export type PaymentUpdateManyWithWhereWithoutUserInput = {
-    where: PaymentScalarWhereInput
-    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type PaymentScalarWhereInput = {
-    AND?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-    OR?: PaymentScalarWhereInput[]
-    NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
-    payment_id?: IntFilter<"Payment"> | number
-    booking_id?: IntFilter<"Payment"> | number
-    user_id?: IntFilter<"Payment"> | number
-    amount?: FloatFilter<"Payment"> | number
-    payment_method?: StringFilter<"Payment"> | string
-    payment_date?: DateTimeFilter<"Payment"> | Date | string
-  }
-
-  export type ReviewUpsertWithWhereUniqueWithoutUserInput = {
-    where: ReviewWhereUniqueInput
-    update: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
-    create: XOR<ReviewCreateWithoutUserInput, ReviewUncheckedCreateWithoutUserInput>
-  }
-
-  export type ReviewUpdateWithWhereUniqueWithoutUserInput = {
-    where: ReviewWhereUniqueInput
-    data: XOR<ReviewUpdateWithoutUserInput, ReviewUncheckedUpdateWithoutUserInput>
-  }
-
-  export type ReviewUpdateManyWithWhereWithoutUserInput = {
-    where: ReviewScalarWhereInput
-    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
-    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
-  }
-
-  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
-    where: NotificationWhereUniqueInput
-    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
-  }
-
-  export type NotificationUpdateManyWithWhereWithoutUserInput = {
-    where: NotificationScalarWhereInput
-    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type NotificationScalarWhereInput = {
-    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    OR?: NotificationScalarWhereInput[]
-    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    notification_id?: IntFilter<"Notification"> | number
-    user_id?: IntNullableFilter<"Notification"> | number | null
-    owner_id?: IntNullableFilter<"Notification"> | number | null
-    message?: StringFilter<"Notification"> | string
-    sent_at?: DateTimeFilter<"Notification"> | Date | string
-  }
-
-  export type ParkingLotCreateWithoutOwnerInput = {
-    lot_name: string
-    capacity: number
-    created_at?: Date | string
-    spaces?: ParkingSpaceCreateNestedManyWithoutLotInput
-    locations?: LocationCreateNestedManyWithoutParkingLotInput
-    prices?: PriceCreateNestedManyWithoutLotInput
-    reviews?: ReviewCreateNestedManyWithoutLotInput
-  }
-
-  export type ParkingLotUncheckedCreateWithoutOwnerInput = {
-    lot_id?: number
-    lot_name: string
-    capacity: number
-    created_at?: Date | string
-    spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
-    locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
-    prices?: PriceUncheckedCreateNestedManyWithoutLotInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
-  }
-
-  export type ParkingLotCreateOrConnectWithoutOwnerInput = {
-    where: ParkingLotWhereUniqueInput
-    create: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type ParkingLotCreateManyOwnerInputEnvelope = {
-    data: ParkingLotCreateManyOwnerInput | ParkingLotCreateManyOwnerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type NotificationCreateWithoutOwnerInput = {
-    message: string
-    sent_at?: Date | string
-    user?: UserCreateNestedOneWithoutNotificationsInput
-  }
-
-  export type NotificationUncheckedCreateWithoutOwnerInput = {
-    notification_id?: number
-    user_id?: number | null
-    message: string
-    sent_at?: Date | string
-  }
-
-  export type NotificationCreateOrConnectWithoutOwnerInput = {
-    where: NotificationWhereUniqueInput
-    create: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type NotificationCreateManyOwnerInputEnvelope = {
-    data: NotificationCreateManyOwnerInput | NotificationCreateManyOwnerInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ParkingLotUpsertWithWhereUniqueWithoutOwnerInput = {
-    where: ParkingLotWhereUniqueInput
-    update: XOR<ParkingLotUpdateWithoutOwnerInput, ParkingLotUncheckedUpdateWithoutOwnerInput>
-    create: XOR<ParkingLotCreateWithoutOwnerInput, ParkingLotUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type ParkingLotUpdateWithWhereUniqueWithoutOwnerInput = {
-    where: ParkingLotWhereUniqueInput
-    data: XOR<ParkingLotUpdateWithoutOwnerInput, ParkingLotUncheckedUpdateWithoutOwnerInput>
-  }
-
-  export type ParkingLotUpdateManyWithWhereWithoutOwnerInput = {
-    where: ParkingLotScalarWhereInput
-    data: XOR<ParkingLotUpdateManyMutationInput, ParkingLotUncheckedUpdateManyWithoutOwnerInput>
-  }
-
-  export type ParkingLotScalarWhereInput = {
-    AND?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
-    OR?: ParkingLotScalarWhereInput[]
-    NOT?: ParkingLotScalarWhereInput | ParkingLotScalarWhereInput[]
-    lot_id?: IntFilter<"ParkingLot"> | number
-    owner_id?: IntFilter<"ParkingLot"> | number
-    lot_name?: StringFilter<"ParkingLot"> | string
-    capacity?: IntFilter<"ParkingLot"> | number
-    created_at?: DateTimeFilter<"ParkingLot"> | Date | string
-  }
-
-  export type NotificationUpsertWithWhereUniqueWithoutOwnerInput = {
-    where: NotificationWhereUniqueInput
-    update: XOR<NotificationUpdateWithoutOwnerInput, NotificationUncheckedUpdateWithoutOwnerInput>
-    create: XOR<NotificationCreateWithoutOwnerInput, NotificationUncheckedCreateWithoutOwnerInput>
-  }
-
-  export type NotificationUpdateWithWhereUniqueWithoutOwnerInput = {
-    where: NotificationWhereUniqueInput
-    data: XOR<NotificationUpdateWithoutOwnerInput, NotificationUncheckedUpdateWithoutOwnerInput>
-  }
-
-  export type NotificationUpdateManyWithWhereWithoutOwnerInput = {
-    where: NotificationScalarWhereInput
-    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutOwnerInput>
   }
 
   export type UserCreateWithoutBookingsInput = {
@@ -24600,7 +24876,6 @@ export namespace Prisma {
     created_at?: Date | string
     payments?: PaymentCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBookingsInput = {
@@ -24613,7 +24888,6 @@ export namespace Prisma {
     created_at?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBookingsInput = {
@@ -24624,7 +24898,7 @@ export namespace Prisma {
   export type ParkingSpaceCreateWithoutBookingsInput = {
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     lot: ParkingLotCreateNestedOneWithoutSpacesInput
     availability?: AvailabilityLogCreateNestedManyWithoutSpaceInput
@@ -24635,7 +24909,7 @@ export namespace Prisma {
     lot_id: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
     availability?: AvailabilityLogUncheckedCreateNestedManyWithoutSpaceInput
   }
@@ -24643,6 +24917,36 @@ export namespace Prisma {
   export type ParkingSpaceCreateOrConnectWithoutBookingsInput = {
     where: ParkingSpaceWhereUniqueInput
     create: XOR<ParkingSpaceCreateWithoutBookingsInput, ParkingSpaceUncheckedCreateWithoutBookingsInput>
+  }
+
+  export type ParkingLotCreateWithoutBookingInput = {
+    lot_name: string
+    image?: string | null
+    capacity: number
+    created_at?: Date | string
+    owner: OwnerCreateNestedOneWithoutParkingLotsInput
+    spaces?: ParkingSpaceCreateNestedManyWithoutLotInput
+    locations?: LocationCreateNestedManyWithoutParkingLotInput
+    prices?: PriceCreateNestedManyWithoutLotInput
+    reviews?: ReviewCreateNestedManyWithoutLotInput
+  }
+
+  export type ParkingLotUncheckedCreateWithoutBookingInput = {
+    lot_id?: number
+    owner_id: number
+    lot_name: string
+    image?: string | null
+    capacity: number
+    created_at?: Date | string
+    spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
+    locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
+    prices?: PriceUncheckedCreateNestedManyWithoutLotInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
+  }
+
+  export type ParkingLotCreateOrConnectWithoutBookingInput = {
+    where: ParkingLotWhereUniqueInput
+    create: XOR<ParkingLotCreateWithoutBookingInput, ParkingLotUncheckedCreateWithoutBookingInput>
   }
 
   export type PaymentCreateWithoutBookingInput = {
@@ -24665,6 +24969,11 @@ export namespace Prisma {
     create: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
   }
 
+  export type PaymentCreateManyBookingInputEnvelope = {
+    data: PaymentCreateManyBookingInput | PaymentCreateManyBookingInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutBookingsInput = {
     update: XOR<UserUpdateWithoutBookingsInput, UserUncheckedUpdateWithoutBookingsInput>
     create: XOR<UserCreateWithoutBookingsInput, UserUncheckedCreateWithoutBookingsInput>
@@ -24685,7 +24994,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookingsInput = {
@@ -24698,7 +25006,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParkingSpaceUpsertWithoutBookingsInput = {
@@ -24715,7 +25022,7 @@ export namespace Prisma {
   export type ParkingSpaceUpdateWithoutBookingsInput = {
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     lot?: ParkingLotUpdateOneRequiredWithoutSpacesNestedInput
     availability?: AvailabilityLogUpdateManyWithoutSpaceNestedInput
@@ -24726,52 +25033,80 @@ export namespace Prisma {
     lot_id?: IntFieldUpdateOperationsInput | number
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     availability?: AvailabilityLogUncheckedUpdateManyWithoutSpaceNestedInput
   }
 
-  export type PaymentUpsertWithoutBookingInput = {
-    update: XOR<PaymentUpdateWithoutBookingInput, PaymentUncheckedUpdateWithoutBookingInput>
-    create: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
-    where?: PaymentWhereInput
+  export type ParkingLotUpsertWithoutBookingInput = {
+    update: XOR<ParkingLotUpdateWithoutBookingInput, ParkingLotUncheckedUpdateWithoutBookingInput>
+    create: XOR<ParkingLotCreateWithoutBookingInput, ParkingLotUncheckedCreateWithoutBookingInput>
+    where?: ParkingLotWhereInput
   }
 
-  export type PaymentUpdateToOneWithWhereWithoutBookingInput = {
-    where?: PaymentWhereInput
+  export type ParkingLotUpdateToOneWithWhereWithoutBookingInput = {
+    where?: ParkingLotWhereInput
+    data: XOR<ParkingLotUpdateWithoutBookingInput, ParkingLotUncheckedUpdateWithoutBookingInput>
+  }
+
+  export type ParkingLotUpdateWithoutBookingInput = {
+    lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    capacity?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: OwnerUpdateOneRequiredWithoutParkingLotsNestedInput
+    spaces?: ParkingSpaceUpdateManyWithoutLotNestedInput
+    locations?: LocationUpdateManyWithoutParkingLotNestedInput
+    prices?: PriceUpdateManyWithoutLotNestedInput
+    reviews?: ReviewUpdateManyWithoutLotNestedInput
+  }
+
+  export type ParkingLotUncheckedUpdateWithoutBookingInput = {
+    lot_id?: IntFieldUpdateOperationsInput | number
+    owner_id?: IntFieldUpdateOperationsInput | number
+    lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    capacity?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
+    prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
+  }
+
+  export type PaymentUpsertWithWhereUniqueWithoutBookingInput = {
+    where: PaymentWhereUniqueInput
+    update: XOR<PaymentUpdateWithoutBookingInput, PaymentUncheckedUpdateWithoutBookingInput>
+    create: XOR<PaymentCreateWithoutBookingInput, PaymentUncheckedCreateWithoutBookingInput>
+  }
+
+  export type PaymentUpdateWithWhereUniqueWithoutBookingInput = {
+    where: PaymentWhereUniqueInput
     data: XOR<PaymentUpdateWithoutBookingInput, PaymentUncheckedUpdateWithoutBookingInput>
   }
 
-  export type PaymentUpdateWithoutBookingInput = {
-    amount?: FloatFieldUpdateOperationsInput | number
-    payment_method?: StringFieldUpdateOperationsInput | string
-    payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutPaymentsNestedInput
-  }
-
-  export type PaymentUncheckedUpdateWithoutBookingInput = {
-    payment_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-    amount?: FloatFieldUpdateOperationsInput | number
-    payment_method?: StringFieldUpdateOperationsInput | string
-    payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type PaymentUpdateManyWithWhereWithoutBookingInput = {
+    where: PaymentScalarWhereInput
+    data: XOR<PaymentUpdateManyMutationInput, PaymentUncheckedUpdateManyWithoutBookingInput>
   }
 
   export type BookingCreateWithoutPaymentInput = {
     start_time: Date | string
     end_time: Date | string
-    status: string
+    status: $Enums.BookStatus
     user: UserCreateNestedOneWithoutBookingsInput
     space: ParkingSpaceCreateNestedOneWithoutBookingsInput
+    lot: ParkingLotCreateNestedOneWithoutBookingInput
   }
 
   export type BookingUncheckedCreateWithoutPaymentInput = {
     booking_id?: number
+    lot_id: number
     user_id: number
     space_id: number
     start_time: Date | string
     end_time: Date | string
-    status: string
+    status: $Enums.BookStatus
   }
 
   export type BookingCreateOrConnectWithoutPaymentInput = {
@@ -24788,7 +25123,6 @@ export namespace Prisma {
     created_at?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -24801,7 +25135,6 @@ export namespace Prisma {
     created_at?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -24823,18 +25156,20 @@ export namespace Prisma {
   export type BookingUpdateWithoutPaymentInput = {
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
     space?: ParkingSpaceUpdateOneRequiredWithoutBookingsNestedInput
+    lot?: ParkingLotUpdateOneRequiredWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutPaymentInput = {
     booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     space_id?: IntFieldUpdateOperationsInput | number
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
   }
 
   export type UserUpsertWithoutPaymentsInput = {
@@ -24857,7 +25192,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -24870,28 +25204,31 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParkingLotCreateWithoutPricesInput = {
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     owner: OwnerCreateNestedOneWithoutParkingLotsInput
     spaces?: ParkingSpaceCreateNestedManyWithoutLotInput
     locations?: LocationCreateNestedManyWithoutParkingLotInput
     reviews?: ReviewCreateNestedManyWithoutLotInput
+    booking?: BookingCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotUncheckedCreateWithoutPricesInput = {
     lot_id?: number
     owner_id: number
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
     locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutLotInput
+    booking?: BookingUncheckedCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotCreateOrConnectWithoutPricesInput = {
@@ -24912,23 +25249,27 @@ export namespace Prisma {
 
   export type ParkingLotUpdateWithoutPricesInput = {
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: OwnerUpdateOneRequiredWithoutParkingLotsNestedInput
     spaces?: ParkingSpaceUpdateManyWithoutLotNestedInput
     locations?: LocationUpdateManyWithoutParkingLotNestedInput
     reviews?: ReviewUpdateManyWithoutLotNestedInput
+    booking?: BookingUpdateManyWithoutLotNestedInput
   }
 
   export type ParkingLotUncheckedUpdateWithoutPricesInput = {
     lot_id?: IntFieldUpdateOperationsInput | number
     owner_id?: IntFieldUpdateOperationsInput | number
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
     locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
+    booking?: BookingUncheckedUpdateManyWithoutLotNestedInput
   }
 
   export type UserCreateWithoutReviewsInput = {
@@ -24940,7 +25281,6 @@ export namespace Prisma {
     created_at?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
-    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -24953,7 +25293,6 @@ export namespace Prisma {
     created_at?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -24963,23 +25302,27 @@ export namespace Prisma {
 
   export type ParkingLotCreateWithoutReviewsInput = {
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     owner: OwnerCreateNestedOneWithoutParkingLotsInput
     spaces?: ParkingSpaceCreateNestedManyWithoutLotInput
     locations?: LocationCreateNestedManyWithoutParkingLotInput
     prices?: PriceCreateNestedManyWithoutLotInput
+    booking?: BookingCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotUncheckedCreateWithoutReviewsInput = {
     lot_id?: number
     owner_id: number
     lot_name: string
+    image?: string | null
     capacity: number
     created_at?: Date | string
     spaces?: ParkingSpaceUncheckedCreateNestedManyWithoutLotInput
     locations?: LocationUncheckedCreateNestedManyWithoutParkingLotInput
     prices?: PriceUncheckedCreateNestedManyWithoutLotInput
+    booking?: BookingUncheckedCreateNestedManyWithoutLotInput
   }
 
   export type ParkingLotCreateOrConnectWithoutReviewsInput = {
@@ -25007,7 +25350,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -25020,7 +25362,6 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParkingLotUpsertWithoutReviewsInput = {
@@ -25036,53 +25377,27 @@ export namespace Prisma {
 
   export type ParkingLotUpdateWithoutReviewsInput = {
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: OwnerUpdateOneRequiredWithoutParkingLotsNestedInput
     spaces?: ParkingSpaceUpdateManyWithoutLotNestedInput
     locations?: LocationUpdateManyWithoutParkingLotNestedInput
     prices?: PriceUpdateManyWithoutLotNestedInput
+    booking?: BookingUpdateManyWithoutLotNestedInput
   }
 
   export type ParkingLotUncheckedUpdateWithoutReviewsInput = {
     lot_id?: IntFieldUpdateOperationsInput | number
     owner_id?: IntFieldUpdateOperationsInput | number
     lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     capacity?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
     locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
     prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
-  }
-
-  export type UserCreateWithoutNotificationsInput = {
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-    bookings?: BookingCreateNestedManyWithoutUserInput
-    payments?: PaymentCreateNestedManyWithoutUserInput
-    reviews?: ReviewCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutNotificationsInput = {
-    user_id?: number
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone: string
-    created_at?: Date | string
-    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
-    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
-    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutNotificationsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    booking?: BookingUncheckedUpdateManyWithoutLotNestedInput
   }
 
   export type OwnerCreateWithoutNotificationsInput = {
@@ -25109,42 +25424,6 @@ export namespace Prisma {
   export type OwnerCreateOrConnectWithoutNotificationsInput = {
     where: OwnerWhereUniqueInput
     create: XOR<OwnerCreateWithoutNotificationsInput, OwnerUncheckedCreateWithoutNotificationsInput>
-  }
-
-  export type UserUpsertWithoutNotificationsInput = {
-    update: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
-    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
-  }
-
-  export type UserUpdateWithoutNotificationsInput = {
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookings?: BookingUpdateManyWithoutUserNestedInput
-    payments?: PaymentUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutNotificationsInput = {
-    user_id?: IntFieldUpdateOperationsInput | number
-    first_name?: StringFieldUpdateOperationsInput | string
-    last_name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
-    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OwnerUpsertWithoutNotificationsInput = {
@@ -25177,6 +25456,169 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     parkingLots?: ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type BookingCreateManyUserInput = {
+    booking_id?: number
+    lot_id: number
+    space_id: number
+    start_time: Date | string
+    end_time: Date | string
+    status: $Enums.BookStatus
+  }
+
+  export type PaymentCreateManyUserInput = {
+    payment_id?: number
+    booking_id: number
+    amount: number
+    payment_method: string
+    payment_date?: Date | string
+  }
+
+  export type ReviewCreateManyUserInput = {
+    review_id?: number
+    lot_id: number
+    rating: number
+    comment: string
+    review_date?: Date | string
+  }
+
+  export type BookingUpdateWithoutUserInput = {
+    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+    space?: ParkingSpaceUpdateOneRequiredWithoutBookingsNestedInput
+    lot?: ParkingLotUpdateOneRequiredWithoutBookingNestedInput
+    payment?: PaymentUpdateManyWithoutBookingNestedInput
+  }
+
+  export type BookingUncheckedUpdateWithoutUserInput = {
+    booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
+    space_id?: IntFieldUpdateOperationsInput | number
+    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+    payment?: PaymentUncheckedUpdateManyWithoutBookingNestedInput
+  }
+
+  export type BookingUncheckedUpdateManyWithoutUserInput = {
+    booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
+    space_id?: IntFieldUpdateOperationsInput | number
+    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+  }
+
+  export type PaymentUpdateWithoutUserInput = {
+    amount?: FloatFieldUpdateOperationsInput | number
+    payment_method?: StringFieldUpdateOperationsInput | string
+    payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    booking?: BookingUpdateOneRequiredWithoutPaymentNestedInput
+  }
+
+  export type PaymentUncheckedUpdateWithoutUserInput = {
+    payment_id?: IntFieldUpdateOperationsInput | number
+    booking_id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    payment_method?: StringFieldUpdateOperationsInput | string
+    payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentUncheckedUpdateManyWithoutUserInput = {
+    payment_id?: IntFieldUpdateOperationsInput | number
+    booking_id?: IntFieldUpdateOperationsInput | number
+    amount?: FloatFieldUpdateOperationsInput | number
+    payment_method?: StringFieldUpdateOperationsInput | string
+    payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUpdateWithoutUserInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+    lot?: ParkingLotUpdateOneRequiredWithoutReviewsNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutUserInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutUserInput = {
+    review_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: StringFieldUpdateOperationsInput | string
+    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ParkingLotCreateManyOwnerInput = {
+    lot_id?: number
+    lot_name: string
+    image?: string | null
+    capacity: number
+    created_at?: Date | string
+  }
+
+  export type NotificationCreateManyOwnerInput = {
+    notification_id?: number
+    message: string
+    sent_at?: Date | string
+  }
+
+  export type ParkingLotUpdateWithoutOwnerInput = {
+    lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    capacity?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaces?: ParkingSpaceUpdateManyWithoutLotNestedInput
+    locations?: LocationUpdateManyWithoutParkingLotNestedInput
+    prices?: PriceUpdateManyWithoutLotNestedInput
+    reviews?: ReviewUpdateManyWithoutLotNestedInput
+    booking?: BookingUpdateManyWithoutLotNestedInput
+  }
+
+  export type ParkingLotUncheckedUpdateWithoutOwnerInput = {
+    lot_id?: IntFieldUpdateOperationsInput | number
+    lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    capacity?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
+    locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
+    prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
+    booking?: BookingUncheckedUpdateManyWithoutLotNestedInput
+  }
+
+  export type ParkingLotUncheckedUpdateManyWithoutOwnerInput = {
+    lot_id?: IntFieldUpdateOperationsInput | number
+    lot_name?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    capacity?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUpdateWithoutOwnerInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateWithoutOwnerInput = {
+    notification_id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutOwnerInput = {
+    notification_id?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type SubCityCreateManyCityInput = {
@@ -25268,7 +25710,7 @@ export namespace Prisma {
     space_id?: number
     space_number: string
     is_handicap: boolean
-    status: string
+    status?: $Enums.SpaceStatus
     created_at?: Date | string
   }
 
@@ -25294,10 +25736,19 @@ export namespace Prisma {
     review_date?: Date | string
   }
 
+  export type BookingCreateManyLotInput = {
+    booking_id?: number
+    user_id: number
+    space_id: number
+    start_time: Date | string
+    end_time: Date | string
+    status: $Enums.BookStatus
+  }
+
   export type ParkingSpaceUpdateWithoutLotInput = {
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     availability?: AvailabilityLogUpdateManyWithoutSpaceNestedInput
     bookings?: BookingUpdateManyWithoutSpaceNestedInput
@@ -25307,7 +25758,7 @@ export namespace Prisma {
     space_id?: IntFieldUpdateOperationsInput | number
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     availability?: AvailabilityLogUncheckedUpdateManyWithoutSpaceNestedInput
     bookings?: BookingUncheckedUpdateManyWithoutSpaceNestedInput
@@ -25317,7 +25768,7 @@ export namespace Prisma {
     space_id?: IntFieldUpdateOperationsInput | number
     space_number?: StringFieldUpdateOperationsInput | string
     is_handicap?: BoolFieldUpdateOperationsInput | boolean
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumSpaceStatusFieldUpdateOperationsInput | $Enums.SpaceStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25384,6 +25835,34 @@ export namespace Prisma {
     review_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BookingUpdateWithoutLotInput = {
+    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+    user?: UserUpdateOneRequiredWithoutBookingsNestedInput
+    space?: ParkingSpaceUpdateOneRequiredWithoutBookingsNestedInput
+    payment?: PaymentUpdateManyWithoutBookingNestedInput
+  }
+
+  export type BookingUncheckedUpdateWithoutLotInput = {
+    booking_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    space_id?: IntFieldUpdateOperationsInput | number
+    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+    payment?: PaymentUncheckedUpdateManyWithoutBookingNestedInput
+  }
+
+  export type BookingUncheckedUpdateManyWithoutLotInput = {
+    booking_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+    space_id?: IntFieldUpdateOperationsInput | number
+    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+  }
+
   export type AvailabilityLogCreateManySpaceInput = {
     log_id?: number
     status: string
@@ -25392,10 +25871,11 @@ export namespace Prisma {
 
   export type BookingCreateManySpaceInput = {
     booking_id?: number
+    lot_id: number
     user_id: number
     start_time: Date | string
     end_time: Date | string
-    status: string
+    status: $Enums.BookStatus
   }
 
   export type AvailabilityLogUpdateWithoutSpaceInput = {
@@ -25418,210 +25898,60 @@ export namespace Prisma {
   export type BookingUpdateWithoutSpaceInput = {
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
     user?: UserUpdateOneRequiredWithoutBookingsNestedInput
-    payment?: PaymentUpdateOneWithoutBookingNestedInput
+    lot?: ParkingLotUpdateOneRequiredWithoutBookingNestedInput
+    payment?: PaymentUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateWithoutSpaceInput = {
     booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
-    payment?: PaymentUncheckedUpdateOneWithoutBookingNestedInput
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
+    payment?: PaymentUncheckedUpdateManyWithoutBookingNestedInput
   }
 
   export type BookingUncheckedUpdateManyWithoutSpaceInput = {
     booking_id?: IntFieldUpdateOperationsInput | number
+    lot_id?: IntFieldUpdateOperationsInput | number
     user_id?: IntFieldUpdateOperationsInput | number
     start_time?: DateTimeFieldUpdateOperationsInput | Date | string
     end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumBookStatusFieldUpdateOperationsInput | $Enums.BookStatus
   }
 
-  export type BookingCreateManyUserInput = {
-    booking_id?: number
-    space_id: number
-    start_time: Date | string
-    end_time: Date | string
-    status: string
-  }
-
-  export type PaymentCreateManyUserInput = {
+  export type PaymentCreateManyBookingInput = {
     payment_id?: number
-    booking_id: number
+    user_id: number
     amount: number
     payment_method: string
     payment_date?: Date | string
   }
 
-  export type ReviewCreateManyUserInput = {
-    review_id?: number
-    lot_id: number
-    rating: number
-    comment: string
-    review_date?: Date | string
-  }
-
-  export type NotificationCreateManyUserInput = {
-    notification_id?: number
-    owner_id?: number | null
-    message: string
-    sent_at?: Date | string
-  }
-
-  export type BookingUpdateWithoutUserInput = {
-    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
-    space?: ParkingSpaceUpdateOneRequiredWithoutBookingsNestedInput
-    payment?: PaymentUpdateOneWithoutBookingNestedInput
-  }
-
-  export type BookingUncheckedUpdateWithoutUserInput = {
-    booking_id?: IntFieldUpdateOperationsInput | number
-    space_id?: IntFieldUpdateOperationsInput | number
-    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
-    payment?: PaymentUncheckedUpdateOneWithoutBookingNestedInput
-  }
-
-  export type BookingUncheckedUpdateManyWithoutUserInput = {
-    booking_id?: IntFieldUpdateOperationsInput | number
-    space_id?: IntFieldUpdateOperationsInput | number
-    start_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    end_time?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type PaymentUpdateWithoutUserInput = {
+  export type PaymentUpdateWithoutBookingInput = {
     amount?: FloatFieldUpdateOperationsInput | number
     payment_method?: StringFieldUpdateOperationsInput | string
     payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    booking?: BookingUpdateOneRequiredWithoutPaymentNestedInput
+    user?: UserUpdateOneRequiredWithoutPaymentsNestedInput
   }
 
-  export type PaymentUncheckedUpdateWithoutUserInput = {
+  export type PaymentUncheckedUpdateWithoutBookingInput = {
     payment_id?: IntFieldUpdateOperationsInput | number
-    booking_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
     payment_method?: StringFieldUpdateOperationsInput | string
     payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PaymentUncheckedUpdateManyWithoutUserInput = {
+  export type PaymentUncheckedUpdateManyWithoutBookingInput = {
     payment_id?: IntFieldUpdateOperationsInput | number
-    booking_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
     amount?: FloatFieldUpdateOperationsInput | number
     payment_method?: StringFieldUpdateOperationsInput | string
     payment_date?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReviewUpdateWithoutUserInput = {
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
-    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    lot?: ParkingLotUpdateOneRequiredWithoutReviewsNestedInput
-  }
-
-  export type ReviewUncheckedUpdateWithoutUserInput = {
-    review_id?: IntFieldUpdateOperationsInput | number
-    lot_id?: IntFieldUpdateOperationsInput | number
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
-    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ReviewUncheckedUpdateManyWithoutUserInput = {
-    review_id?: IntFieldUpdateOperationsInput | number
-    lot_id?: IntFieldUpdateOperationsInput | number
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: StringFieldUpdateOperationsInput | string
-    review_date?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUpdateWithoutUserInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    owner?: OwnerUpdateOneWithoutNotificationsNestedInput
-  }
-
-  export type NotificationUncheckedUpdateWithoutUserInput = {
-    notification_id?: IntFieldUpdateOperationsInput | number
-    owner_id?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: StringFieldUpdateOperationsInput | string
-    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutUserInput = {
-    notification_id?: IntFieldUpdateOperationsInput | number
-    owner_id?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: StringFieldUpdateOperationsInput | string
-    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ParkingLotCreateManyOwnerInput = {
-    lot_id?: number
-    lot_name: string
-    capacity: number
-    created_at?: Date | string
-  }
-
-  export type NotificationCreateManyOwnerInput = {
-    notification_id?: number
-    user_id?: number | null
-    message: string
-    sent_at?: Date | string
-  }
-
-  export type ParkingLotUpdateWithoutOwnerInput = {
-    lot_name?: StringFieldUpdateOperationsInput | string
-    capacity?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    spaces?: ParkingSpaceUpdateManyWithoutLotNestedInput
-    locations?: LocationUpdateManyWithoutParkingLotNestedInput
-    prices?: PriceUpdateManyWithoutLotNestedInput
-    reviews?: ReviewUpdateManyWithoutLotNestedInput
-  }
-
-  export type ParkingLotUncheckedUpdateWithoutOwnerInput = {
-    lot_id?: IntFieldUpdateOperationsInput | number
-    lot_name?: StringFieldUpdateOperationsInput | string
-    capacity?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    spaces?: ParkingSpaceUncheckedUpdateManyWithoutLotNestedInput
-    locations?: LocationUncheckedUpdateManyWithoutParkingLotNestedInput
-    prices?: PriceUncheckedUpdateManyWithoutLotNestedInput
-    reviews?: ReviewUncheckedUpdateManyWithoutLotNestedInput
-  }
-
-  export type ParkingLotUncheckedUpdateManyWithoutOwnerInput = {
-    lot_id?: IntFieldUpdateOperationsInput | number
-    lot_name?: StringFieldUpdateOperationsInput | string
-    capacity?: IntFieldUpdateOperationsInput | number
-    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUpdateWithoutOwnerInput = {
-    message?: StringFieldUpdateOperationsInput | string
-    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutNotificationsNestedInput
-  }
-
-  export type NotificationUncheckedUpdateWithoutOwnerInput = {
-    notification_id?: IntFieldUpdateOperationsInput | number
-    user_id?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: StringFieldUpdateOperationsInput | string
-    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutOwnerInput = {
-    notification_id?: IntFieldUpdateOperationsInput | number
-    user_id?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: StringFieldUpdateOperationsInput | string
-    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
