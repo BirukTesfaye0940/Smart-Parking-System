@@ -12,34 +12,39 @@ export async function GET(req) {
 
   const ownerId = session.user.id;
 
-  // ✅ Step 1: Get the lot owned by this user
+  // ✅ Fetch the entire lot with all related data
   const lot = await prisma.parkingLot.findFirst({
     where: { owner_id: ownerId },
-    select: { lot_id: true, name: true, address: true },
+    include: {
+      owner: true,
+      spaces: {
+        include: {
+          availability: true,
+          bookings: {
+            include: {
+              user: true,
+              payment: true,
+            },
+          },
+        },
+      },
+      locations: true,
+      prices: true,
+      reviews: true,
+      booking: {
+        include: {
+          user: true,
+          space: true,
+          payment: true,
+        },
+      },
+    },
   });
+  console.log("Fetched lot:", lot);
 
   if (!lot) {
     return NextResponse.json({ error: "No parking lot found for owner" }, { status: 404 });
   }
 
-  // ✅ Step 2: Get all bookings for this lot
-  const bookings = await prisma.booking.findMany({
-    where: {
-      lot_id: lot.lot_id,
-    },
-    include: {
-      user: true,
-      space: true,
-      lot: true,
-    },
-    orderBy: {
-      start_time: "desc",
-    },
-  });
-
-  // ✅ Step 3: Return lot info + bookings
-  return NextResponse.json({
-    lot,
-    bookings,
-  });
+  return NextResponse.json({ lot });
 }
