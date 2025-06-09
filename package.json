@@ -15,6 +15,7 @@
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "better-auth": "^1.2.8",
+    "daisyui": "^5.0.43",
     "dotenv": "^16.5.0",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
@@ -22,6 +23,7 @@
     "next": "15.3.2",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
+    "react-datepicker": "^8.4.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-leaflet": "^5.0.0"

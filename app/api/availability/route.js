@@ -4,6 +4,7 @@ import prisma from '../../../lib/prisma';
 export async function POST(req) {
   try {
     const { space_id, status } = await req.json();
+    console.log('Received data:', { space_id, status });
 
     if (!space_id || !status) {
       return NextResponse.json({ error: 'space_id and status are required' }, { status: 400 });
@@ -21,7 +22,7 @@ export async function POST(req) {
     });
 
     // ✅ Step 2: Log the change
-    const log = await prisma.availabilityLog.create({
+    const log = await prisma.availabilityLog.update({
       data: {
         space_id,
         status,
