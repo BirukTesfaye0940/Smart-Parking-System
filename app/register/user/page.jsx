@@ -1,9 +1,8 @@
-// app/register/user/page.jsx
+
 'use client';
-
-import RegisterForm from '../../../components/RegisterForm';
-
 import { useState } from 'react';
+import RegisterForm from '../../../components/RegisterForm'; // your form component
+import VerifyOtpUser from '../../../components/VerifyUser'; // adjust the import path if needed
 
 export default function UserRegisterPage() {
   const [formData, setFormData] = useState({
@@ -13,6 +12,8 @@ export default function UserRegisterPage() {
     password: '',
     phone: '',
   });
+
+  const [showOtp, setShowOtp] = useState(false); // track OTP step
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,13 +28,15 @@ export default function UserRegisterPage() {
 
     const result = await res.json();
     if (res.ok) {
-      alert('User registered!');
+      setShowOtp(true); // show OTP step
     } else {
-      alert(result.error || 'Failed to register user');
+      alert(result.error || 'Failed to register admin');
     }
   };
 
-  return (
+  return showOtp ? (
+    <VerifyOtpUser email={formData.email} />
+  ) : (
     <RegisterForm
       role="user"
       formData={formData}

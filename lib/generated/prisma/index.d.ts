@@ -93,7 +93,15 @@ export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
  * Enums
  */
 export namespace $Enums {
-  export const SpaceStatus: {
+  export const AdminStatus: {
+  active: 'active',
+  inactive: 'inactive'
+};
+
+export type AdminStatus = (typeof AdminStatus)[keyof typeof AdminStatus]
+
+
+export const SpaceStatus: {
   available: 'available',
   unavailable: 'unavailable'
 };
@@ -109,6 +117,10 @@ export const BookStatus: {
 export type BookStatus = (typeof BookStatus)[keyof typeof BookStatus]
 
 }
+
+export type AdminStatus = $Enums.AdminStatus
+
+export const AdminStatus: typeof $Enums.AdminStatus
 
 export type SpaceStatus = $Enums.SpaceStatus
 
@@ -2175,12 +2187,14 @@ export namespace Prisma {
     bookings: number
     payments: number
     reviews: number
+    notification: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | UserCountOutputTypeCountBookingsArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
     reviews?: boolean | UserCountOutputTypeCountReviewsArgs
+    notification?: boolean | UserCountOutputTypeCountNotificationArgs
   }
 
   // Custom InputTypes
@@ -2213,6 +2227,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountReviewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountNotificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -2505,10 +2526,12 @@ export namespace Prisma {
 
   export type AdminAvgAggregateOutputType = {
     id: number | null
+    OTP: number | null
   }
 
   export type AdminSumAggregateOutputType = {
     id: number | null
+    OTP: number | null
   }
 
   export type AdminMinAggregateOutputType = {
@@ -2518,6 +2541,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phone: string | null
+    OTP: number | null
+    isVerified: boolean | null
+    status: $Enums.AdminStatus | null
     createdAt: Date | null
   }
 
@@ -2528,6 +2554,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phone: string | null
+    OTP: number | null
+    isVerified: boolean | null
+    status: $Enums.AdminStatus | null
     createdAt: Date | null
   }
 
@@ -2538,6 +2567,9 @@ export namespace Prisma {
     email: number
     password: number
     phone: number
+    OTP: number
+    isVerified: number
+    status: number
     createdAt: number
     _all: number
   }
@@ -2545,10 +2577,12 @@ export namespace Prisma {
 
   export type AdminAvgAggregateInputType = {
     id?: true
+    OTP?: true
   }
 
   export type AdminSumAggregateInputType = {
     id?: true
+    OTP?: true
   }
 
   export type AdminMinAggregateInputType = {
@@ -2558,6 +2592,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     createdAt?: true
   }
 
@@ -2568,6 +2605,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     createdAt?: true
   }
 
@@ -2578,6 +2618,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     createdAt?: true
     _all?: true
   }
@@ -2675,6 +2718,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified: boolean
+    status: $Enums.AdminStatus
     createdAt: Date
     _count: AdminCountAggregateOutputType | null
     _avg: AdminAvgAggregateOutputType | null
@@ -2704,6 +2750,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["admin"]>
 
@@ -2714,6 +2763,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["admin"]>
 
@@ -2724,6 +2776,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["admin"]>
 
@@ -2734,10 +2789,13 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     createdAt?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "password" | "phone" | "createdAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "last_name" | "email" | "password" | "phone" | "OTP" | "isVerified" | "status" | "createdAt", ExtArgs["result"]["admin"]>
 
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
@@ -2749,6 +2807,9 @@ export namespace Prisma {
       email: string
       password: string
       phone: string
+      OTP: number
+      isVerified: boolean
+      status: $Enums.AdminStatus
       createdAt: Date
     }, ExtArgs["result"]["admin"]>
     composites: {}
@@ -3179,6 +3240,9 @@ export namespace Prisma {
     readonly email: FieldRef<"Admin", 'String'>
     readonly password: FieldRef<"Admin", 'String'>
     readonly phone: FieldRef<"Admin", 'String'>
+    readonly OTP: FieldRef<"Admin", 'Int'>
+    readonly isVerified: FieldRef<"Admin", 'Boolean'>
+    readonly status: FieldRef<"Admin", 'AdminStatus'>
     readonly createdAt: FieldRef<"Admin", 'DateTime'>
   }
     
@@ -3560,10 +3624,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     user_id: number | null
+    OTP: number | null
   }
 
   export type UserSumAggregateOutputType = {
     user_id: number | null
+    OTP: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -3573,6 +3639,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phone: string | null
+    OTP: number | null
+    isVerified: boolean | null
+    status: $Enums.AdminStatus | null
     created_at: Date | null
   }
 
@@ -3583,6 +3652,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phone: string | null
+    OTP: number | null
+    isVerified: boolean | null
+    status: $Enums.AdminStatus | null
     created_at: Date | null
   }
 
@@ -3593,6 +3665,9 @@ export namespace Prisma {
     email: number
     password: number
     phone: number
+    OTP: number
+    isVerified: number
+    status: number
     created_at: number
     _all: number
   }
@@ -3600,10 +3675,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateInputType = {
     user_id?: true
+    OTP?: true
   }
 
   export type UserSumAggregateInputType = {
     user_id?: true
+    OTP?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -3613,6 +3690,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     created_at?: true
   }
 
@@ -3623,6 +3703,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     created_at?: true
   }
 
@@ -3633,6 +3716,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     created_at?: true
     _all?: true
   }
@@ -3730,6 +3816,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified: boolean
+    status: $Enums.AdminStatus
     created_at: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
@@ -3759,10 +3848,14 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
+    notification?: boolean | User$notificationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3773,6 +3866,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -3783,6 +3879,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -3793,14 +3892,18 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "created_at", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"user_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "OTP" | "isVerified" | "status" | "created_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
     reviews?: boolean | User$reviewsArgs<ExtArgs>
+    notification?: boolean | User$notificationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3812,6 +3915,7 @@ export namespace Prisma {
       bookings: Prisma.$BookingPayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
       reviews: Prisma.$ReviewPayload<ExtArgs>[]
+      notification: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       user_id: number
@@ -3820,6 +3924,9 @@ export namespace Prisma {
       email: string
       password: string
       phone: string
+      OTP: number
+      isVerified: boolean
+      status: $Enums.AdminStatus
       created_at: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -4218,6 +4325,7 @@ export namespace Prisma {
     bookings<T extends User$bookingsArgs<ExtArgs> = {}>(args?: Subset<T, User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviews<T extends User$reviewsArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notification<T extends User$notificationArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4253,6 +4361,9 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
+    readonly OTP: FieldRef<"User", 'Int'>
+    readonly isVerified: FieldRef<"User", 'Boolean'>
+    readonly status: FieldRef<"User", 'AdminStatus'>
     readonly created_at: FieldRef<"User", 'DateTime'>
   }
     
@@ -4714,6 +4825,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.notification
+   */
+  export type User$notificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4746,10 +4881,12 @@ export namespace Prisma {
 
   export type OwnerAvgAggregateOutputType = {
     owner_id: number | null
+    OTP: number | null
   }
 
   export type OwnerSumAggregateOutputType = {
     owner_id: number | null
+    OTP: number | null
   }
 
   export type OwnerMinAggregateOutputType = {
@@ -4759,6 +4896,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phone: string | null
+    OTP: number | null
+    isVerified: boolean | null
+    status: $Enums.AdminStatus | null
     created_at: Date | null
   }
 
@@ -4769,6 +4909,9 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phone: string | null
+    OTP: number | null
+    isVerified: boolean | null
+    status: $Enums.AdminStatus | null
     created_at: Date | null
   }
 
@@ -4779,6 +4922,9 @@ export namespace Prisma {
     email: number
     password: number
     phone: number
+    OTP: number
+    isVerified: number
+    status: number
     created_at: number
     _all: number
   }
@@ -4786,10 +4932,12 @@ export namespace Prisma {
 
   export type OwnerAvgAggregateInputType = {
     owner_id?: true
+    OTP?: true
   }
 
   export type OwnerSumAggregateInputType = {
     owner_id?: true
+    OTP?: true
   }
 
   export type OwnerMinAggregateInputType = {
@@ -4799,6 +4947,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     created_at?: true
   }
 
@@ -4809,6 +4960,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     created_at?: true
   }
 
@@ -4819,6 +4973,9 @@ export namespace Prisma {
     email?: true
     password?: true
     phone?: true
+    OTP?: true
+    isVerified?: true
+    status?: true
     created_at?: true
     _all?: true
   }
@@ -4916,6 +5073,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified: boolean
+    status: $Enums.AdminStatus
     created_at: Date
     _count: OwnerCountAggregateOutputType | null
     _avg: OwnerAvgAggregateOutputType | null
@@ -4945,6 +5105,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
     parkingLots?: boolean | Owner$parkingLotsArgs<ExtArgs>
     notifications?: boolean | Owner$notificationsArgs<ExtArgs>
@@ -4958,6 +5121,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["owner"]>
 
@@ -4968,6 +5134,9 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
   }, ExtArgs["result"]["owner"]>
 
@@ -4978,10 +5147,13 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phone?: boolean
+    OTP?: boolean
+    isVerified?: boolean
+    status?: boolean
     created_at?: boolean
   }
 
-  export type OwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"owner_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "created_at", ExtArgs["result"]["owner"]>
+  export type OwnerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"owner_id" | "first_name" | "last_name" | "email" | "password" | "phone" | "OTP" | "isVerified" | "status" | "created_at", ExtArgs["result"]["owner"]>
   export type OwnerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parkingLots?: boolean | Owner$parkingLotsArgs<ExtArgs>
     notifications?: boolean | Owner$notificationsArgs<ExtArgs>
@@ -5003,6 +5175,9 @@ export namespace Prisma {
       email: string
       password: string
       phone: string
+      OTP: number
+      isVerified: boolean
+      status: $Enums.AdminStatus
       created_at: Date
     }, ExtArgs["result"]["owner"]>
     composites: {}
@@ -5435,6 +5610,9 @@ export namespace Prisma {
     readonly email: FieldRef<"Owner", 'String'>
     readonly password: FieldRef<"Owner", 'String'>
     readonly phone: FieldRef<"Owner", 'String'>
+    readonly OTP: FieldRef<"Owner", 'Int'>
+    readonly isVerified: FieldRef<"Owner", 'Boolean'>
+    readonly status: FieldRef<"Owner", 'AdminStatus'>
     readonly created_at: FieldRef<"Owner", 'DateTime'>
   }
     
@@ -18382,16 +18560,19 @@ export namespace Prisma {
   export type NotificationAvgAggregateOutputType = {
     notification_id: number | null
     owner_id: number | null
+    user_id: number | null
   }
 
   export type NotificationSumAggregateOutputType = {
     notification_id: number | null
     owner_id: number | null
+    user_id: number | null
   }
 
   export type NotificationMinAggregateOutputType = {
     notification_id: number | null
     owner_id: number | null
+    user_id: number | null
     message: string | null
     sent_at: Date | null
   }
@@ -18399,6 +18580,7 @@ export namespace Prisma {
   export type NotificationMaxAggregateOutputType = {
     notification_id: number | null
     owner_id: number | null
+    user_id: number | null
     message: string | null
     sent_at: Date | null
   }
@@ -18406,6 +18588,7 @@ export namespace Prisma {
   export type NotificationCountAggregateOutputType = {
     notification_id: number
     owner_id: number
+    user_id: number
     message: number
     sent_at: number
     _all: number
@@ -18415,16 +18598,19 @@ export namespace Prisma {
   export type NotificationAvgAggregateInputType = {
     notification_id?: true
     owner_id?: true
+    user_id?: true
   }
 
   export type NotificationSumAggregateInputType = {
     notification_id?: true
     owner_id?: true
+    user_id?: true
   }
 
   export type NotificationMinAggregateInputType = {
     notification_id?: true
     owner_id?: true
+    user_id?: true
     message?: true
     sent_at?: true
   }
@@ -18432,6 +18618,7 @@ export namespace Prisma {
   export type NotificationMaxAggregateInputType = {
     notification_id?: true
     owner_id?: true
+    user_id?: true
     message?: true
     sent_at?: true
   }
@@ -18439,6 +18626,7 @@ export namespace Prisma {
   export type NotificationCountAggregateInputType = {
     notification_id?: true
     owner_id?: true
+    user_id?: true
     message?: true
     sent_at?: true
     _all?: true
@@ -18533,6 +18721,7 @@ export namespace Prisma {
   export type NotificationGroupByOutputType = {
     notification_id: number
     owner_id: number | null
+    user_id: number | null
     message: string
     sent_at: Date
     _count: NotificationCountAggregateOutputType | null
@@ -18559,53 +18748,65 @@ export namespace Prisma {
   export type NotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     notification_id?: boolean
     owner_id?: boolean
+    user_id?: boolean
     message?: boolean
     sent_at?: boolean
     owner?: boolean | Notification$ownerArgs<ExtArgs>
+    user?: boolean | Notification$userArgs<ExtArgs>
   }, ExtArgs["result"]["notification"]>
 
   export type NotificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     notification_id?: boolean
     owner_id?: boolean
+    user_id?: boolean
     message?: boolean
     sent_at?: boolean
     owner?: boolean | Notification$ownerArgs<ExtArgs>
+    user?: boolean | Notification$userArgs<ExtArgs>
   }, ExtArgs["result"]["notification"]>
 
   export type NotificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     notification_id?: boolean
     owner_id?: boolean
+    user_id?: boolean
     message?: boolean
     sent_at?: boolean
     owner?: boolean | Notification$ownerArgs<ExtArgs>
+    user?: boolean | Notification$userArgs<ExtArgs>
   }, ExtArgs["result"]["notification"]>
 
   export type NotificationSelectScalar = {
     notification_id?: boolean
     owner_id?: boolean
+    user_id?: boolean
     message?: boolean
     sent_at?: boolean
   }
 
-  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"notification_id" | "owner_id" | "message" | "sent_at", ExtArgs["result"]["notification"]>
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"notification_id" | "owner_id" | "user_id" | "message" | "sent_at", ExtArgs["result"]["notification"]>
   export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Notification$ownerArgs<ExtArgs>
+    user?: boolean | Notification$userArgs<ExtArgs>
   }
   export type NotificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Notification$ownerArgs<ExtArgs>
+    user?: boolean | Notification$userArgs<ExtArgs>
   }
   export type NotificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Notification$ownerArgs<ExtArgs>
+    user?: boolean | Notification$userArgs<ExtArgs>
   }
 
   export type $NotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Notification"
     objects: {
       owner: Prisma.$OwnerPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       notification_id: number
       owner_id: number | null
+      user_id: number | null
       message: string
       sent_at: Date
     }, ExtArgs["result"]["notification"]>
@@ -19003,6 +19204,7 @@ export namespace Prisma {
   export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends Notification$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Notification$ownerArgs<ExtArgs>>): Prisma__OwnerClient<$Result.GetResult<Prisma.$OwnerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends Notification$userArgs<ExtArgs> = {}>(args?: Subset<T, Notification$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19034,6 +19236,7 @@ export namespace Prisma {
   interface NotificationFieldRefs {
     readonly notification_id: FieldRef<"Notification", 'Int'>
     readonly owner_id: FieldRef<"Notification", 'Int'>
+    readonly user_id: FieldRef<"Notification", 'Int'>
     readonly message: FieldRef<"Notification", 'String'>
     readonly sent_at: FieldRef<"Notification", 'DateTime'>
   }
@@ -19451,6 +19654,25 @@ export namespace Prisma {
   }
 
   /**
+   * Notification.user
+   */
+  export type Notification$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Notification without action
    */
   export type NotificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19490,6 +19712,9 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     phone: 'phone',
+    OTP: 'OTP',
+    isVerified: 'isVerified',
+    status: 'status',
     createdAt: 'createdAt'
   };
 
@@ -19503,6 +19728,9 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     phone: 'phone',
+    OTP: 'OTP',
+    isVerified: 'isVerified',
+    status: 'status',
     created_at: 'created_at'
   };
 
@@ -19516,6 +19744,9 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     phone: 'phone',
+    OTP: 'OTP',
+    isVerified: 'isVerified',
+    status: 'status',
     created_at: 'created_at'
   };
 
@@ -19649,6 +19880,7 @@ export namespace Prisma {
   export const NotificationScalarFieldEnum: {
     notification_id: 'notification_id',
     owner_id: 'owner_id',
+    user_id: 'user_id',
     message: 'message',
     sent_at: 'sent_at'
   };
@@ -19714,6 +19946,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'AdminStatus'
+   */
+  export type EnumAdminStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'AdminStatus[]'
+   */
+  export type ListEnumAdminStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -19738,13 +19991,6 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -19789,6 +20035,9 @@ export namespace Prisma {
     email?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     phone?: StringFilter<"Admin"> | string
+    OTP?: IntFilter<"Admin"> | number
+    isVerified?: BoolFilter<"Admin"> | boolean
+    status?: EnumAdminStatusFilter<"Admin"> | $Enums.AdminStatus
     createdAt?: DateTimeFilter<"Admin"> | Date | string
   }
 
@@ -19799,6 +20048,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -19812,6 +20064,9 @@ export namespace Prisma {
     last_name?: StringFilter<"Admin"> | string
     password?: StringFilter<"Admin"> | string
     phone?: StringFilter<"Admin"> | string
+    OTP?: IntFilter<"Admin"> | number
+    isVerified?: BoolFilter<"Admin"> | boolean
+    status?: EnumAdminStatusFilter<"Admin"> | $Enums.AdminStatus
     createdAt?: DateTimeFilter<"Admin"> | Date | string
   }, "id" | "email">
 
@@ -19822,6 +20077,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     _count?: AdminCountOrderByAggregateInput
     _avg?: AdminAvgOrderByAggregateInput
@@ -19840,6 +20098,9 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Admin"> | string
     password?: StringWithAggregatesFilter<"Admin"> | string
     phone?: StringWithAggregatesFilter<"Admin"> | string
+    OTP?: IntWithAggregatesFilter<"Admin"> | number
+    isVerified?: BoolWithAggregatesFilter<"Admin"> | boolean
+    status?: EnumAdminStatusWithAggregatesFilter<"Admin"> | $Enums.AdminStatus
     createdAt?: DateTimeWithAggregatesFilter<"Admin"> | Date | string
   }
 
@@ -19853,10 +20114,14 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     phone?: StringFilter<"User"> | string
+    OTP?: IntFilter<"User"> | number
+    isVerified?: BoolFilter<"User"> | boolean
+    status?: EnumAdminStatusFilter<"User"> | $Enums.AdminStatus
     created_at?: DateTimeFilter<"User"> | Date | string
     bookings?: BookingListRelationFilter
     payments?: PaymentListRelationFilter
     reviews?: ReviewListRelationFilter
+    notification?: NotificationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -19866,10 +20131,14 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     bookings?: BookingOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
     reviews?: ReviewOrderByRelationAggregateInput
+    notification?: NotificationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -19882,10 +20151,14 @@ export namespace Prisma {
     last_name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     phone?: StringFilter<"User"> | string
+    OTP?: IntFilter<"User"> | number
+    isVerified?: BoolFilter<"User"> | boolean
+    status?: EnumAdminStatusFilter<"User"> | $Enums.AdminStatus
     created_at?: DateTimeFilter<"User"> | Date | string
     bookings?: BookingListRelationFilter
     payments?: PaymentListRelationFilter
     reviews?: ReviewListRelationFilter
+    notification?: NotificationListRelationFilter
   }, "user_id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -19895,6 +20168,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
@@ -19913,6 +20189,9 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     phone?: StringWithAggregatesFilter<"User"> | string
+    OTP?: IntWithAggregatesFilter<"User"> | number
+    isVerified?: BoolWithAggregatesFilter<"User"> | boolean
+    status?: EnumAdminStatusWithAggregatesFilter<"User"> | $Enums.AdminStatus
     created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -19926,6 +20205,9 @@ export namespace Prisma {
     email?: StringFilter<"Owner"> | string
     password?: StringFilter<"Owner"> | string
     phone?: StringFilter<"Owner"> | string
+    OTP?: IntFilter<"Owner"> | number
+    isVerified?: BoolFilter<"Owner"> | boolean
+    status?: EnumAdminStatusFilter<"Owner"> | $Enums.AdminStatus
     created_at?: DateTimeFilter<"Owner"> | Date | string
     parkingLots?: ParkingLotListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -19938,6 +20220,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     parkingLots?: ParkingLotOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
@@ -19953,6 +20238,9 @@ export namespace Prisma {
     last_name?: StringFilter<"Owner"> | string
     password?: StringFilter<"Owner"> | string
     phone?: StringFilter<"Owner"> | string
+    OTP?: IntFilter<"Owner"> | number
+    isVerified?: BoolFilter<"Owner"> | boolean
+    status?: EnumAdminStatusFilter<"Owner"> | $Enums.AdminStatus
     created_at?: DateTimeFilter<"Owner"> | Date | string
     parkingLots?: ParkingLotListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -19965,6 +20253,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
     _count?: OwnerCountOrderByAggregateInput
     _avg?: OwnerAvgOrderByAggregateInput
@@ -19983,6 +20274,9 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Owner"> | string
     password?: StringWithAggregatesFilter<"Owner"> | string
     phone?: StringWithAggregatesFilter<"Owner"> | string
+    OTP?: IntWithAggregatesFilter<"Owner"> | number
+    isVerified?: BoolWithAggregatesFilter<"Owner"> | boolean
+    status?: EnumAdminStatusWithAggregatesFilter<"Owner"> | $Enums.AdminStatus
     created_at?: DateTimeWithAggregatesFilter<"Owner"> | Date | string
   }
 
@@ -20682,17 +20976,21 @@ export namespace Prisma {
     NOT?: NotificationWhereInput | NotificationWhereInput[]
     notification_id?: IntFilter<"Notification"> | number
     owner_id?: IntNullableFilter<"Notification"> | number | null
+    user_id?: IntNullableFilter<"Notification"> | number | null
     message?: StringFilter<"Notification"> | string
     sent_at?: DateTimeFilter<"Notification"> | Date | string
     owner?: XOR<OwnerNullableScalarRelationFilter, OwnerWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type NotificationOrderByWithRelationInput = {
     notification_id?: SortOrder
     owner_id?: SortOrderInput | SortOrder
+    user_id?: SortOrderInput | SortOrder
     message?: SortOrder
     sent_at?: SortOrder
     owner?: OwnerOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type NotificationWhereUniqueInput = Prisma.AtLeast<{
@@ -20701,14 +20999,17 @@ export namespace Prisma {
     OR?: NotificationWhereInput[]
     NOT?: NotificationWhereInput | NotificationWhereInput[]
     owner_id?: IntNullableFilter<"Notification"> | number | null
+    user_id?: IntNullableFilter<"Notification"> | number | null
     message?: StringFilter<"Notification"> | string
     sent_at?: DateTimeFilter<"Notification"> | Date | string
     owner?: XOR<OwnerNullableScalarRelationFilter, OwnerWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "notification_id">
 
   export type NotificationOrderByWithAggregationInput = {
     notification_id?: SortOrder
     owner_id?: SortOrderInput | SortOrder
+    user_id?: SortOrderInput | SortOrder
     message?: SortOrder
     sent_at?: SortOrder
     _count?: NotificationCountOrderByAggregateInput
@@ -20724,6 +21025,7 @@ export namespace Prisma {
     NOT?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
     notification_id?: IntWithAggregatesFilter<"Notification"> | number
     owner_id?: IntNullableWithAggregatesFilter<"Notification"> | number | null
+    user_id?: IntNullableWithAggregatesFilter<"Notification"> | number | null
     message?: StringWithAggregatesFilter<"Notification"> | string
     sent_at?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
   }
@@ -20734,6 +21036,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     createdAt?: Date | string
   }
 
@@ -20744,6 +21049,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     createdAt?: Date | string
   }
 
@@ -20753,6 +21061,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20763,6 +21074,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20773,6 +21087,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     createdAt?: Date | string
   }
 
@@ -20782,6 +21099,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20792,6 +21112,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20801,10 +21124,14 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    notification?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20814,10 +21141,14 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    notification?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -20826,10 +21157,14 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    notification?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20839,10 +21174,14 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -20852,6 +21191,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
   }
 
@@ -20861,6 +21203,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20871,6 +21216,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20880,6 +21228,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     parkingLots?: ParkingLotCreateNestedManyWithoutOwnerInput
     notifications?: NotificationCreateNestedManyWithoutOwnerInput
@@ -20892,6 +21243,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     parkingLots?: ParkingLotUncheckedCreateNestedManyWithoutOwnerInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutOwnerInput
@@ -20903,6 +21257,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     parkingLots?: ParkingLotUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUpdateManyWithoutOwnerNestedInput
@@ -20915,6 +21272,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     parkingLots?: ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutOwnerNestedInput
@@ -20927,6 +21287,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
   }
 
@@ -20936,6 +21299,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20946,6 +21312,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21586,11 +21955,13 @@ export namespace Prisma {
     message: string
     sent_at?: Date | string
     owner?: OwnerCreateNestedOneWithoutNotificationsInput
+    user?: UserCreateNestedOneWithoutNotificationInput
   }
 
   export type NotificationUncheckedCreateInput = {
     notification_id?: number
     owner_id?: number | null
+    user_id?: number | null
     message: string
     sent_at?: Date | string
   }
@@ -21599,11 +21970,13 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: OwnerUpdateOneWithoutNotificationsNestedInput
+    user?: UserUpdateOneWithoutNotificationNestedInput
   }
 
   export type NotificationUncheckedUpdateInput = {
     notification_id?: IntFieldUpdateOperationsInput | number
     owner_id?: NullableIntFieldUpdateOperationsInput | number | null
+    user_id?: NullableIntFieldUpdateOperationsInput | number | null
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21611,6 +21984,7 @@ export namespace Prisma {
   export type NotificationCreateManyInput = {
     notification_id?: number
     owner_id?: number | null
+    user_id?: number | null
     message: string
     sent_at?: Date | string
   }
@@ -21623,6 +21997,7 @@ export namespace Prisma {
   export type NotificationUncheckedUpdateManyInput = {
     notification_id?: IntFieldUpdateOperationsInput | number
     owner_id?: NullableIntFieldUpdateOperationsInput | number | null
+    user_id?: NullableIntFieldUpdateOperationsInput | number | null
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -21653,6 +22028,18 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type EnumAdminStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminStatus | EnumAdminStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminStatusFilter<$PrismaModel> | $Enums.AdminStatus
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -21671,11 +22058,15 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
   export type AdminAvgOrderByAggregateInput = {
     id?: SortOrder
+    OTP?: SortOrder
   }
 
   export type AdminMaxOrderByAggregateInput = {
@@ -21685,6 +22076,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21695,11 +22089,15 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
   export type AdminSumOrderByAggregateInput = {
     id?: SortOrder
+    OTP?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -21736,6 +22134,24 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumAdminStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminStatus | EnumAdminStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminStatusWithAggregatesFilter<$PrismaModel> | $Enums.AdminStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAdminStatusFilter<$PrismaModel>
+    _max?: NestedEnumAdminStatusFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -21768,6 +22184,12 @@ export namespace Prisma {
     none?: ReviewWhereInput
   }
 
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
+  }
+
   export type BookingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -21780,6 +22202,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     user_id?: SortOrder
     first_name?: SortOrder
@@ -21787,11 +22213,15 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     user_id?: SortOrder
+    OTP?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -21801,6 +22231,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
   }
 
@@ -21811,11 +22244,15 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     user_id?: SortOrder
+    OTP?: SortOrder
   }
 
   export type ParkingLotListRelationFilter = {
@@ -21824,17 +22261,7 @@ export namespace Prisma {
     none?: ParkingLotWhereInput
   }
 
-  export type NotificationListRelationFilter = {
-    every?: NotificationWhereInput
-    some?: NotificationWhereInput
-    none?: NotificationWhereInput
-  }
-
   export type ParkingLotOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -21845,11 +22272,15 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
   }
 
   export type OwnerAvgOrderByAggregateInput = {
     owner_id?: SortOrder
+    OTP?: SortOrder
   }
 
   export type OwnerMaxOrderByAggregateInput = {
@@ -21859,6 +22290,9 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
   }
 
@@ -21869,11 +22303,15 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phone?: SortOrder
+    OTP?: SortOrder
+    isVerified?: SortOrder
+    status?: SortOrder
     created_at?: SortOrder
   }
 
   export type OwnerSumOrderByAggregateInput = {
     owner_id?: SortOrder
+    OTP?: SortOrder
   }
 
   export type SubCityListRelationFilter = {
@@ -22208,11 +22646,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type EnumSpaceStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.SpaceStatus | EnumSpaceStatusFieldRefInput<$PrismaModel>
     in?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
@@ -22265,14 +22698,6 @@ export namespace Prisma {
   export type ParkingSpaceSumOrderByAggregateInput = {
     space_id?: SortOrder
     lot_id?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumSpaceStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -22523,9 +22948,15 @@ export namespace Prisma {
     isNot?: OwnerWhereInput | null
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type NotificationCountOrderByAggregateInput = {
     notification_id?: SortOrder
     owner_id?: SortOrder
+    user_id?: SortOrder
     message?: SortOrder
     sent_at?: SortOrder
   }
@@ -22533,11 +22964,13 @@ export namespace Prisma {
   export type NotificationAvgOrderByAggregateInput = {
     notification_id?: SortOrder
     owner_id?: SortOrder
+    user_id?: SortOrder
   }
 
   export type NotificationMaxOrderByAggregateInput = {
     notification_id?: SortOrder
     owner_id?: SortOrder
+    user_id?: SortOrder
     message?: SortOrder
     sent_at?: SortOrder
   }
@@ -22545,6 +22978,7 @@ export namespace Prisma {
   export type NotificationMinOrderByAggregateInput = {
     notification_id?: SortOrder
     owner_id?: SortOrder
+    user_id?: SortOrder
     message?: SortOrder
     sent_at?: SortOrder
   }
@@ -22552,6 +22986,7 @@ export namespace Prisma {
   export type NotificationSumOrderByAggregateInput = {
     notification_id?: SortOrder
     owner_id?: SortOrder
+    user_id?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -22574,16 +23009,24 @@ export namespace Prisma {
     set?: string
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type EnumAdminStatusFieldUpdateOperationsInput = {
+    set?: $Enums.AdminStatus
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type BookingCreateNestedManyWithoutUserInput = {
@@ -22607,6 +23050,13 @@ export namespace Prisma {
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type BookingUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
@@ -22626,6 +23076,13 @@ export namespace Prisma {
     connectOrCreate?: ReviewCreateOrConnectWithoutUserInput | ReviewCreateOrConnectWithoutUserInput[]
     createMany?: ReviewCreateManyUserInputEnvelope
     connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type BookingUpdateManyWithoutUserNestedInput = {
@@ -22670,6 +23127,20 @@ export namespace Prisma {
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type BookingUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<BookingCreateWithoutUserInput, BookingUncheckedCreateWithoutUserInput> | BookingCreateWithoutUserInput[] | BookingUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BookingCreateOrConnectWithoutUserInput | BookingCreateOrConnectWithoutUserInput[]
@@ -22710,6 +23181,20 @@ export namespace Prisma {
     update?: ReviewUpdateWithWhereUniqueWithoutUserInput | ReviewUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ReviewUpdateManyWithWhereWithoutUserInput | ReviewUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type ParkingLotCreateNestedManyWithoutOwnerInput = {
@@ -23248,10 +23733,6 @@ export namespace Prisma {
     connect?: BookingWhereUniqueInput | BookingWhereUniqueInput[]
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type EnumSpaceStatusFieldUpdateOperationsInput = {
     set?: $Enums.SpaceStatus
   }
@@ -23498,6 +23979,12 @@ export namespace Prisma {
     connect?: OwnerWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutNotificationInput = {
+    create?: XOR<UserCreateWithoutNotificationInput, UserUncheckedCreateWithoutNotificationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type OwnerUpdateOneWithoutNotificationsNestedInput = {
     create?: XOR<OwnerCreateWithoutNotificationsInput, OwnerUncheckedCreateWithoutNotificationsInput>
     connectOrCreate?: OwnerCreateOrConnectWithoutNotificationsInput
@@ -23506,6 +23993,16 @@ export namespace Prisma {
     delete?: OwnerWhereInput | boolean
     connect?: OwnerWhereUniqueInput
     update?: XOR<XOR<OwnerUpdateToOneWithWhereWithoutNotificationsInput, OwnerUpdateWithoutNotificationsInput>, OwnerUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserUpdateOneWithoutNotificationNestedInput = {
+    create?: XOR<UserCreateWithoutNotificationInput, UserUncheckedCreateWithoutNotificationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationInput
+    upsert?: UserUpsertWithoutNotificationInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationInput, UserUpdateWithoutNotificationInput>, UserUncheckedUpdateWithoutNotificationInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -23539,6 +24036,18 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumAdminStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminStatus | EnumAdminStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminStatusFilter<$PrismaModel> | $Enums.AdminStatus
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -23594,6 +24103,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumAdminStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AdminStatus | EnumAdminStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AdminStatus[] | ListEnumAdminStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumAdminStatusWithAggregatesFilter<$PrismaModel> | $Enums.AdminStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAdminStatusFilter<$PrismaModel>
+    _max?: NestedEnumAdminStatusFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -23668,24 +24195,11 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedEnumSpaceStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.SpaceStatus | EnumSpaceStatusFieldRefInput<$PrismaModel>
     in?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.SpaceStatus[] | ListEnumSpaceStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumSpaceStatusFilter<$PrismaModel> | $Enums.SpaceStatus
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumSpaceStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -23821,6 +24335,29 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type NotificationCreateWithoutUserInput = {
+    message: string
+    sent_at?: Date | string
+    owner?: OwnerCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateWithoutUserInput = {
+    notification_id?: number
+    owner_id?: number | null
+    message: string
+    sent_at?: Date | string
+  }
+
+  export type NotificationCreateOrConnectWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationCreateManyUserInputEnvelope = {
+    data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BookingUpsertWithWhereUniqueWithoutUserInput = {
     where: BookingWhereUniqueInput
     update: XOR<BookingUpdateWithoutUserInput, BookingUncheckedUpdateWithoutUserInput>
@@ -23906,6 +24443,33 @@ export namespace Prisma {
     review_date?: DateTimeFilter<"Review"> | Date | string
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutUserInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    notification_id?: IntFilter<"Notification"> | number
+    owner_id?: IntNullableFilter<"Notification"> | number | null
+    user_id?: IntNullableFilter<"Notification"> | number | null
+    message?: StringFilter<"Notification"> | string
+    sent_at?: DateTimeFilter<"Notification"> | Date | string
+  }
+
   export type ParkingLotCreateWithoutOwnerInput = {
     lot_name: string
     image?: string | null
@@ -23944,10 +24508,12 @@ export namespace Prisma {
   export type NotificationCreateWithoutOwnerInput = {
     message: string
     sent_at?: Date | string
+    user?: UserCreateNestedOneWithoutNotificationInput
   }
 
   export type NotificationUncheckedCreateWithoutOwnerInput = {
     notification_id?: number
+    user_id?: number | null
     message: string
     sent_at?: Date | string
   }
@@ -24004,16 +24570,6 @@ export namespace Prisma {
   export type NotificationUpdateManyWithWhereWithoutOwnerInput = {
     where: NotificationScalarWhereInput
     data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutOwnerInput>
-  }
-
-  export type NotificationScalarWhereInput = {
-    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    OR?: NotificationScalarWhereInput[]
-    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    notification_id?: IntFilter<"Notification"> | number
-    owner_id?: IntNullableFilter<"Notification"> | number | null
-    message?: StringFilter<"Notification"> | string
-    sent_at?: DateTimeFilter<"Notification"> | Date | string
   }
 
   export type SubCityCreateWithoutCityInput = {
@@ -24372,6 +24928,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     notifications?: NotificationCreateNestedManyWithoutOwnerInput
   }
@@ -24383,6 +24942,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     notifications?: NotificationUncheckedCreateNestedManyWithoutOwnerInput
   }
@@ -24538,6 +25100,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: NotificationUpdateManyWithoutOwnerNestedInput
   }
@@ -24549,6 +25114,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     notifications?: NotificationUncheckedUpdateManyWithoutOwnerNestedInput
   }
@@ -24873,9 +25441,13 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     payments?: PaymentCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    notification?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBookingsInput = {
@@ -24885,9 +25457,13 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    notification?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBookingsInput = {
@@ -24991,9 +25567,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    notification?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookingsInput = {
@@ -25003,9 +25583,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParkingSpaceUpsertWithoutBookingsInput = {
@@ -25120,9 +25704,13 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
     reviews?: ReviewCreateNestedManyWithoutUserInput
+    notification?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -25132,9 +25720,13 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
     reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+    notification?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -25189,9 +25781,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
     reviews?: ReviewUpdateManyWithoutUserNestedInput
+    notification?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -25201,9 +25797,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
     reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
+    notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParkingLotCreateWithoutPricesInput = {
@@ -25278,9 +25878,13 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
     payments?: PaymentCreateNestedManyWithoutUserInput
+    notification?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewsInput = {
@@ -25290,9 +25894,13 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
     payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    notification?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewsInput = {
@@ -25347,9 +25955,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
     payments?: PaymentUpdateManyWithoutUserNestedInput
+    notification?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -25359,9 +25971,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    notification?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParkingLotUpsertWithoutReviewsInput = {
@@ -25406,6 +26022,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     parkingLots?: ParkingLotCreateNestedManyWithoutOwnerInput
   }
@@ -25417,6 +26036,9 @@ export namespace Prisma {
     email: string
     password: string
     phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
     created_at?: Date | string
     parkingLots?: ParkingLotUncheckedCreateNestedManyWithoutOwnerInput
   }
@@ -25424,6 +26046,42 @@ export namespace Prisma {
   export type OwnerCreateOrConnectWithoutNotificationsInput = {
     where: OwnerWhereUniqueInput
     create: XOR<OwnerCreateWithoutNotificationsInput, OwnerUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type UserCreateWithoutNotificationInput = {
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
+    created_at?: Date | string
+    bookings?: BookingCreateNestedManyWithoutUserInput
+    payments?: PaymentCreateNestedManyWithoutUserInput
+    reviews?: ReviewCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutNotificationInput = {
+    user_id?: number
+    first_name: string
+    last_name: string
+    email: string
+    password: string
+    phone: string
+    OTP: number
+    isVerified?: boolean
+    status?: $Enums.AdminStatus
+    created_at?: Date | string
+    bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutUserInput
+    reviews?: ReviewUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutNotificationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNotificationInput, UserUncheckedCreateWithoutNotificationInput>
   }
 
   export type OwnerUpsertWithoutNotificationsInput = {
@@ -25443,6 +26101,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     parkingLots?: ParkingLotUpdateManyWithoutOwnerNestedInput
   }
@@ -25454,8 +26115,53 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     parkingLots?: ParkingLotUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserUpsertWithoutNotificationInput = {
+    update: XOR<UserUpdateWithoutNotificationInput, UserUncheckedUpdateWithoutNotificationInput>
+    create: XOR<UserCreateWithoutNotificationInput, UserUncheckedCreateWithoutNotificationInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNotificationInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNotificationInput, UserUncheckedUpdateWithoutNotificationInput>
+  }
+
+  export type UserUpdateWithoutNotificationInput = {
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUpdateManyWithoutUserNestedInput
+    payments?: PaymentUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNotificationInput = {
+    user_id?: IntFieldUpdateOperationsInput | number
+    first_name?: StringFieldUpdateOperationsInput | string
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    OTP?: IntFieldUpdateOperationsInput | number
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumAdminStatusFieldUpdateOperationsInput | $Enums.AdminStatus
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutUserNestedInput
+    reviews?: ReviewUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BookingCreateManyUserInput = {
@@ -25481,6 +26187,13 @@ export namespace Prisma {
     rating: number
     comment: string
     review_date?: Date | string
+  }
+
+  export type NotificationCreateManyUserInput = {
+    notification_id?: number
+    owner_id?: number | null
+    message: string
+    sent_at?: Date | string
   }
 
   export type BookingUpdateWithoutUserInput = {
@@ -25557,6 +26270,26 @@ export namespace Prisma {
     review_date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type NotificationUpdateWithoutUserInput = {
+    message?: StringFieldUpdateOperationsInput | string
+    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: OwnerUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutUserInput = {
+    notification_id?: IntFieldUpdateOperationsInput | number
+    owner_id?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: StringFieldUpdateOperationsInput | string
+    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserInput = {
+    notification_id?: IntFieldUpdateOperationsInput | number
+    owner_id?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: StringFieldUpdateOperationsInput | string
+    sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ParkingLotCreateManyOwnerInput = {
     lot_id?: number
     lot_name: string
@@ -25567,6 +26300,7 @@ export namespace Prisma {
 
   export type NotificationCreateManyOwnerInput = {
     notification_id?: number
+    user_id?: number | null
     message: string
     sent_at?: Date | string
   }
@@ -25607,16 +26341,19 @@ export namespace Prisma {
   export type NotificationUpdateWithoutOwnerInput = {
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutNotificationNestedInput
   }
 
   export type NotificationUncheckedUpdateWithoutOwnerInput = {
     notification_id?: IntFieldUpdateOperationsInput | number
+    user_id?: NullableIntFieldUpdateOperationsInput | number | null
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NotificationUncheckedUpdateManyWithoutOwnerInput = {
     notification_id?: IntFieldUpdateOperationsInput | number
+    user_id?: NullableIntFieldUpdateOperationsInput | number | null
     message?: StringFieldUpdateOperationsInput | string
     sent_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

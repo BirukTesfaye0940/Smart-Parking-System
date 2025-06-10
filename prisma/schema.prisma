@@ -15,14 +15,18 @@ datasource db {
 }
 
 model Admin {
-  id         Int      @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   first_name  String
   last_name   String
-  email      String   @unique
-  password   String
-  phone      String
-  createdAt  DateTime @default(now())
+  email       String   @unique
+  password    String
+  phone       String
+  OTP         Int
+  isVerified  Boolean  @default(false)
+  status      AdminStatus  @default(active)
+  createdAt   DateTime @default(now())
 }
+
 model User {
   user_id    Int       @id @default(autoincrement())
   first_name String
@@ -30,11 +34,15 @@ model User {
   email      String    @unique
   password   String
   phone      String
+  OTP        Int
+  isVerified   Boolean    @default(false)
+  status     AdminStatus  @ default(active)
   created_at DateTime  @default(now())
 
   bookings   Booking[]
   payments   Payment[]
   reviews    Review[]
+  notification Notification[]
 
 
   @@map("Users")
@@ -47,12 +55,19 @@ model Owner {
   email      String    @unique
   password   String
   phone      String
+  OTP         Int
+  isVerified   Boolean    @default(false)
+  status     AdminStatus @default(active)
   created_at DateTime  @default(now())
 
   parkingLots ParkingLot[]
   notifications Notification[]
 
   @@map("Owners")
+}
+enum   AdminStatus{
+  active
+  inactive
 }
 model City {
   city_id   Int       @id @default(autoincrement())
@@ -221,9 +236,12 @@ model Review {
 model Notification {
   notification_id Int       @id @default(autoincrement())
   owner_id        Int?
+  user_id         Int?
   message         String
   sent_at         DateTime  @default(now())
   owner           Owner?    @relation(fields: [owner_id], references: [owner_id], onDelete: Cascade, onUpdate: Cascade)
+  user           User?      @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
+  
   @@map("Notifications")
 }

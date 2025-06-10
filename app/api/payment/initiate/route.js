@@ -1,8 +1,9 @@
 
+
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...next-auth]/route";
 
 export async function POST(req) {
   try {
@@ -70,7 +71,7 @@ export async function POST(req) {
       })
     });
 
-    const data = await chapaRes.json();
+    const data = await chaptRes.json();
     console.log('DATA',data)
 
     if (data.status !== 'success') {

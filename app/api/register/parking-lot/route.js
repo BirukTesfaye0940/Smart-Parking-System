@@ -155,3 +155,55 @@ export async function POST(req) {
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
+
+
+
+
+
+// let imageUrl = "";
+
+//     const imageFile = formData.get("student.image");
+//     if (imageFile && imageFile.size > 5 * 1024 * 1024) {
+//       console.error("❌ Image size exceeds 5MB.");
+//       return NextResponse.json({ error: "Image size exceeds 5MB" }, { status: 400 });
+//     }
+//     if (imageFile && !["image/jpeg", "image/png", "image/webp"].includes(imageFile.type)) {
+//       console.error("❌ Unsupported image format.");
+//       return NextResponse.json({ error: "Unsupported image format" }, { status: 400 });
+//     }
+    
+
+    // console.log("🖼️ Handling image upload...");
+  
+  
+
+    // if (!imageFile) {
+    //   console.error("❌ No image file provided!");
+    //   return NextResponse.json({ error: "Image is required for student registration" }, { status: 400 });
+    // }
+    
+    // imageUrl = await uploadToCloudinary(imageFile);
+    // if (!imageUrl) {
+    //   console.error("❌ Image upload failed!");
+    //   return NextResponse.json({ error: "Image upload failed" }, { status: 500 });
+    // }
+    // console.log("🖼️ Image uploaded successfully!");
+    // console.log("🔐 Generating password...");
+    // const randomPassword = crypto.randomBytes(5).toString("hex");
+    // const hashedPassword = await hash(randomPassword, 10);
+    
+    // const newStudent = await prisma.student.create({
+    //   data: {
+    //     studentID: studentData.studentID,
+    //     firstName: studentData.firstName,
+    //     middleName: studentData.middleName,
+    //     lastName: studentData.lastName,
+    //     age: parseInt(studentData.age),
+    //     gender: studentData.gender,
+    //     phoneNumber: studentData.phoneNumber,
+    //     email: studentData.email,
+    //     password: hashedPassword,
+
+    //     image: imageUrl,
+    //   },
+    // });

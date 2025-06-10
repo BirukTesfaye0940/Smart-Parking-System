@@ -1,4 +1,10 @@
 -- CreateEnum
+CREATE TYPE "AdminStatus" AS ENUM ('active', 'inactive');
+
+-- CreateEnum
+CREATE TYPE "SpaceStatus" AS ENUM ('available', 'unavailable');
+
+-- CreateEnum
 CREATE TYPE "BookStatus" AS ENUM ('unpaid', 'paid');
 
 -- CreateTable
@@ -9,6 +15,9 @@ CREATE TABLE "Admin" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
+    "OTP" INTEGER NOT NULL,
+    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+    "status" "AdminStatus" NOT NULL DEFAULT 'active',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Admin_pkey" PRIMARY KEY ("id")
@@ -22,6 +31,9 @@ CREATE TABLE "Users" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
+    "OTP" INTEGER NOT NULL,
+    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+    "status" "AdminStatus" NOT NULL DEFAULT 'active',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Users_pkey" PRIMARY KEY ("user_id")
@@ -35,6 +47,9 @@ CREATE TABLE "Owners" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
+    "OTP" INTEGER NOT NULL,
+    "isVerified" BOOLEAN NOT NULL DEFAULT false,
+    "status" "AdminStatus" NOT NULL DEFAULT 'active',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Owners_pkey" PRIMARY KEY ("owner_id")
@@ -101,7 +116,7 @@ CREATE TABLE "Parking_Spaces" (
     "lot_id" INTEGER NOT NULL,
     "space_number" TEXT NOT NULL,
     "is_handicap" BOOLEAN NOT NULL,
-    "status" TEXT NOT NULL,
+    "status" "SpaceStatus" NOT NULL DEFAULT 'available',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Parking_Spaces_pkey" PRIMARY KEY ("space_id")
@@ -168,6 +183,7 @@ CREATE TABLE "Reviews" (
 CREATE TABLE "Notifications" (
     "notification_id" SERIAL NOT NULL,
     "owner_id" INTEGER,
+    "user_id" INTEGER,
     "message" TEXT NOT NULL,
     "sent_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -245,3 +261,6 @@ ALTER TABLE "Reviews" ADD CONSTRAINT "Reviews_lot_id_fkey" FOREIGN KEY ("lot_id"
 
 -- AddForeignKey
 ALTER TABLE "Notifications" ADD CONSTRAINT "Notifications_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "Owners"("owner_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Notifications" ADD CONSTRAINT "Notifications_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
