@@ -1,15 +1,15 @@
-
 'use client';
 import dynamic from 'next/dynamic';
-
-
 import { useEffect, useState } from 'react';
-import { FaCar, FaCity, FaMap, FaMapMarkerAlt, FaMoneyBillWave, FaStar } from 'react-icons/fa';
+import {
+  FaCar, FaCity, FaMap, FaMapMarkerAlt,
+  FaMoneyBillWave, FaStar
+} from 'react-icons/fa';
 import { MdLocationCity } from 'react-icons/md';
 import BookingPopup from '../../components/Booking';
-const LotMap = dynamic(() => import('../../components/LotMap'), { ssr: false });
-// ✅ Import the new map component
 import ReviewPopup from '../../components/Review';
+
+const LotMap = dynamic(() => import('../../components/LotMap'), { ssr: false });
 
 export default function ParkingLotsList() {
   const [lots, setLots] = useState([]);
@@ -32,6 +32,17 @@ export default function ParkingLotsList() {
             key={lot.lot_id}
             className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 hover:shadow-lg transition"
           >
+            {/* Display Lot Image */}
+            {lot.image && (
+              <div className="w-full h-40 rounded-xl overflow-hidden mb-4 shadow-sm border">
+                <img
+                  src={lot.image}
+                  alt={`${lot.lot_name} preview`}
+                  className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+            )}
+
             <h2 className="text-xl font-semibold text-indigo-600 mb-2 flex items-center gap-2">
               <FaMapMarkerAlt className="text-indigo-500" />
               {lot.lot_name}

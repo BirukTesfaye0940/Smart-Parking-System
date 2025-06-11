@@ -21,7 +21,7 @@ export async function POST(request) {
     }
 
     // Check OTP expiration (5 minutes = 300,000 ms)
-    const createdAt = new Date(owner.createdAt);
+    const createdAt = new Date(owner.created_at);
     const expiresAt = new Date(createdAt.getTime() + 5 * 60 * 1000);
     const now = new Date();
 

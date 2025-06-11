@@ -113,6 +113,7 @@ export async function GET() {
         
   lot_id: lot.lot_id,
   lot_name: lot.lot_name,
+  image: lot.image,
   address: street?.street_address || 'N/A',
   zip_code: street?.zip_code || 'N/A',
   subcity: subcity?.sub_city_name || 'N/A',
