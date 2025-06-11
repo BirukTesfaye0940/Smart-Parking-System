@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import LoadingButton from '../../../components/LoadingButton'; // adjust the import path if needed
 
 export default function CityForm() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ export default function CityForm() {
       },
     ],
   });
+  const [loading, setLoading] = useState(false);
 
   const handleCityChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -47,11 +49,13 @@ export default function CityForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await fetch('/api/register/city', {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json' },
     });
+    setLoading(false);
 
     if (res.ok) {
       alert('City structure registered successfully!');
@@ -149,12 +153,11 @@ export default function CityForm() {
           + Add Sub-City
         </button>
 
-        <button
-          type="submit"
-          className="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700"
-        >
-          Submit
-        </button>
+        <LoadingButton
+          loading={loading}
+          text="Register City Structure"
+          loadingText="Registering..."
+        />
       </form>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
+import LoadingButton from '../../../components/LoadingButton';
 
 export default function RegisterParkingLot() {
   const [lotName, setLotName] = useState('');
@@ -10,12 +11,13 @@ export default function RegisterParkingLot() {
   const [longitude, setLongitude] = useState('');
   const [streetAddressId, setStreetAddressId] = useState('');
 const [imageFile, setImageFile] = useState(null);
-
+const [loading, setLoading] = useState(false);
 
   const { data: session } = useSession();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!session?.user?.id) {
       alert("You must be logged in to register a parking lot.");
@@ -38,6 +40,7 @@ const [imageFile, setImageFile] = useState(null);
       method: 'POST',
       body: formData,
     });
+    setLoading(false);
 
     const result = await res.json();
     alert(result.success ? 'Parking Lot Registered ✅' : `Error: ${result.error}`);
@@ -102,12 +105,11 @@ const [imageFile, setImageFile] = useState(null);
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold text-lg"
-        >
-          Register Lot
-        </button>
+        <LoadingButton
+          loading={loading}
+          text="Register Parking Lot"
+          loadingText="Registering..."
+          />
       </form>
     </div>
   );

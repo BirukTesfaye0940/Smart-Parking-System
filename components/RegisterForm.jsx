@@ -1,7 +1,8 @@
 // components/RegisterForm.jsx
 import FormInput from './FormInput';
+import LoadingButton from './LoadingButton';
 
-export default function RegisterForm({ formData, onChange, onSubmit, role }) {
+export default function RegisterForm({ formData, onChange, onSubmit, role,loading }) {
   return (
     <form
       onSubmit={onSubmit}
@@ -17,12 +18,11 @@ export default function RegisterForm({ formData, onChange, onSubmit, role }) {
       <FormInput label="Password" name="password" type="password" value={formData.password} onChange={onChange} />
       <FormInput label="Phone" name="phone" value={formData.phone} onChange={onChange} />
 
-      <button
-        type="submit"
-        className="w-full mt-4 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-      >
-        Register
-      </button>
+      <LoadingButton
+        loading={loading}
+        text="Register"
+        loadingText="Registering..."
+      />
     </form>
   );
 }

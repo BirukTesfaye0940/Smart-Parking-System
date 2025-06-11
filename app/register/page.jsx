@@ -1,8 +1,8 @@
 
 'use client';
 import { useState } from 'react';
-import RegisterForm from '../../../components/RegisterForm'; // your form component
-import VerifyOtpUser from '../../../components/VerifyUser'; // adjust the import path if needed
+import RegisterForm from '../../components/RegisterForm'; // your form component
+import VerifyOtpUser from '../../components/VerifyUser'; // adjust the import path if needed
 
 export default function UserRegisterPage() {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ export default function UserRegisterPage() {
     password: '',
     phone: '',
   });
+  const [loading, setLoading] = useState(false);
 
   const [showOtp, setShowOtp] = useState(false); // track OTP step
 
@@ -20,12 +21,13 @@ export default function UserRegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await fetch('/api/register/user', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
-
+    setLoading(false);
     const result = await res.json();
     if (res.ok) {
       setShowOtp(true); // show OTP step
@@ -42,6 +44,7 @@ export default function UserRegisterPage() {
       formData={formData}
       onChange={handleChange}
       onSubmit={handleSubmit}
+      loading={loading}
     />
   );
 }
