@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 import prisma from '../lib/prisma';
 
 export default async function Home() {
@@ -20,7 +20,7 @@ export default async function Home() {
               parking management system.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/find-parking" className="btn btn-primary">
+              <Link href="/lot" className="btn btn-primary">
                 Find Parking
               </Link>
               <Link href="/register" className="btn btn-secondary">
