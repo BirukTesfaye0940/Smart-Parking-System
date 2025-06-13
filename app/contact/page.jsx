@@ -1,7 +1,8 @@
 "use client"
 
-import Link from "next/link"
+// import Link from "next/link"
 import { useState } from "react"
+import axios from 'axios'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -22,115 +23,36 @@ export default function Contact() {
     }))
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitMessage("Thank you for your message! We'll get back to you within 24 hours.")
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-        userType: "user",
-      })
-    }, 2000)
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  setIsSubmitting(true)
+  setSubmitMessage("")
+
+  try {
+    const response = await axios.post('/api/contact', formData)
+
+    setSubmitMessage(response.data.message || "Message sent successfully.")
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+      userType: "user",
+    })
+  } catch (error) {
+    console.error('Error:', error)
+    const errMsg = error.response?.data?.message || "Failed to send message. Please try again."
+    setSubmitMessage(errMsg)
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
 
   return (
     <div className="min-h-screen bg-base-100">
-      {/* Navigation Bar */}
-      {/* <nav className="navbar bg-primary text-primary-content">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-base-content"
-            >
-              <li>
-                <Link href="/find-parking">Find Parking</Link>
-              </li>
-              <li>
-                <Link href="/about">About Us</Link>
-              </li>
-              <li>
-                <Link href="/contact">Contact</Link>
-              </li>
-              <li>
-                <a>User Type</a>
-                <ul className="p-2">
-                  <li>
-                    <Link href="/user/dashboard">User Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link href="/owner/dashboard">Owner Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link href="/admin/dashboard">Admin Dashboard</Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <Link href="/" className="btn btn-ghost text-xl">
-            Smart Parking
-          </Link>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <Link href="/find-parking">Find Parking</Link>
-            </li>
-            <li>
-              <Link href="/about">About Us</Link>
-            </li>
-            <li>
-              <Link href="/contact" className="active">
-                Contact
-              </Link>
-            </li>
-            <li>
-              <details>
-                <summary>User Type</summary>
-                <ul className="p-2 bg-base-100 text-base-content">
-                  <li>
-                    <Link href="/user/dashboard">User Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link href="/owner/dashboard">Owner Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link href="/admin/dashboard">Admin Dashboard</Link>
-                  </li>
-                </ul>
-              </details>
-            </li>
-          </ul>
-        </div>
-        <div className="navbar-end">
-          <Link href="/login" className="btn btn-ghost">
-            Login
-          </Link>
-          <Link href="/register" className="btn btn-accent">
-            Register
-          </Link>
-        </div>
-      </nav> */} 
-
       {/* Hero Section */}
       <div className="hero min-h-[40vh] bg-base-200">
         <div className="hero-content text-center">
