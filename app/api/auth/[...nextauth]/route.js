@@ -80,7 +80,7 @@
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import prisma from "../../../../lib/prisma"; // Adjust this path if needed
+import prisma from "../../../../lib/prisma";
 
 export const authOptions = {
   providers: [
