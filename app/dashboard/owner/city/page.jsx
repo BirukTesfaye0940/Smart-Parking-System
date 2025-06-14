@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import LoadingButton from '../../../components/LoadingButton'; // adjust the import path if needed
+import LoadingButton from '../../../../components/LoadingButton';
 
 export default function CityForm() {
   const [formData, setFormData] = useState({

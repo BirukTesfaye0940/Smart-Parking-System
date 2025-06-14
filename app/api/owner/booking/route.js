@@ -9,7 +9,7 @@ export async function GET(req) {
   if (!session || session.user.role !== "owner") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-
+//finance 
   const ownerId = session.user.id;
 
   // ✅ Fetch the entire lot with all related data

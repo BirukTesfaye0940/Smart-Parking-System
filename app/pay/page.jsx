@@ -31,7 +31,7 @@ export default function PayParkingFee() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-2xl shadow-xl border">
+    <div className="max-w-lg mx-auto mt-10 bg-white p-6 rounded-2xl shadow-xl border mb-50">
       <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
         Pay for Parking
       </h2>

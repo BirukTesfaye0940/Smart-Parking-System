@@ -69,7 +69,7 @@ export default function VerifyOtpUser({ email }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Verify Your Account</h2>
         <p className="text-gray-500 mb-6">

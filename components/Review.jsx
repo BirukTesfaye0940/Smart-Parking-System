@@ -30,10 +30,10 @@ export default function ReviewPopup({ lotId }) {
   };
 
   return (
-    <div className="relative bg-white p-4 rounded-lg shadow-md">
+    <div className="relative bg-white p-4">
       <button
         onClick={() => setOpen(true)}
-        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow"
+        className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-lg shadow"
       >
         ✍️ Write Review
       </button>

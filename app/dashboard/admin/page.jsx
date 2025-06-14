@@ -1,11 +1,8 @@
-import React from 'react'
+// page.jsx
+import dynamic from 'next/dynamic';
 
-function page() {
-  return (
-    <div>
-      
-    </div>
-  )
+export default function Page({ searchParams }) {
+  const role ='admin';
+  const DynamicManage = dynamic(() => import('../../../components/ManageUser'));
+  return <DynamicManage role={role} />;
 }
-
-export default page
