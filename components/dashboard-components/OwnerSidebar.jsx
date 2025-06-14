@@ -6,7 +6,7 @@ import Link from "next/link"
 export default function OwnerSidebar({ closeDrawer }) {
   const navLinks = [
     { href: "/dashboard/owner", label: "Overview", icon: <ClipboardList size={18} /> },
-    { href: "/dashboard/owner/users", label: "Users", icon: <Users size={18} /> },
+    { href: "/dashboard/owner/finance", label: "Finance", icon: <Star size={18} /> },
     { href: "/dashboard/owner/city", label: "city", icon: <Users size={18} /> },
     { href: "/dashboard/owner/lots", label: "Parking Lots", icon: <ParkingCircle size={18} /> },
     { href: "/dashboard/owner/bookings", label: "Bookings", icon: <ClipboardList size={18} /> },
