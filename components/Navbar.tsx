@@ -1,160 +1,232 @@
-'use client'
+'use client';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, Car, Home, CreditCard, Info, Mail, User, LogOut } from 'lucide-react';
 
-import Link from "next/link"
-import { useState } from "react"
-import { useSession, signOut } from "next-auth/react"
+// Mock authentication hook for demo purposes
+const useAuth = () => {
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-export default function Navbar() {
-  const { data: session, status } = useSession()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  useEffect(() => {
+    // Simulate loading
+    setTimeout(() => {
+      // Simulate authenticated user - you can change this to null to see unauthenticated state
+      setUser({ name: 'John Doe', email: 'john@example.com' });
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-  const closeMenu = () => setIsMenuOpen(false)
+  const signOut = () => {
+    setUser(null);
+  };
 
-  const isLoading = status === "loading"
-  const isAuthenticated = status === "authenticated"
+  return { user, isLoading, signOut };
+};
+
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { user, isLoading, signOut } = useAuth();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const navItems = [
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/pay', label: 'Pay', icon: CreditCard },
+    { href: '/about', label: 'About', icon: Info },
+    { href: '/contact', label: 'Contact', icon: Mail },
+  ];
 
   return (
-    <div className="navbar bg-base-300">
-      <div className="navbar-start">
-        <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden" onClick={toggleMenu}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-            </svg>
-          </label>
+    <>
+      {/* Backdrop overlay for mobile menu */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+          onClick={closeMenu}
+        />
+      )}
 
-          {/* Mobile Dropdown */}
-          {isMenuOpen && (
-            <div className="absolute top-16 right-4 w-48 bg-base-100 shadow-lg rounded-lg z-50 border border-base-300">
-              <ul className="menu menu-compact gap-1 p-2">
-                <li>
-                  <Link href="/" onClick={closeMenu} className="btn btn-sm btn-ghost w-full justify-start">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pay" onClick={closeMenu} className="btn btn-sm btn-ghost w-full justify-start">
-                    Pay
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" onClick={closeMenu} className="btn btn-sm btn-ghost w-full justify-start">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" onClick={closeMenu} className="btn btn-sm btn-ghost w-full justify-start">
-                    Contact
-                  </Link>
-                </li>
-                
-                {!isAuthenticated && !isLoading && (
-                  <>
-                    <li>
-                      <Link
-                        href="/register"
-                        onClick={closeMenu}
-                        className="btn btn-sm btn-primary w-full justify-start"
-                      >
-                        Register
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/login"
-                        onClick={closeMenu}
-                        className="btn btn-sm btn-ghost text-error w-full justify-start"
-                      >
-                        Login
-                      </Link>
-                    </li>
-                  </>
-                )}
-                {isAuthenticated && (
-                  <>
-                    <li className="text-sm px-3 text-gray-500">
-                      Signed in as <strong>{session.user?.name || session.user?.email}</strong>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => {
-                          signOut()
-                          closeMenu()
-                        }}
-                        className="btn btn-sm btn-error w-full justify-start"
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </>
-                )}
-              </ul>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        isScrolled 
+          ? 'bg-blue-500/30 backdrop-blur-xl border-b border-white/20 shadow-2xl' 
+          : 'bg-blue-500/25 backdrop-blur-md border-b border-white/10'
+      }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            
+            {/* Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm border border-white/20">
+                <Car className="h-6 w-6 text-blue-400" />
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Smart Parking
+              </span>
             </div>
-          )}
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:block">
+              <div className="flex items-center space-x-1">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="group relative px-4 py-2 rounded-xl text-white/80 hover:text-white transition-all duration-300 hover:bg-white/10 backdrop-blur-sm"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <Icon className="h-4 w-4 transition-transform group-hover:scale-110" />
+                        <span className="font-medium">{item.label}</span>
+                      </div>
+                      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-300 -z-10" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right side - Auth buttons */}
+            <div className="hidden lg:flex items-center space-x-3">
+              {isLoading ? (
+                <div className="animate-pulse flex space-x-2">
+                  <div className="h-9 w-16 bg-white/10 rounded-lg"></div>
+                  <div className="h-9 w-20 bg-white/10 rounded-lg"></div>
+                </div>
+              ) : user ? (
+                <div className="flex items-center space-x-3">
+                  <div className="text-sm text-white/70">
+                    Hi, <span className="text-white font-medium">{user.name}</span>
+                  </div>
+                  <button
+                    onClick={signOut}
+                    className="group flex items-center space-x-2 px-4 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-200 hover:text-white border border-red-500/30 hover:border-red-400/50 transition-all duration-300 backdrop-blur-sm"
+                  >
+                    <LogOut className="h-4 w-4 transition-transform group-hover:scale-110" />
+                    <span className="font-medium">Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <a
+                    href="/login"
+                    className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 font-medium"
+                  >
+                    Login
+                  </a>
+                  <a
+                    href="/register"
+                    className="group px-6 py-2 rounded-xl bg-gradient-to-r from-blue-500/30 to-purple-600/30 hover:from-blue-500/40 hover:to-purple-600/40 text-white border border-white/20 hover:border-white/30 transition-all duration-300 backdrop-blur-sm font-medium shadow-lg"
+                  >
+                    <span className="flex items-center space-x-2">
+                      <User className="h-4 w-4 transition-transform group-hover:scale-110" />
+                      <span>Register</span>
+                    </span>
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="lg:hidden">
+              <button
+                onClick={toggleMenu}
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 transition-all duration-300"
+              >
+                {isMenuOpen ? (
+                  <X className="h-6 w-6 text-white" />
+                ) : (
+                  <Menu className="h-6 w-6 text-white" />
+                )}
+              </button>
+            </div>
+          </div>
         </div>
 
-        <Link href="/" className="btn btn-ghost normal-case text-xl font-serif">
-          🚗 Smart Parking System
-        </Link>
-      </div>
+        {/* Mobile Navigation Menu */}
+        <div className={`lg:hidden transition-all duration-500 ease-out ${
+          isMenuOpen 
+            ? 'max-h-screen opacity-100 visible' 
+            : 'max-h-0 opacity-0 invisible'
+        }`}>
+          <div className="px-4 py-6 bg-white/5 backdrop-blur-xl border-t border-white/10">
+            <div className="space-y-3">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMenu}
+                    className="group flex items-center space-x-3 p-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
+                  >
+                    <Icon className="h-5 w-5 transition-transform group-hover:scale-110" />
+                    <span className="font-medium">{item.label}</span>
+                  </a>
+                );
+              })}
+              
+              <div className="h-px bg-white/10 my-4"></div>
+              
+              {isLoading ? (
+                <div className="animate-pulse space-y-3">
+                  <div className="h-12 bg-white/10 rounded-xl"></div>
+                  <div className="h-12 bg-white/10 rounded-xl"></div>
+                </div>
+              ) : user ? (
+                <div className="space-y-3">
+                  <div className="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div className="text-sm text-white/70">Signed in as</div>
+                    <div className="text-white font-medium">{user.name}</div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      closeMenu();
+                    }}
+                    className="group w-full flex items-center space-x-3 p-3 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-200 hover:text-white border border-red-500/30 hover:border-red-400/50 transition-all duration-300 backdrop-blur-sm"
+                  >
+                    <LogOut className="h-5 w-5 transition-transform group-hover:scale-110" />
+                    <span className="font-medium">Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <a
+                    href="/login"
+                    onClick={closeMenu}
+                    className="group w-full flex items-center space-x-3 p-3 rounded-xl text-white/80 hover:text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
+                  >
+                    <User className="h-5 w-5 transition-transform group-hover:scale-110" />
+                    <span className="font-medium">Login</span>
+                  </a>
+                  <a
+                    href="/register"
+                    onClick={closeMenu}
+                    className="group w-full flex items-center space-x-3 p-3 rounded-xl bg-gradient-to-r from-blue-500/30 to-purple-600/30 hover:from-blue-500/40 hover:to-purple-600/40 text-white border border-white/20 hover:border-white/30 transition-all duration-300 backdrop-blur-sm"
+                  >
+                    <User className="h-5 w-5 transition-transform group-hover:scale-110" />
+                    <span className="font-medium">Register Now</span>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+};
 
-      {/* Center Desktop Menu */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-2">
-          <li>
-            <Link href="/" className="btn btn-sm btn-ghost">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/pay" className="btn btn-sm btn-ghost">
-              Pay
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" className="btn btn-sm btn-ghost">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" className="btn btn-sm btn-ghost">
-              Contact
-            </Link>
-          </li>
-        </ul>
-      </div>
-
-      {/* Right side buttons */}
-      <div className="navbar-end gap-1">
-        {!isAuthenticated && !isLoading && (
-          <>
-            <Link href="/login" className="btn btn-sm btn-ghost text-blue-600">
-              Login
-            </Link>
-            <Link href="/register" className="btn btn-sm btn-primary">
-              Register Now
-            </Link>
-          </>
-        )}
-
-        {isAuthenticated && (
-          <>
-            <span className="text-sm text-gray-300 hidden lg:block">
-              Hi, {session.user?.name || session.user?.email}
-            </span>
-            <button onClick={() => signOut()} className="btn btn-sm btn-error">
-              Logout
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  )
-}
+export default Navbar;
