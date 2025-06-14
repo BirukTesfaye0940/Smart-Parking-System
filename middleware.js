@@ -5,15 +5,15 @@ import { ownerAuthMiddleware } from "./middleware/ownerMiddleware";
 export async function middleware(req) {
   const path = req.nextUrl.pathname;
 
-  if (path.startsWith("/admin") || path.startsWith("/api/admin")) {
+  if (path.startsWith("/dashboard/admin") || path.startsWith("/api/admin")) {
     return adminAuthMiddleware(req);
   }
 
-  if (path.startsWith("/user") || path.startsWith("/api/user")) {
+  if (path.startsWith("/lot") || path.startsWith("/api/user")) {
     return userAuthMiddleware(req);
   }
 
-  if (path.startsWith("/owner") || path.startsWith("/api/owner")) {
+  if (path.startsWith("/dashboard/owner") || path.startsWith("/api/owner")) {
     return ownerAuthMiddleware(req);
   }
 
@@ -21,9 +21,9 @@ export async function middleware(req) {
 }
 export const config = {
   matcher: [
-    "/admin/:path*",
-    "/user/:path*",
-    "/owner/:path*",
+    "/dashboard/admin/:path*",
+    "/lot/:path*",
+    "/dashboard/owner/:path*",
     "/api/admin/:path*",
     "/api/user/:path*",
     "/api/owner/:path*",
