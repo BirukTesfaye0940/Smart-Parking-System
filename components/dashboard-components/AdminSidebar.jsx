@@ -8,11 +8,8 @@ export default function AdminSidebar({ closeDrawer }) {
     { href: "/dashboard/admin", label: "Overview", icon: <ClipboardList size={18} /> },
     { href: "/dashboard/admin/users", label: "Users", icon: <Users size={18} /> },
     { href: "/dashboard/admin/owners", label: "Owners", icon: <Users size={18} /> },
-    { href: "/dashboard/admin/lots", label: "Parking Lots", icon: <ParkingCircle size={18} /> },
-    { href: "/dashboard/admin/bookings", label: "Bookings", icon: <ClipboardList size={18} /> },
-    { href: "/dashboard/admin/reviews", label: "Reviews", icon: <Star size={18} /> },
     { href: "/dashboard/admin/notifications", label: "Notifications", icon: <Bell size={18} /> },
-    { href: "/dashboard/admin/geo-insights", label: "Geo Insights", icon: <Map size={18} /> },
+    //{ href: "/dashboard/admin/geo-insights", label: "Geo Insights", icon: <Map size={18} /> },
   ]
 
   return (

@@ -2,6 +2,7 @@
 
 import { Bell, ClipboardList, ParkingCircle, Star, Users, X } from "lucide-react"
 import Link from "next/link"
+import { MdNotificationAdd } from "react-icons/md"
 
 export default function OwnerSidebar({ closeDrawer }) {
   const navLinks = [
@@ -12,6 +13,7 @@ export default function OwnerSidebar({ closeDrawer }) {
     { href: "/dashboard/owner/bookings", label: "Bookings", icon: <ClipboardList size={18} /> },
     { href: "/dashboard/owner/pricing", label: "Pricing", icon: <Star size={18} /> },
     { href: "/dashboard/owner/spaces", label: "Space Availability", icon: <Bell size={18} /> },
+    {href: "/dashboard/owner/notifications", label: "Notifications", icon: <MdNotificationAdd size={18}/>}
   ]
 
   return (

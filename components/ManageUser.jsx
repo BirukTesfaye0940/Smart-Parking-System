@@ -113,17 +113,18 @@ const ManageUsers = ({ role = 'admin' }) => {
 
   const toggleStatus = async (user) => {
     const id = user.id ?? user.user_id ?? user.owner_id;
+    const isOwner = !!user.owner_id;
     const newStatus = user.status === 'active' ? 'inactive' : 'active';
-
+  
     try {
       const res = await fetch(`/api/${role}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status: newStatus }),
       });
-
+  
       const updated = await res.json();
-
+  
       if (res.ok) {
         setUsers((prev) =>
           prev.map((u) => {
@@ -132,6 +133,21 @@ const ManageUsers = ({ role = 'admin' }) => {
             return u;
           })
         );
+  
+        // ✅ Send notification *only if activated*
+        if (newStatus === 'active') {
+          const notifPayload = {
+            message: `🎉 Your account has been activated! You can now access the Smart Parking System.`,
+            user_id: !isOwner ? id : null,
+            owner_id: isOwner ? id : null,
+          };
+  
+          await fetch('/api/notifications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(notifPayload),
+          });
+        }
       } else {
         console.error('Failed to update status:', updated.error);
       }
@@ -139,6 +155,7 @@ const ManageUsers = ({ role = 'admin' }) => {
       console.error('Unexpected error:', error);
     }
   };
+  
 
   const handleDelete = async (user) => {
     const id = user.id ?? user.user_id ?? user.owner_id;

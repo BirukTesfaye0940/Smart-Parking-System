@@ -1,6 +1,6 @@
-// /app/dashboard/owner/notifications/page.tsx
-import NotificationViewer from '../../../../components/NotificationPopup';
-import { authOptions } from '../../../api/auth/[...nextauth]/route';
+
+import NotificationViewer from '../../components/NotificationPopup';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 
