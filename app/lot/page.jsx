@@ -85,7 +85,7 @@ export default function ParkingLotsList() {
             </div>
 
             {/* Parking Lots Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-5">
               {lots.map((lot) => {
                 const availability = getAvailabilityStatus(lot);
                 const AvailabilityIcon = availability.icon;
@@ -207,12 +207,11 @@ export default function ParkingLotsList() {
                       <div className="flex gap-3">
                         <button
                           onClick={() => setSelectedLot(lot)}
-                          className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
-                        >
+                          className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-3 py-1.5 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 max-h-16">
                           <Eye className="w-4 h-4" />
                           View Map
                         </button>
-
+                        
                         <ReviewPopup lotId={lot.lot_id} />
 
                         {lot.available_spaces > 0 && lot.available_space_ids?.length ? (

@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 export default async function OwnerNotificationsPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session || session.user.role !== 'owner') {
+  if (!session || session.user.role !== 'owner' | 'user') {
     return redirect('/login'); // Redirect if not authenticated or not an owner
   }
 
