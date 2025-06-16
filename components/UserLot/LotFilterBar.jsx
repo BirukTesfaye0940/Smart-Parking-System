@@ -92,7 +92,7 @@ export default function LotFilterBar({ onFilter }) {
                 value={filters.city}
                 onChange={handleChange}
                 placeholder="City"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-black transition-all duration-200"
               />
             </div>
             <div className="relative">
@@ -103,7 +103,7 @@ export default function LotFilterBar({ onFilter }) {
                 value={filters.subcity}
                 onChange={handleChange}
                 placeholder="Subcity/District"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-black transition-all duration-200"
               />
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function LotFilterBar({ onFilter }) {
                 value={filters.minPrice}
                 onChange={handleChange}
                 placeholder="Min Price"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-black transition-all duration-200"
               />
             </div>
             <div className="relative">
@@ -130,7 +130,7 @@ export default function LotFilterBar({ onFilter }) {
                 value={filters.maxPrice}
                 onChange={handleChange}
                 placeholder="Max Price"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100  text-black transition-all duration-200"
               />
             </div>
           </div>
@@ -146,7 +146,7 @@ export default function LotFilterBar({ onFilter }) {
                 value={filters.minRating}
                 onChange={handleChange}
                 placeholder="Min Rating (0-5)"
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-black transition-all duration-200"
                 min="0"
                 max="5"
                 step="0.1"
@@ -163,7 +163,7 @@ export default function LotFilterBar({ onFilter }) {
                 name="onlyAvailable"
                 checked={filters.onlyAvailable}
                 onChange={handleChange}
-                className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                className="w-5 h-5 text-blue-600 border-2 border-gray-300 rounded focus:ring-blue-500 text-black focus:ring-2"
               />
               <div className="flex items-center gap-2">
                 <Car className="w-4 h-4 text-green-600" />

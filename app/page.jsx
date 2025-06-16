@@ -6,7 +6,7 @@ export default async function Home() {
   const totalCities = await prisma.city.count()
   const totalUsers = await prisma.user.count()
   return (
-    <div className="min-h-screen bg-base-100">
+    <div className="min-h-screen bg-base-100 ">
       {/* Navigation Bar */}
 
       {/* Hero Section */}

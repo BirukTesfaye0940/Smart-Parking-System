@@ -43,25 +43,26 @@ export default function NotificationPopup() {
 
   return (
     <div className="relative">
-      {/* <button
+      {/* Trigger Button */}
+      <button
         onClick={() => setOpen(true)}
         className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg shadow"
       >
         🔔 Send Notification
-      </button> */}
+      </button>
 
-      
-        <div className="fixed inset-0 bg-opacity-40 flex items-center justify-center z-50 p-4">
+      {/* Modal Popup */}
+      {open && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
             <h2 className="text-2xl font-bold mb-5 text-center text-gray-800">Send Notification</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-            
               <input
                 type="number"
                 placeholder="Owner ID (optional)"
                 value={ownerId}
                 onChange={(e) => setOwnerId(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-400   text-gray-800"
+                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-400 text-gray-800"
               />
               <textarea
                 placeholder="Message"
@@ -76,7 +77,7 @@ export default function NotificationPopup() {
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="text-sm text-gray-500 hover:underline text-purple-600"
+                  className="text-sm text-purple-600 hover:underline"
                 >
                   Cancel
                 </button>
@@ -94,7 +95,7 @@ export default function NotificationPopup() {
             )}
           </div>
         </div>
-      
+      )}
     </div>
   );
 }

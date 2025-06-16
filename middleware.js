@@ -13,7 +13,7 @@ export async function middleware(req) {
     return userAuthMiddleware(req);
   }
 
-  if (path.startsWith("/dashboard/owner") || path.startsWith("/api/owner")) {
+  if (path.startsWith("/dashboard/owner")) {
     return ownerAuthMiddleware(req);
   }
 
@@ -26,6 +26,6 @@ export const config = {
     "/dashboard/owner/:path*",
     "/api/admin/:path*",
     "/api/user/:path*",
-    "/api/owner/:path*",
+
   ],
 };
