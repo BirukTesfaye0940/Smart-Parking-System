@@ -33,8 +33,8 @@ export default function ReviewPopup({ lotId }) {
     <div className="relative bg-white p-4">
       <button
         onClick={() => setOpen(true)}
-        className="flex-1 bg-gradient-to-r from-yellow-600 to-yellow-500 hover:from-yellow-700 hover:to-yellow-600 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
-        ✍️ Write Review
+        className="flex-1 bg-gradient-to-r ml-5 from-yellow-600 to-yellow-500 hover:from-yellow-700 hover:to-yellow-600 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-xs w-full">
+        ✍️ Review
       </button>
 
       {open && (

@@ -41,12 +41,12 @@ export default function BookingPopup({ lot_id, availableSpaceIds = [] }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <button
         onClick={() => setOpen(true)}
-        className="flex-1 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-600 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+        className="flex-1 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-600 text-white font-semibold px-4 py-3 rounded-xl shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-xs w-full"
         >
-        🅱️ Book Parking Space
+        🅱️ Book a space
       </button>
 
       {open && (
